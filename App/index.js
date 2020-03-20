@@ -6,27 +6,11 @@ import {
     TouchableWithoutFeedback,
     View,
 } from 'react-native'
-import BottomSheet from 'reanimated-bottom-sheet'
+import BottomSheet from 'reanimated-bottom-sheet';
+import Navigation from './config/navigation';
+import connectHesjes from './screens/connectHesjes';
 
 export default class Example extends React.Component {
-    renderInner = () => (
-        <View style={styles.panel}>
-            <Text style={styles.panelTitle}>Connectie hesjes</Text>
-            <Text style={styles.panelSubtitle}>
-                20 hesjes geconnecteerd
-            </Text>
-            <View style={styles.panelButton}>
-                <Text style={styles.panelButtonTitle}>Hesjes connecteren</Text>
-            </View>
-            <View style={styles.panelButton}>
-                <Text style={styles.panelButtonTitle}>Hesjes afmelden</Text>
-            </View>
-            <Image
-                style={styles.photo}
-
-            />
-        </View>
-    )
 
     renderHeader = () => (
         <View style={styles.header}>
@@ -44,13 +28,14 @@ export default class Example extends React.Component {
                 <BottomSheet
                     ref={this.bs}
                     snapPoints={[500, 130, 0]}
-                    renderContent={this.renderInner}
+                    renderContent={connectHesjes}
                     renderHeader={this.renderHeader}
                     initialSnap={1}
                 />
                 <TouchableWithoutFeedback onPress={() => this.bs.current.snapTo(0)}>
                     <Image style={styles.map} />
                 </TouchableWithoutFeedback>
+                
             </View>
         )
     }
@@ -76,7 +61,6 @@ const styles = StyleSheet.create({
     },
     panel: {
         height: 550,
-        padding: 20,
         backgroundColor: '#f7f5eee8',
     },
     header: {
@@ -97,6 +81,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     panelTitle: {
+        alignSelf: 'center',
         fontSize: 27,
         height: 35,
     },
@@ -104,7 +89,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: 'gray',
         height: 30,
-        marginBottom: 10,
+        marginTop: 40,
     },
     panelButton: {
         padding: 20,
