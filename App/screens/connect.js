@@ -12,7 +12,7 @@ const hesjes = () => (
     <View style={styles.panel}>
         <Text style={styles.panelTitle}>Connectie hesjes</Text>
         <Text style={styles.panelSubtitle}>
-            20 hesjes geconnecteerd
+            2000 hesjes geconnecteerd
         </Text>
         <View style={styles.panelButton}>
             <Text style={styles.panelButtonTitle}>Hesjes connecteren</Text>
@@ -43,7 +43,6 @@ export default () => (
         renderContent={hesjes}
         renderHeader={renderHeader}
         initialSnap={1}
-        enabledBottomInitialAnimation={true}
     />
 );
 
