@@ -10,6 +10,10 @@ const SettingsTab = ({ navigation }) => {
       ></Button>
       <Button title="FAQ" onPress={() => navigation.navigate('FAQ')}></Button>
       <Button title="Help" onPress={() => navigation.navigate('Help')}></Button>
+      <Button
+        title="QRScanner"
+        onPress={() => navigation.navigate('QRScanner')}
+      ></Button>
     </View>
   );
 };
