@@ -7,16 +7,15 @@ import connectHesjes from '../screens/connectHesjes';
 const Tabs = createBottomTabNavigator();
 
 const MainBottomNav = () => (
-    <Tabs.Navigator>
-        <Tabs.Screen name="Hesjes" component={connectHesjes}/>
-    </Tabs.Navigator>
+  <Tabs.Navigator>
+    <Tabs.Screen name="Hesjes" component={connectHesjes} />
+  </Tabs.Navigator>
 );
 
 export default () => {
-    <NavigationContainer>
-        <Tabs.Navigator>
-            <Tabs.Screen name="Hesjes" component={connectHesjes}/>
-        </Tabs.Navigator>
-    </NavigationContainer>
-}
-
+  <NavigationContainer>
+    <Tabs.Navigator>
+      <Tabs.Screen name="Hesjes" component={connectHesjes} />
+    </Tabs.Navigator>
+  </NavigationContainer>;
+};
