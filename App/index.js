@@ -3,6 +3,8 @@ import connectHesjes from './screens/connectHesjes';
 import connect from './screens/connect';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import MapView from 'expo';
+import map from './screens/map';
 
 const Tabs = createBottomTabNavigator();
 
