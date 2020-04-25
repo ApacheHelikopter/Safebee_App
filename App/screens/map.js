@@ -1,16 +1,6 @@
 import React from 'react';
-import MapView from 'expo';
-import { StyleSheet, Text, View, Dimensions } from 'react-native';
-
-export default class Map extends React.Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <MapView style={styles.mapStyle} />
-      </View>
-    );
-  }
-}
+import MapView from 'react-native-maps';
+import { StyleSheet, Text, View, Dimensions, Button } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -24,3 +14,21 @@ const styles = StyleSheet.create({
     height: Dimensions.get('window').height,
   },
 });
+
+const Map = () => {
+  return (
+    <View style={styles.container}>
+      <MapView style={styles.mapStyle} />
+    </View>
+  );
+};
+
+// const Map = () => {
+//   return (
+//     <View style={styles.container}>
+//       <MapView style={styles.mapStyle} />
+//     </View>
+//   );
+// };
+
+export default Map;
