@@ -12,6 +12,7 @@ import SettingsTab from '../screens/settings';
 import Meldingen from '../screens/meldingen';
 import FAQ from '../screens/FAQ';
 import Help from '../screens/help';
+import Map from '../screens/map';
 
 const Tab = createBottomTabNavigator();
 
