@@ -23,12 +23,4 @@ const Map = () => {
   );
 };
 
-// const Map = () => {
-//   return (
-//     <View style={styles.container}>
-//       <MapView style={styles.mapStyle} />
-//     </View>
-//   );
-// };
-
 export default Map;
