@@ -3,6 +3,26 @@ import MapView from 'react-native-maps';
 import { StyleSheet, Text, View, Dimensions } from 'react-native';
 
 const styles = StyleSheet.create({
+  radius: {
+    height: 50,
+    width: 50,
+    borderRadius: 50 / 2,
+    overflow: 'hidden',
+    backgroundColor: 'rgba(0, 122, 255, 0.1)',
+    borderWidth: 1,
+    borderColor: 'rgba(0, 122, 255, 0.3)',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  marker: {
+    height: 20,
+    width: 20,
+    borderRadius: 20 / 2,
+    overflow: 'hidden',
+    borderColor: 'white',
+    borderWidth: 3,
+    backgroundColor: '#007AFF',
+  },
   container: {
     flex: 1,
     backgroundColor: '#fff',
@@ -33,7 +53,11 @@ const Map = () => {
             latitude: 37.78825,
             longitude: -122.4324,
           }}
-        />
+        >
+          <View style={styles.radius}>
+            <View style={styles.marker} />
+          </View>
+        </MapView.Marker>
       </MapView>
     </View>
   );
