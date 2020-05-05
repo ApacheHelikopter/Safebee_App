@@ -12,7 +12,8 @@ import SettingsTab from '../screens/settings';
 import Meldingen from '../screens/meldingen';
 import FAQ from '../screens/FAQ';
 import Help from '../screens/help';
-import Map from '../screens/Map';
+import Map from '../screens/map';
+import GeoLocationMap from '../screens/map2';
 
 const Tab = createBottomTabNavigator();
 
@@ -37,7 +38,7 @@ class TabNavigator extends React.Component {
         <Tab.Navigator tabBarOptions={{ showLabel: false }}>
           <Tab.Screen
             name="Home"
-            component={Map}
+            component={GeoLocationMap}
             options={{
               tabBarIcon: () => <Icon name="location-on" size={30} />,
             }}
