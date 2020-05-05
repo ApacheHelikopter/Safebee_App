@@ -20,6 +20,9 @@ import MijnGroepen from '../screens/Profile/mijnGroepen';
 import ConnectHesje from '../screens/Profile/connectHesje';
 import DisconnectHesje from '../screens/Profile/disconnectHesje';
 
+//Radius imports
+import Radius from '../screens/Radius/radiusSheet';
+
 const Tab = createBottomTabNavigator();
 
 const SettingsStack = createStackNavigator();
@@ -107,7 +110,7 @@ class TabNavigator extends React.Component {
           />
           <Tab.Screen
             name="Radius"
-            component={connectHesjes}
+            component={Radius}
             options={{
               tabBarIcon: ({ color }) => (
                 <Icon name="my-location" size={30} color={color} />
