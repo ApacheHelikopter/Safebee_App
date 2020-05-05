@@ -1,6 +1,6 @@
 import React from 'react';
 import MapView from 'react-native-maps';
-import { StyleSheet, Text, View, Dimensions, Button } from 'react-native';
+import { StyleSheet, Text, View, Dimensions } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -18,7 +18,16 @@ const styles = StyleSheet.create({
 const Map = () => {
   return (
     <View style={styles.container}>
-      <MapView style={styles.mapStyle} />
+      <MapView
+        style={styles.mapStyle}
+        initialRegion={{
+          latitude: 37.78825,
+          longitude: -122.4324,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        }}
+        mapType={'satellite'}
+      />
     </View>
   );
 };
