@@ -1,5 +1,4 @@
 import React from 'react';
-import { View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -8,11 +7,16 @@ import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import connectHesjes from '../screens/connectHesjes';
 import connect from '../screens/connect';
 import QRScanner from '../screens/QRScanner';
+
+//Map imports
+import Map from '../screens/map';
+import GeoLocationMap from '../screens/map2';
+
+//Settings imports
 import SettingsTab from '../screens/Settings/settings';
-import Meldingen from '../screens/meldingen';
 import FAQ from '../screens/Settings/FAQ';
 import Help from '../screens/Settings/help';
-import Map from '../screens/map';
+import Meldingen from '../screens/meldingen';
 
 //Profiel imports
 import ProfielTab from '../screens/Profile/profile';
@@ -92,7 +96,7 @@ class TabNavigator extends React.Component {
         >
           <Tab.Screen
             name="Home"
-            component={Map}
+            component={GeoLocationMap}
             options={{
               tabBarIcon: ({ color }) => (
                 <Icon name="location-on" size={30} color={color} />

@@ -26,13 +26,17 @@ const SettingsTab = ({ navigation }) => {
               <Text>nl</Text>
             </TouchableOpacity>
           </View>
+          <View style={styles.languageBttns}>
+            <TouchableOpacity style={styles.languageBttn}>
+              <Text>fr</Text>
+            </TouchableOpacity>
+          </View>
 
-          <TouchableOpacity style={styles.languageBttn}>
-            <Text>fr</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.languageBttn}>
-            <Text>en</Text>
-          </TouchableOpacity>
+          <View style={styles.languageBttns}>
+            <TouchableOpacity style={styles.languageBttn}>
+              <Text>en</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </View>
@@ -60,7 +64,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   languageBttns: {
-    margin: '4%',
+    paddingTop: '30%',
+    margin: '1%',
   },
   languageBttn: {
     borderWidth: 1,
@@ -71,7 +76,7 @@ const styles = StyleSheet.create({
     height: 70,
     backgroundColor: '#eeee',
     borderRadius: 50,
-    margin: '4%',
+    margin: '2%',
   },
   languageBttnSelected: {
     borderWidth: 1,
@@ -82,7 +87,7 @@ const styles = StyleSheet.create({
     height: 70,
     backgroundColor: '#F6C004',
     borderRadius: 50,
-    margin: '4%',
+    margin: '2%',
   },
 });
 
