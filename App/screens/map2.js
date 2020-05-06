@@ -1,13 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import MapView from 'react-native-maps';
-import { StyleSheet, Text, View, Dimensions } from 'react-native';
-
+import {
+  StyleSheet,
+  Text,
+  View,
+  Dimensions,
+  TouchableOpacity,
+} from 'react-native';
+import BottomSheet from 'reanimated-bottom-sheet';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import Radius from '../components/Radius/radius';
+import renderHeader from '../components/BottomSheet/header';
 const { width, height } = Dimensions.get('window');
 
-const SCREEN_HEIGHT = height;
-const SCREEN_WIDTH = width;
 const ASPECT_RATIO = width / height;
-const LATITUDE_DELTA = 0.0922;
+const LATITUDE_DELTA = 0.0222;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 const styles = StyleSheet.create({
@@ -41,6 +48,30 @@ const styles = StyleSheet.create({
   mapStyle: {
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
+  },
+  FAB: {
+    position: 'absolute',
+    width: 56,
+    height: 56,
+    alignItems: 'center',
+    justifyContent: 'center',
+    left: 20,
+    bottom: '85%',
+    backgroundColor: '#F6C004',
+    borderRadius: 30,
+    elevation: 8,
+  },
+  FABposition: {
+    position: 'absolute',
+    width: 56,
+    height: 56,
+    alignItems: 'center',
+    justifyContent: 'center',
+    left: 20,
+    bottom: '75%',
+    backgroundColor: '#F6C004',
+    borderRadius: 30,
+    elevation: 8,
   },
 });
 
@@ -102,19 +133,49 @@ const GeoLocationMap = () => {
     watchPosition();
   }, []);
 
+  const bottomSheetRef = React.createRef();
+  const map = React.createRef();
+
+  const showRadius = () => {
+    bottomSheetRef.current.snapTo(0);
+  };
+
+  const showCurrentLocation = () => {
+    map.current.animateToRegion(markerPosition, 1000);
+  };
+
   return (
     <View style={styles.container}>
+      <BottomSheet
+        ref={bottomSheetRef}
+        snapPoints={[330, 0]}
+        renderContent={Radius}
+        renderHeader={renderHeader}
+        initialSnap={1}
+        enabledBottomInitialAnimation={true}
+        enabledContentGestureInteraction={false}
+      />
       <MapView
+        ref={map}
         style={styles.mapStyle}
         region={initialPosition}
         mapType={'satellite'}
       >
-        <MapView.Marker coordinate={markerPosition}>
+        <MapView.Marker key={1} coordinate={markerPosition}>
           <View style={styles.radius}>
             <View style={styles.marker} />
           </View>
         </MapView.Marker>
       </MapView>
+      <TouchableOpacity onPress={showRadius} style={styles.FAB}>
+        <Icon name="group-work" size={30} color={'white'} />
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={showCurrentLocation}
+        style={styles.FABposition}
+      >
+        <Icon name="gps-fixed" size={30} color={'white'} />
+      </TouchableOpacity>
     </View>
   );
 };

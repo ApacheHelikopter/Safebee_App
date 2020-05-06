@@ -61,21 +61,6 @@ const styles = StyleSheet.create({
   },
 });
 
-const Radius = () => (
-  <View style={styles.panel}>
-    <Text style={styles.panelTitle}>Zone instellen</Text>
-    <View style={styles.sliderView}>
-      <Slider
-        style={{ width: 300 }}
-        step={5}
-        minimumValue={1}
-        maximumValue={200}
-        value={100}
-      />
-    </View>
-  </View>
-);
-
 const renderHeader = () => (
   <View style={styles.header}>
     <View style={styles.panelHeader}>

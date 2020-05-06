@@ -113,15 +113,6 @@ class TabNavigator extends React.Component {
             }}
           />
           <Tab.Screen
-            name="Radius"
-            component={Radius}
-            options={{
-              tabBarIcon: ({ color }) => (
-                <Icon name="my-location" size={30} color={color} />
-              ),
-            }}
-          />
-          <Tab.Screen
             name="Instellingen"
             component={SettingsStackScreen}
             options={{
