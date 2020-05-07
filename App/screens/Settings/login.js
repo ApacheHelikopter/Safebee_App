@@ -47,7 +47,7 @@ const Login = () => {
         <Text style={styles.loginText}>Inloggen</Text>
       </TouchableOpacity>
       <TouchableOpacity>
-        <Text style={styles.loginText}>nog geen lid? registreer dan nu</Text>
+        <Text style={styles.register}>nog geen lid? registreer dan nu</Text>
       </TouchableOpacity>
     </View>
   );
@@ -97,6 +97,10 @@ const styles = StyleSheet.create({
   },
   loginText: {
     color: '#F6C004',
+  },
+  register: {
+    color: '#9F9F9F',
+    fontSize: 12,
   },
   logo: {
     width: 60,
