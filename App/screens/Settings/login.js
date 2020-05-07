@@ -16,7 +16,7 @@ const state = {
 
 const Login = () => {
   return (
-    <View style={StyleSheet.ViewContainer}>
+    <View style={styles.viewContainer}>
       <Image
         style={styles.logo}
         source={require('./../../../assets/logo.png')}
@@ -56,9 +56,10 @@ const Login = () => {
 const styles = StyleSheet.create({
   viewContainer: {
     flex: 1,
-    alignItems: 'center',
+    flexDirection: 'column',
     justifyContent: 'center',
-    backgroundColor: '#FFFFFF',
+    alignItems: 'center',
+    backgroundColor: '#ffffff',
   },
   inputView: {
     width: '80%',
