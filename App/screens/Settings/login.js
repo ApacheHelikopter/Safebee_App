@@ -5,11 +5,22 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
+  Image,
 } from 'react-native';
+
+const IMAGE_SIZE = 200;
+const state = {
+  email: '',
+  password: '',
+};
 
 const Login = () => {
   return (
     <View style={StyleSheet.ViewContainer}>
+      <Image
+        style={styles.logo}
+        source={require('./../../../assets/logo.png')}
+      />
       <View style={styles.inputView}>
         <TextInput
           style={styles.inputText}
@@ -85,6 +96,13 @@ const styles = StyleSheet.create({
   },
   loginText: {
     color: '#F6C004',
+  },
+  logo: {
+    width: 60,
+    height: 130,
+    resizeMode: 'stretch',
+    marginBottom: 40,
+    marginTop: 40,
   },
 });
 
