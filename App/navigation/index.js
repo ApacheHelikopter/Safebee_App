@@ -17,6 +17,7 @@ import SettingsTab from '../screens/Settings/settings';
 import FAQ from '../screens/Settings/FAQ';
 import Help from '../screens/Settings/help';
 import Meldingen from '../screens/meldingen';
+import Login from '../screens/Settings/login';
 
 //Profiel imports
 import ProfielTab from '../screens/Profile/profile';
@@ -54,6 +55,7 @@ const SettingsStackScreen = () => {
       <SettingsStack.Screen name="FAQ" component={FAQ} />
       <SettingsStack.Screen name="Help" component={Help} />
       <SettingsStack.Screen name="QRScanner" component={QRScanner} />
+      <SettingsStack.Screen name="Login" component={Login} />
     </SettingsStack.Navigator>
   );
 };

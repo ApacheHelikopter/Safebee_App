@@ -19,6 +19,10 @@ const SettingsTab = ({ navigation }) => {
             title="Help"
             onPress={() => navigation.navigate('Help')}
           />
+          <CustomButton
+            title="Login"
+            onPress={() => navigation.navigate('Login')}
+          />
         </View>
         <View style={styles.containerBttns}>
           <View style={styles.languageBttns}>
