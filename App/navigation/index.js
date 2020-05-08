@@ -32,6 +32,7 @@ import DisconnectHesje from '../screens/Profile/disconnectHesje';
 
 //Radius imports
 
+//Initialize FireBase
 import * as firebase from 'firebase';
 
 let firebaseConfig = {
@@ -45,29 +46,27 @@ let firebaseConfig = {
   measurementId: 'G-182CQNE80E',
 };
 
-//initialize FireBase
 firebase.initializeApp(firebaseConfig);
 
 const Tab = createBottomTabNavigator();
 
-const AppStack = createStackNavigator();
 const AuthStack = createStackNavigator();
 const SettingsStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
 
-const AppStackScreen = () => {
-  return (
-    <AppStack.Navigator>
-      <AppStack.Screen name="Home" component={TabNavigator} />
-    </AppStack.Navigator>
-  );
-};
-
 const AuthStackScreen = () => {
   return (
-    <AuthStack.Navigator>
-      <AuthStack.Screen name="Login" component={Login} />
-      <AuthStack.Screen name="Register" component={Register} />
+    <AuthStack.Navigator screenOptions={{ gestureEnabled: true }}>
+      <AuthStack.Screen
+        name="Login"
+        component={Login}
+        options={{ headerShown: false }}
+      />
+      <AuthStack.Screen
+        name="Register"
+        component={Register}
+        options={{ headerShown: false }}
+      />
     </AuthStack.Navigator>
   );
 };
