@@ -1,8 +1,13 @@
 import React from 'react';
-import TabNavigator from './navigation/index';
+import SafebeeApp from './navigation/index';
+import { NavigationContainer } from '@react-navigation/native';
 
-export default class Example extends React.Component {
+export default class Safebee extends React.Component {
   render() {
-    return <TabNavigator />;
+    return (
+      <NavigationContainer>
+        <SafebeeApp />
+      </NavigationContainer>
+    );
   }
 }

@@ -148,7 +148,7 @@ const GeoLocationMap = () => {
     <View style={styles.container}>
       <BottomSheet
         ref={bottomSheetRef}
-        snapPoints={[330, 0]}
+        snapPoints={['50%', 0]}
         renderContent={Radius}
         renderHeader={renderHeader}
         initialSnap={1}

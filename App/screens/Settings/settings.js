@@ -1,8 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import CustomButton from '../../components/CustomButton/customButton';
+import * as firebase from 'firebase';
 
 const SettingsTab = ({ navigation }) => {
+  const [email, setEmail] = useState('');
+  const [displayName, setDisplayName] = useState('');
+
+  useEffect(() => {
+    const { email } = firebase.auth().currentUser;
+    setEmail(email);
+    setDisplayName(displayName);
+  });
+
+  const handleLogout = () => {
+    firebase.auth().signOut();
+  };
+
   return (
     <View style={styles.screen}>
       <View style={styles.settingsTab}>
@@ -19,7 +33,10 @@ const SettingsTab = ({ navigation }) => {
             title="Help"
             onPress={() => navigation.navigate('Help')}
           />
+          <CustomButton title="Logout" onPress={handleLogout} />
         </View>
+        <Text>Hi, {email}</Text>
+
         <View style={styles.containerBttns}>
           <View style={styles.languageBttns}>
             <TouchableOpacity style={styles.languageBttnSelected}>
