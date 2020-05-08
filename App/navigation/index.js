@@ -26,11 +26,14 @@ import Meldingen from '../screens/meldingen';
 
 //Profiel imports
 import ProfielTab from '../screens/Profile/profile';
-import MijnGroepen from '../screens/Profile/mijnGroepen';
 import ConnectHesje from '../screens/Profile/connectHesje';
 import DisconnectHesje from '../screens/Profile/disconnectHesje';
 
 //Radius imports
+
+//Onboarding
+import SelecteerGroep from '../screens/Profile/Groepen/selecteerGroep';
+import CreateGroep from '../screens/Profile/Groepen/createGroep';
 
 //Initialize FireBase
 import * as firebase from 'firebase';
@@ -100,7 +103,7 @@ const SettingsStackScreen = () => {
 
 const ProfileStackScreen = () => {
   return (
-    <ProfileStack.Navigator>
+    <ProfileStack.Navigator screenOptions={{ gestureEnabled: true }}>
       <ProfileStack.Screen
         name="ProfielTab"
         component={ProfielTab}
@@ -116,7 +119,16 @@ const ProfileStackScreen = () => {
           },
         }}
       />
-      <ProfileStack.Screen name="Groepen" component={MijnGroepen} />
+      <ProfileStack.Screen
+        name="Groepen"
+        component={SelecteerGroep}
+        options={{ headerShown: false }}
+      />
+      <ProfileStack.Screen
+        name="CreateGroep"
+        component={CreateGroep}
+        options={{ headerShown: false }}
+      />
       <ProfileStack.Screen name="ConnectHesje" component={ConnectHesje} />
       <ProfileStack.Screen name="DisconnectHesje" component={DisconnectHesje} />
     </ProfileStack.Navigator>
