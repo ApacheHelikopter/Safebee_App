@@ -18,7 +18,7 @@ const Login = ({ navigation }) => {
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .catch(error => setErrorMessage(error.message));
+      .catch((error) => setErrorMessage(error.message));
   };
 
   return (
@@ -37,7 +37,7 @@ const Login = ({ navigation }) => {
           style={styles.inputText}
           placeholder="E-mailadres"
           placeholderTextColor="#9F9F9F"
-          onChangeText={email => setEmail(email)}
+          onChangeText={(email) => setEmail(email)}
           autoCapitalize="none"
           value={email}
         />
@@ -49,7 +49,7 @@ const Login = ({ navigation }) => {
           style={styles.inputText}
           placeholder="Wachtwoord"
           placeholderTextColor="#9F9F9F"
-          onChangeText={pass => setPassword(pass)}
+          onChangeText={(pass) => setPassword(pass)}
           autoCapitalize="none"
           value={password}
         />
@@ -98,12 +98,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     borderRadius: 25,
     shadowColor: '#000000',
-    shadowOpacity: 0.8,
+    shadowOpacity: 0.25,
     shadowRadius: 2,
     shadowOffset: {
       height: 1,
       width: 1,
     },
+    elevation: 2,
     height: 50,
     alignItems: 'center',
     justifyContent: 'center',
