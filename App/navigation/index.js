@@ -31,7 +31,8 @@ import DisconnectHesje from '../screens/Profile/disconnectHesje';
 
 //Radius imports
 
-//Onboarding
+//Groepen
+import MijnGroepen from '../screens/Profile/Groepen/mijnGroepen';
 import SelecteerGroep from '../screens/Profile/Groepen/selecteerGroep';
 import CreateGroep from '../screens/Profile/Groepen/createGroep';
 
@@ -101,7 +102,12 @@ const SettingsStackScreen = () => {
   );
 };
 
-const ProfileStackScreen = () => {
+const ProfileStackScreen = ({ navigation, route }) => {
+  if (route.state && route.state.index > 0) {
+    navigation.setOptions({ tabBarVisible: false });
+  } else {
+    navigation.setOptions({ tabBarVisible: true });
+  }
   return (
     <ProfileStack.Navigator screenOptions={{ gestureEnabled: true }}>
       <ProfileStack.Screen
@@ -120,7 +126,12 @@ const ProfileStackScreen = () => {
         }}
       />
       <ProfileStack.Screen
-        name="Groepen"
+        name="MijnGroepen"
+        component={MijnGroepen}
+        options={{ headerShown: false }}
+      />
+      <ProfileStack.Screen
+        name="SelecteerGroep"
         component={SelecteerGroep}
         options={{ headerShown: false }}
       />

@@ -11,12 +11,21 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import * as firebase from 'firebase';
 
 const CreateGroep = ({ navigation }) => {
+  const [count, setCount] = useState(0);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    let currentUser = firebase.auth().currentUser.uid;
+    setUser(currentUser);
+  });
+
   return (
     <View style={styles.viewContainer}>
       <Image
         style={styles.logo}
         source={require('../../../../assets/logo.png')}
       />
+      <Text>{user}</Text>
       <View style={styles.inputView}>
         <Icon name="group" size={20} style={styles.groepIcon} />
         <TextInput
@@ -26,9 +35,27 @@ const CreateGroep = ({ navigation }) => {
           autoCapitalize="none"
         />
       </View>
+      <View>
+        <View style={styles.otherForm}>
+          <Text>Aantal leden</Text>
+          <TouchableOpacity
+            style={styles.counterBtn}
+            onPress={() => setCount(count - 1)}
+          >
+            <Text>-</Text>
+          </TouchableOpacity>
+          <Text>{count}</Text>
+          <TouchableOpacity
+            style={styles.counterBtn}
+            onPress={() => setCount(count + 1)}
+          >
+            <Text>+</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
 
       <TouchableOpacity style={styles.saveBtn}>
-        <Text style={styles.loginText}>Groep opslaan</Text>
+        <Text style={styles.saveText}>Groep opslaan</Text>
       </TouchableOpacity>
     </View>
   );
@@ -57,10 +84,6 @@ const styles = StyleSheet.create({
     color: 'black',
     width: '100%',
   },
-  forgot: {
-    color: '#F6C004',
-    fontSize: 12,
-  },
   saveBtn: {
     width: '80%',
     backgroundColor: '#ffffff',
@@ -79,12 +102,8 @@ const styles = StyleSheet.create({
     marginTop: 40,
     marginBottom: 10,
   },
-  loginText: {
+  saveText: {
     color: '#F6C004',
-  },
-  register: {
-    color: '#9F9F9F',
-    fontSize: 12,
   },
   logo: {
     width: 60,
@@ -93,19 +112,22 @@ const styles = StyleSheet.create({
     marginBottom: 40,
     marginTop: 40,
   },
-  error: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '80%',
-    marginBottom: 40,
-  },
-  errorMessage: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    color: 'red',
-  },
   groepIcon: {
     padding: 20,
+  },
+  counterBtn: {
+    borderWidth: 1,
+    borderColor: 'rgba(0,0,0,0)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 40,
+    height: 40,
+    backgroundColor: '#aaaa',
+    borderRadius: 50,
+    margin: '2%',
+  },
+  otherForm: {
+    flexDirection: 'row',
   },
 });
 
