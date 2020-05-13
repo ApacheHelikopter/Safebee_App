@@ -3,19 +3,60 @@ import {
   Text,
   View,
   StyleSheet,
-  TextInput,
   TouchableOpacity,
-  Image,
+  ActivityIndicator,
 } from 'react-native';
+import GroepButton from '../../../components/Groepen/GroepButton';
 import * as firebase from 'firebase';
+import 'firebase/firestore';
+import { FlatList } from 'react-native-gesture-handler';
 
 const SelecteerGroep = ({ navigation }) => {
+  window.addEventListener = x => x;
+  const [user, setUser] = useState('');
+  const [groupName, setGroupName] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const db = firebase.firestore();
+
+  useEffect(() => {
+    const currentUser = firebase.auth().currentUser.uid;
+
+    const unsubscribe = db
+      .collection('groups')
+      .where('createdBy', '==', currentUser)
+      .onSnapshot(querySnapShot => {
+        const groups = querySnapShot.docs.map(documentSnapShot => {
+          return {
+            _id: documentSnapShot.id,
+            name: '',
+            createdAt: new Date().getTime(),
+            ...documentSnapShot.data(),
+          };
+        });
+        setGroupName(groups);
+
+        if (loading) {
+          setLoading(false);
+        }
+      });
+    return () => unsubscribe();
+  }, []);
+
+  if (loading) {
+    return <ActivityIndicator />;
+  }
+
   return (
     <View style={styles.viewContainer}>
       <View style={styles.error}>
-        <Text style={styles.errorMessage}>
-          Er bestaan nog geen groepen voor dit account. Voeg een groep toe.
-        </Text>
+        <FlatList
+          data={groupName}
+          keyExtractor={item => item._id}
+          renderItem={({ item }) => <GroepButton name={item.name} />}
+        />
+        {/* <Text style={styles.errorMessage}>
+            Er bestaan nog geen groepen voor dit account. Voeg een groep toe.
+          </Text> */}
       </View>
 
       <TouchableOpacity

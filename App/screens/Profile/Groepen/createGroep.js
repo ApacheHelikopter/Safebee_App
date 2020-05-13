@@ -13,11 +13,26 @@ import * as firebase from 'firebase';
 const CreateGroep = ({ navigation }) => {
   const [count, setCount] = useState(0);
   const [user, setUser] = useState(null);
+  const [group, setGroup] = useState('');
 
   useEffect(() => {
     let currentUser = firebase.auth().currentUser.uid;
     setUser(currentUser);
   });
+
+  async function createGroup() {
+    await firebase
+      .firestore()
+      .collection('groups')
+      .add({
+        amount: count,
+        createdAt: new Date().getTime(),
+        createdBy: user,
+        name: group,
+        names: [],
+      })
+      .then(() => navigation.navigate('SelecteerGroep'));
+  }
 
   return (
     <View style={styles.viewContainer}>
@@ -25,7 +40,6 @@ const CreateGroep = ({ navigation }) => {
         style={styles.logo}
         source={require('../../../../assets/logo.png')}
       />
-      <Text>{user}</Text>
       <View style={styles.inputView}>
         <Icon name="group" size={20} style={styles.groepIcon} />
         <TextInput
@@ -33,6 +47,8 @@ const CreateGroep = ({ navigation }) => {
           placeholder="Groepsnaam"
           placeholderTextColor="#9F9F9F"
           autoCapitalize="none"
+          value={group}
+          onChangeText={setGroup}
         />
       </View>
       <View>
@@ -54,7 +70,7 @@ const CreateGroep = ({ navigation }) => {
         </View>
       </View>
 
-      <TouchableOpacity style={styles.saveBtn}>
+      <TouchableOpacity style={styles.saveBtn} onPress={() => createGroup()}>
         <Text style={styles.saveText}>Groep opslaan</Text>
       </TouchableOpacity>
     </View>
