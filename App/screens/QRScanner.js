@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, Button } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
+import * as firebase from 'firebase';
+import 'firebase/firestore';
 
-const QRScanner = () => {
+const QRScanner = ({ route, navigation }) => {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
+  const { groupDetails } = route.params;
+  const db = firebase.firestore();
 
   useEffect(() => {
     (async () => {
@@ -16,6 +20,9 @@ const QRScanner = () => {
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
     alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+    db.collection('groups')
+      .doc(groupDetails._id)
+      .update({ names: firebase.firestore.FieldValue.arrayUnion(data) });
   };
 
   if (hasPermission === null) {
@@ -38,8 +45,20 @@ const QRScanner = () => {
         style={StyleSheet.absoluteFillObject}
       />
 
-      {scanned && (
-        <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />
+      <Button
+        title="Klaar"
+        onPress={() =>
+          navigation.navigate('GroepDetails', { groupDetails: groupDetails })
+        }
+      />
+
+      {scanned ? (
+        <Button
+          title={'Scan volgend hesje'}
+          onPress={() => setScanned(false)}
+        />
+      ) : (
+        <Text>Scan uw fluohesje</Text>
       )}
     </View>
   );
