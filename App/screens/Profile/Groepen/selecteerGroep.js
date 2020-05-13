@@ -13,7 +13,6 @@ import { FlatList } from 'react-native-gesture-handler';
 
 const SelecteerGroep = ({ navigation }) => {
   window.addEventListener = x => x;
-  const [user, setUser] = useState('');
   const [groupName, setGroupName] = useState([]);
   const [loading, setLoading] = useState(true);
   const db = firebase.firestore();
@@ -49,11 +48,18 @@ const SelecteerGroep = ({ navigation }) => {
   return (
     <View style={styles.viewContainer}>
       <View style={styles.error}>
-        <FlatList
-          data={groupName}
-          keyExtractor={item => item._id}
-          renderItem={({ item }) => <GroepButton name={item.name} />}
-        />
+        {groupName.length > 0 ? (
+          <FlatList
+            data={groupName}
+            keyExtractor={item => item._id}
+            renderItem={({ item }) => <GroepButton name={item.name} />}
+          />
+        ) : (
+          <Text style={styles.errorMessage}>
+            Er bestaan nog geen groepen voor dit account. Voeg een groep toe.
+          </Text>
+        )}
+
         {/* <Text style={styles.errorMessage}>
             Er bestaan nog geen groepen voor dit account. Voeg een groep toe.
           </Text> */}
