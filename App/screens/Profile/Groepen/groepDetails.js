@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   Text,
   View,
@@ -12,7 +12,6 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import * as firebase from 'firebase';
 import 'firebase/firestore';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 const GroepDetails = ({ route, navigation }) => {
   window.addEventListener = x => x;
@@ -30,7 +29,7 @@ const GroepDetails = ({ route, navigation }) => {
 
   const addHesjes = () => {
     setModalVisible(!modalVisible);
-    navigation.navigate('QRScanner');
+    navigation.navigate('QRScanner', { groupDetails: groupDetails });
   };
 
   return (
@@ -39,7 +38,16 @@ const GroepDetails = ({ route, navigation }) => {
         <View style={styles.viewContainerModal}>
           <View style={styles.modalView}>
             <Text>Hesjes</Text>
-            <Text>Er zijn nog geen hesjes toegevoegd, voeg deze toe.</Text>
+            {groupDetails.names.length > 0 ? (
+              <View>
+                {groupDetails.names.map(name => (
+                  <Text key={name}>{name}</Text>
+                ))}
+              </View>
+            ) : (
+              <Text>Er zijn nog geen namen ingegeven, voeg deze toe.</Text>
+            )}
+
             <View>
               <TouchableHighlight
                 onPress={() => {
@@ -121,11 +129,11 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   modalView: {
+    width: '80%',
     margin: 20,
     backgroundColor: 'white',
     borderRadius: 20,
     padding: 20,
-    margin: 10,
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
