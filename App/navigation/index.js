@@ -35,6 +35,7 @@ import DisconnectHesje from '../screens/Profile/disconnectHesje';
 import MijnGroepen from '../screens/Profile/Groepen/mijnGroepen';
 import SelecteerGroep from '../screens/Profile/Groepen/selecteerGroep';
 import CreateGroep from '../screens/Profile/Groepen/createGroep';
+import GroepDetails from '../screens/Profile/Groepen/groepDetails';
 
 //Initialize FireBase
 import * as firebase from 'firebase';
@@ -96,7 +97,6 @@ const SettingsStackScreen = () => {
       <SettingsStack.Screen name="Meldingen" component={Meldingen} />
       <SettingsStack.Screen name="FAQ" component={FAQ} />
       <SettingsStack.Screen name="Help" component={Help} />
-      <SettingsStack.Screen name="QRScanner" component={QRScanner} />
       <SettingsStack.Screen name="Login" component={Login} />
     </SettingsStack.Navigator>
   );
@@ -138,6 +138,16 @@ const ProfileStackScreen = ({ navigation, route }) => {
       <ProfileStack.Screen
         name="CreateGroep"
         component={CreateGroep}
+        options={{ headerShown: false }}
+      />
+      <ProfileStack.Screen
+        name="GroepDetails"
+        component={GroepDetails}
+        options={{ headerShown: false }}
+      />
+      <ProfileStack.Screen
+        name="QRScanner"
+        component={QRScanner}
         options={{ headerShown: false }}
       />
       <ProfileStack.Screen name="ConnectHesje" component={ConnectHesje} />
