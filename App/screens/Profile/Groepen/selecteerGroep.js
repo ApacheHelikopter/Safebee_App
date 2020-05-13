@@ -52,17 +52,21 @@ const SelecteerGroep = ({ navigation }) => {
           <FlatList
             data={groupName}
             keyExtractor={item => item._id}
-            renderItem={({ item }) => <GroepButton name={item.name} />}
+            renderItem={({ item }) => (
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate('GroepDetails', { groupDetails: item })
+                }
+              >
+                <GroepButton name={item.name} />
+              </TouchableOpacity>
+            )}
           />
         ) : (
           <Text style={styles.errorMessage}>
             Er bestaan nog geen groepen voor dit account. Voeg een groep toe.
           </Text>
         )}
-
-        {/* <Text style={styles.errorMessage}>
-            Er bestaan nog geen groepen voor dit account. Voeg een groep toe.
-          </Text> */}
       </View>
 
       <TouchableOpacity
