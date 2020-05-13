@@ -18,6 +18,7 @@ const Register = ({ navigation }) => {
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
+      .then(() => navigation.navigate('OnBoarding'))
       .catch(error => setErrorMessage(error.message));
   };
 

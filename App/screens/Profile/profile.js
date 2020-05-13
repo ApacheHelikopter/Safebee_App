@@ -14,7 +14,7 @@ const ProfielTab = ({ navigation }) => {
       <View style={styles.profileActions}>
         <CustomButton
           title="Mijn groepen"
-          onPress={() => navigation.navigate('Groepen')}
+          onPress={() => navigation.navigate('MijnGroepen')}
         />
         <CustomButton
           title="Hesjes connecteren"
