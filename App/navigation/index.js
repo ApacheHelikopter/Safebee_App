@@ -130,9 +130,6 @@ const ProfileStackScreen = ({ navigation, route }) => {
         component={MijnGroepen}
         options={{
           title: 'Mijn groepen',
-          titleStyle: {
-            fontFamily: 'Roboto',
-          },
           headerStyle: {
             backgroundColor: '#FFFFFF',
             elevation: 0,
@@ -147,9 +144,10 @@ const ProfileStackScreen = ({ navigation, route }) => {
         component={SelecteerGroep}
         options={{
           title: 'Selecteer groepen',
-          titleStyle: {
+          /*headerTitleStyle: {
             fontFamily: 'Roboto',
-          },
+            fontSize: '32',
+          },*/
           headerStyle: {
             backgroundColor: '#FFFFFF',
             elevation: 0,
