@@ -83,7 +83,7 @@ const SettingsStackScreen = () => {
         name="SettingsTab"
         component={SettingsTab}
         options={{
-          title: 'Settings',
+          title: 'Instellingen',
           headerStyle: {
             backgroundColor: '#F6C004',
           },
@@ -128,12 +128,36 @@ const ProfileStackScreen = ({ navigation, route }) => {
       <ProfileStack.Screen
         name="MijnGroepen"
         component={MijnGroepen}
-        options={{ headerShown: false }}
+        options={{
+          title: 'Mijn groepen',
+          titleStyle: {
+            fontFamily: 'Roboto',
+          },
+          headerStyle: {
+            backgroundColor: '#FFFFFF',
+            elevation: 0,
+            shadowOpacity: 0,
+          },
+          headerTitleAlign: 'left',
+          headerTintColor: '#000000',
+        }}
       />
       <ProfileStack.Screen
         name="SelecteerGroep"
         component={SelecteerGroep}
-        options={{ headerShown: false }}
+        options={{
+          title: 'Selecteer groepen',
+          titleStyle: {
+            fontFamily: 'Roboto',
+          },
+          headerStyle: {
+            backgroundColor: '#FFFFFF',
+            elevation: 0,
+            shadowOpacity: 0,
+          },
+          headerTitleAlign: 'left',
+          headerTintColor: '#000000',
+        }}
       />
       <ProfileStack.Screen
         name="CreateGroep"

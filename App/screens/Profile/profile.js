@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import CustomButton from '../../components/CustomButton/customButton';
 
 const ProfielTab = ({ navigation }) => {
@@ -7,10 +8,11 @@ const ProfielTab = ({ navigation }) => {
     <View style={styles.screen}>
       <View style={styles.profileTab}>
         <View>
-          <TouchableOpacity>
-            <Text>20</Text>
+          <TouchableOpacity style={styles.textcontainer}>
+            <Text style={styles.text}>20</Text>
+            <Text style={styles.times}>x</Text>
+            <Icon name="face" size={35} />
           </TouchableOpacity>
-          <Text>hesjes geconnecteerd</Text>
         </View>
         <View style={styles.profileActions}>
           <CustomButton
@@ -38,6 +40,7 @@ const styles = StyleSheet.create({
   },
 
   profileTab: {
+    marginTop: 80,
     display: 'flex',
     margin: '8%',
   },
@@ -46,6 +49,22 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
+  },
+
+  text: {
+    fontSize: 24,
+    fontFamily: 'Roboto',
+  },
+
+  times: {
+    fontSize: 24,
+    fontFamily: 'Roboto',
+    marginRight: 10,
+  },
+
+  textcontainer: {
+    flexDirection: 'row',
+    marginBottom: 20,
   },
 });
 
