@@ -14,7 +14,7 @@ import * as firebase from 'firebase';
 import 'firebase/firestore';
 
 const GroepDetails = ({ route, navigation }) => {
-  window.addEventListener = x => x;
+  window.addEventListener = (x) => x;
   const { groupDetails } = route.params;
   const [groupName, setGroupName] = useState(groupDetails.name);
   const [modalVisible, setModalVisible] = useState(false);
@@ -40,7 +40,7 @@ const GroepDetails = ({ route, navigation }) => {
             <Text>Hesjes</Text>
             {groupDetails.names.length > 0 ? (
               <View>
-                {groupDetails.names.map(name => (
+                {groupDetails.names.map((name) => (
                   <Text key={name}>{name}</Text>
                 ))}
               </View>
@@ -85,7 +85,7 @@ const GroepDetails = ({ route, navigation }) => {
           setModalVisible(true);
         }}
       >
-        <Icon name="group" size={20} style={styles.groepIcon} />
+        <Icon name="face" size={20} style={styles.faceIcon} />
 
         <Text style={styles.loginText}>Hesjes</Text>
       </TouchableOpacity>
@@ -112,17 +112,22 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(52, 52, 52, 0.8)',
   },
   inputView: {
-    width: '80%',
+    flexDirection: 'row',
+    alignContent: 'center',
+    alignItems: 'center',
+    width: '100%',
     backgroundColor: '#F8F8F8',
     borderRadius: 25,
     height: 50,
     marginBottom: 20,
-    justifyContent: 'center',
-    padding: 20,
   },
   inputText: {
     height: 50,
     color: 'black',
+    width: '100%',
+  },
+  groepIcon: {
+    padding: 20,
   },
   forgot: {
     color: '#F6C004',
