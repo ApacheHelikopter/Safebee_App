@@ -53,7 +53,7 @@ const CreateGroep = ({ navigation }) => {
       </View>
       <View>
         <View style={styles.otherForm}>
-          <Text>Aantal leden</Text>
+          <Text style={styles.ledenText}>Aantal leden</Text>
           <TouchableOpacity
             style={styles.counterBtn}
             onPress={() => setCount(count - 1)}
@@ -144,6 +144,10 @@ const styles = StyleSheet.create({
   },
   otherForm: {
     flexDirection: 'row',
+  },
+  ledenText: {
+    width: '40%',
+    marginTop: 10,
   },
 });
 

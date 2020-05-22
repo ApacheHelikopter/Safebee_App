@@ -84,8 +84,9 @@ const GroepDetails = ({ route, navigation }) => {
         onPress={() => {
           setModalVisible(true);
         }}
+        style={styles.hesjesView}
       >
-        <Icon name="face" size={20} style={styles.faceIcon} />
+        <Icon name="face" size={30} style={styles.faceIcon} />
 
         <Text style={styles.loginText}>Hesjes</Text>
       </TouchableOpacity>
@@ -119,7 +120,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#F8F8F8',
     borderRadius: 25,
     height: 50,
-    marginBottom: 20,
   },
   inputText: {
     height: 50,
@@ -128,6 +128,19 @@ const styles = StyleSheet.create({
   },
   groepIcon: {
     padding: 20,
+    color: '#9F9F9F',
+  },
+  hesjesView: {
+    flexDirection: 'row',
+    alignContent: 'center',
+    alignItems: 'center',
+    width: '72%',
+    height: 50,
+    marginBottom: 20,
+  },
+  faceIcon: {
+    color: '#9F9F9F',
+    marginRight: 15,
   },
   forgot: {
     color: '#F6C004',
