@@ -14,7 +14,7 @@ import * as firebase from 'firebase';
 import 'firebase/firestore';
 
 const GroepDetails = ({ route, navigation }) => {
-  window.addEventListener = x => x;
+  window.addEventListener = (x) => x;
   const { groupDetails } = route.params;
   const [groupName, setGroupName] = useState(groupDetails.name);
   const [modalVisible, setModalVisible] = useState(false);
@@ -37,15 +37,17 @@ const GroepDetails = ({ route, navigation }) => {
       <Modal animationType="fade" transparent={true} visible={modalVisible}>
         <View style={styles.viewContainerModal}>
           <View style={styles.modalView}>
-            <Text>Hesjes</Text>
+            <Text style={styles.titleModal}>Hesjes</Text>
             {groupDetails.names.length > 0 ? (
-              <View>
-                {groupDetails.names.map(name => (
+              <View style={styles.bodyModal}>
+                {groupDetails.names.map((name) => (
                   <Text key={name}>{name}</Text>
                 ))}
               </View>
             ) : (
-              <Text>Er zijn nog geen namen ingegeven, voeg deze toe.</Text>
+              <Text style={styles.bodyModal}>
+                Er zijn nog geen namen ingegeven, voeg deze toe.
+              </Text>
             )}
 
             <View>
@@ -54,9 +56,12 @@ const GroepDetails = ({ route, navigation }) => {
                   setModalVisible(!modalVisible);
                 }}
               >
-                <Text style={{ color: '#F6C004' }}>Terug</Text>
+                <Text style={styles.backModal}>Terug</Text>
               </TouchableHighlight>
-              <TouchableOpacity onPress={() => addHesjes()}>
+              <TouchableOpacity
+                style={styles.groepIconRight}
+                onPress={() => addHesjes()}
+              >
                 <Icon name="person-add" size={20} style={styles.groepIcon} />
               </TouchableOpacity>
             </View>
@@ -84,8 +89,9 @@ const GroepDetails = ({ route, navigation }) => {
         onPress={() => {
           setModalVisible(true);
         }}
+        style={styles.hesjesView}
       >
-        <Icon name="group" size={20} style={styles.groepIcon} />
+        <Icon name="face" size={30} style={styles.faceIcon} />
 
         <Text style={styles.loginText}>Hesjes</Text>
       </TouchableOpacity>
@@ -112,17 +118,34 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(52, 52, 52, 0.8)',
   },
   inputView: {
-    width: '80%',
+    flexDirection: 'row',
+    alignContent: 'center',
+    alignItems: 'center',
+    width: '100%',
     backgroundColor: '#F8F8F8',
     borderRadius: 25,
     height: 50,
-    marginBottom: 20,
-    justifyContent: 'center',
-    padding: 20,
   },
   inputText: {
     height: 50,
     color: 'black',
+    width: '100%',
+  },
+  groepIcon: {
+    padding: 20,
+    color: '#9F9F9F',
+  },
+  hesjesView: {
+    flexDirection: 'row',
+    alignContent: 'center',
+    alignItems: 'center',
+    width: '72%',
+    height: 50,
+    marginBottom: 20,
+  },
+  faceIcon: {
+    color: '#9F9F9F',
+    marginRight: 15,
   },
   forgot: {
     color: '#F6C004',
@@ -134,7 +157,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 20,
     padding: 20,
-    alignItems: 'center',
+    alignItems: 'flex-start',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -146,6 +169,24 @@ const styles = StyleSheet.create({
   },
   modalBtns: {
     flexDirection: 'row',
+  },
+  titleModal: {
+    fontWeight: 'bold',
+    marginLeft: 10,
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  bodyModal: {
+    marginLeft: 10,
+    marginBottom: 10,
+  },
+  backModal: {
+    color: '#F6C004',
+    marginLeft: 150,
+    marginTop: 20,
+  },
+  groepIconRight: {
+    marginLeft: 200,
   },
   loginBtn: {
     width: '80%',

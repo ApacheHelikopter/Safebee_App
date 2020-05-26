@@ -12,9 +12,6 @@ import * as firebase from 'firebase';
 const MijnGroepen = ({ navigation }) => {
   return (
     <View style={styles.viewContainer}>
-      <View style={styles.title}>
-        <Text style={styles.titleText}>Mijn groepen</Text>
-      </View>
       <TouchableOpacity>
         <Text
           style={styles.register}
@@ -74,7 +71,7 @@ const styles = StyleSheet.create({
     color: '#F6C004',
   },
   register: {
-    color: '#9F9F9F',
+    color: '#F6C004',
     fontSize: 12,
   },
   logo: {

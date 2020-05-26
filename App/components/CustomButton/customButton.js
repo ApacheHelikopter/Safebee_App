@@ -14,7 +14,6 @@ const styles = StyleSheet.create({
   button: {
     height: 50,
     justifyContent: 'center',
-
     shadowColor: '#2AC062',
     shadowOpacity: 0.4,
     shadowOffset: { height: 10, width: 0 },
@@ -22,15 +21,16 @@ const styles = StyleSheet.create({
   },
 
   text: {
-    fontSize: 16,
+    fontSize: 14,
     color: 'black',
+    fontFamily: 'Roboto',
   },
 
   singleButton: {
     margin: '2%',
     width: '100%',
     borderBottomColor: 'black',
-    borderBottomWidth: 0.7,
+    borderBottomWidth: 0.2,
   },
 });
 

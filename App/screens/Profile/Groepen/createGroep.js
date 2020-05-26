@@ -31,7 +31,7 @@ const CreateGroep = ({ navigation }) => {
         name: group,
         names: [],
       })
-      .then(() => navigation.navigate('SelecteerGroep'));
+      .then(() => navigation.navigate('MijnGroepen'));
   }
 
   return (
@@ -53,19 +53,19 @@ const CreateGroep = ({ navigation }) => {
       </View>
       <View>
         <View style={styles.otherForm}>
-          <Text>Aantal leden</Text>
+          <Text style={styles.ledenText}>Aantal leden</Text>
           <TouchableOpacity
             style={styles.counterBtn}
             onPress={() => setCount(count - 1)}
           >
-            <Text>-</Text>
+            <Text style={styles.countSign}>-</Text>
           </TouchableOpacity>
-          <Text>{count}</Text>
+          <Text style={styles.countNumber}>{count}</Text>
           <TouchableOpacity
             style={styles.counterBtn}
             onPress={() => setCount(count + 1)}
           >
-            <Text>+</Text>
+            <Text style={styles.countSign}>+</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -125,8 +125,8 @@ const styles = StyleSheet.create({
     width: 60,
     height: 130,
     resizeMode: 'stretch',
-    marginBottom: 40,
-    marginTop: 40,
+    marginBottom: 0,
+    marginTop: 0,
   },
   groepIcon: {
     padding: 20,
@@ -144,6 +144,16 @@ const styles = StyleSheet.create({
   },
   otherForm: {
     flexDirection: 'row',
+  },
+  ledenText: {
+    width: '40%',
+    marginTop: 14,
+  },
+  countSign: {
+    marginTop: -10,
+  },
+  countNumber: {
+    marginTop: 14,
   },
 });
 
