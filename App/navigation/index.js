@@ -145,6 +145,7 @@ const ProfileStackScreen = ({ navigation, route }) => {
         component={SelecteerGroep}
         options={{
           title: 'Selecteer groepen',
+          headerBackTitle: ' ',
           headerStyle: {
             backgroundColor: '#FFFFFF',
             elevation: 0,
@@ -157,12 +158,32 @@ const ProfileStackScreen = ({ navigation, route }) => {
       <ProfileStack.Screen
         name="CreateGroep"
         component={CreateGroep}
-        options={{ headerShown: false }}
+        options={{
+          title: ' ',
+          headerBackTitle: ' ',
+          headerStyle: {
+            backgroundColor: '#FFFFFF',
+            elevation: 0,
+            shadowOpacity: 0,
+          },
+          headerTitleAlign: 'left',
+          headerTintColor: '#000000',
+        }}
       />
       <ProfileStack.Screen
         name="GroepDetails"
         component={GroepDetails}
-        options={{ headerShown: false }}
+        options={{
+          title: ' ',
+          headerBackTitle: ' ',
+          headerStyle: {
+            backgroundColor: '#FFFFFF',
+            elevation: 0,
+            shadowOpacity: 0,
+          },
+          headerTitleAlign: 'left',
+          headerTintColor: '#000000',
+        }}
       />
       <ProfileStack.Screen
         name="QRScanner"

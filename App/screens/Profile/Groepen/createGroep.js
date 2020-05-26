@@ -58,14 +58,14 @@ const CreateGroep = ({ navigation }) => {
             style={styles.counterBtn}
             onPress={() => setCount(count - 1)}
           >
-            <Text>-</Text>
+            <Text style={styles.countSign}>-</Text>
           </TouchableOpacity>
-          <Text>{count}</Text>
+          <Text style={styles.countNumber}>{count}</Text>
           <TouchableOpacity
             style={styles.counterBtn}
             onPress={() => setCount(count + 1)}
           >
-            <Text>+</Text>
+            <Text style={styles.countSign}>+</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -147,7 +147,13 @@ const styles = StyleSheet.create({
   },
   ledenText: {
     width: '40%',
-    marginTop: 10,
+    marginTop: 14,
+  },
+  countSign: {
+    marginTop: -10,
+  },
+  countNumber: {
+    marginTop: 14,
   },
 });
 

@@ -53,12 +53,10 @@ const styles = StyleSheet.create({
 
   text: {
     fontSize: 24,
-    fontFamily: 'Roboto',
   },
 
   times: {
     fontSize: 24,
-    fontFamily: 'Roboto',
     marginRight: 10,
   },
 
