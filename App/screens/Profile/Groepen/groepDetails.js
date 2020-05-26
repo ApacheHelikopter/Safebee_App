@@ -37,15 +37,17 @@ const GroepDetails = ({ route, navigation }) => {
       <Modal animationType="fade" transparent={true} visible={modalVisible}>
         <View style={styles.viewContainerModal}>
           <View style={styles.modalView}>
-            <Text>Hesjes</Text>
+            <Text style={styles.titleModal}>Hesjes</Text>
             {groupDetails.names.length > 0 ? (
-              <View>
+              <View style={styles.bodyModal}>
                 {groupDetails.names.map((name) => (
                   <Text key={name}>{name}</Text>
                 ))}
               </View>
             ) : (
-              <Text>Er zijn nog geen namen ingegeven, voeg deze toe.</Text>
+              <Text style={styles.bodyModal}>
+                Er zijn nog geen namen ingegeven, voeg deze toe.
+              </Text>
             )}
 
             <View>
@@ -54,9 +56,12 @@ const GroepDetails = ({ route, navigation }) => {
                   setModalVisible(!modalVisible);
                 }}
               >
-                <Text style={{ color: '#F6C004' }}>Terug</Text>
+                <Text style={styles.backModal}>Terug</Text>
               </TouchableHighlight>
-              <TouchableOpacity onPress={() => addHesjes()}>
+              <TouchableOpacity
+                style={styles.groepIconRight}
+                onPress={() => addHesjes()}
+              >
                 <Icon name="person-add" size={20} style={styles.groepIcon} />
               </TouchableOpacity>
             </View>
@@ -152,7 +157,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 20,
     padding: 20,
-    alignItems: 'center',
+    alignItems: 'flex-start',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -164,6 +169,24 @@ const styles = StyleSheet.create({
   },
   modalBtns: {
     flexDirection: 'row',
+  },
+  titleModal: {
+    fontWeight: 'bold',
+    marginLeft: 10,
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  bodyModal: {
+    marginLeft: 10,
+    marginBottom: 10,
+  },
+  backModal: {
+    color: '#F6C004',
+    marginLeft: 150,
+    marginTop: 20,
+  },
+  groepIconRight: {
+    marginLeft: 200,
   },
   loginBtn: {
     width: '80%',

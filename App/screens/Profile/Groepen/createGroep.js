@@ -31,7 +31,7 @@ const CreateGroep = ({ navigation }) => {
         name: group,
         names: [],
       })
-      .then(() => navigation.navigate('SelecteerGroep'));
+      .then(() => navigation.navigate('MijnGroepen'));
   }
 
   return (
@@ -125,8 +125,8 @@ const styles = StyleSheet.create({
     width: 60,
     height: 130,
     resizeMode: 'stretch',
-    marginBottom: 40,
-    marginTop: 40,
+    marginBottom: 0,
+    marginTop: 0,
   },
   groepIcon: {
     padding: 20,

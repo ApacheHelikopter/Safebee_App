@@ -38,28 +38,23 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     height: '100%',
   },
-
   profileTab: {
     marginTop: 80,
     display: 'flex',
     margin: '8%',
   },
-
   profileActions: {
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
   },
-
   text: {
     fontSize: 24,
   },
-
   times: {
     fontSize: 24,
     marginRight: 10,
   },
-
   textcontainer: {
     flexDirection: 'row',
     marginBottom: 20,
