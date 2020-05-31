@@ -98,7 +98,11 @@ const SettingsStackScreen = () => {
       <SettingsStack.Screen name="Meldingen" component={Meldingen} />
       <SettingsStack.Screen name="FAQ" component={FAQ} />
       <SettingsStack.Screen name="Help" component={Help} />
-      <SettingsStack.Screen name="Tutorial" component={Tutorial} />
+      <SettingsStack.Screen
+        name="Tutorial"
+        component={Tutorial}
+        options={{ headerShown: false }}
+      />
     </SettingsStack.Navigator>
   );
 };
