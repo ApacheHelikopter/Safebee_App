@@ -23,6 +23,7 @@ import SettingsTab from '../screens/Settings/settings';
 import FAQ from '../screens/Settings/FAQ';
 import Help from '../screens/Settings/help';
 import Meldingen from '../screens/meldingen';
+import Tutorial from '../screens/Settings/tutorial';
 
 //Profiel imports
 import ProfielTab from '../screens/Profile/profile';
@@ -97,7 +98,7 @@ const SettingsStackScreen = () => {
       <SettingsStack.Screen name="Meldingen" component={Meldingen} />
       <SettingsStack.Screen name="FAQ" component={FAQ} />
       <SettingsStack.Screen name="Help" component={Help} />
-      <SettingsStack.Screen name="Login" component={Login} />
+      <SettingsStack.Screen name="Tutorial" component={Tutorial} />
     </SettingsStack.Navigator>
   );
 };
