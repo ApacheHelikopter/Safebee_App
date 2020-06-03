@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, Image } from 'react-native';
 
-const Tutorial = () => {
+const Tutorial = ({ navigation }) => {
   return (
     <View style={styles.viewContainer}>
       <View style={styles.tutorialText}>
@@ -22,7 +22,7 @@ const Tutorial = () => {
 
       <TouchableOpacity
         style={styles.loginBtn}
-        onPress={() => navigation.navigate('CreateGroep')}
+        onPress={() => navigation.navigate('TutorialCreateGroup')}
       >
         <Text style={styles.loginText}>Groep toevoegen</Text>
       </TouchableOpacity>
@@ -35,7 +35,6 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontWeight: 'bold',
     fontSize: 26,
-    marginTop: -100,
     marginLeft: 40,
   },
   tutorialAanwijzing: {
@@ -47,9 +46,12 @@ const styles = StyleSheet.create({
     marginBottom: 60,
   },
   arrow: {
-    width: 60,
-    height: 160,
+    width: 50,
+    height: 190,
     resizeMode: 'stretch',
+    position: 'absolute',
+    right: 60,
+    zIndex: 2,
   },
   viewContainer: {
     flex: 1,
@@ -91,7 +93,7 @@ const styles = StyleSheet.create({
     height: 50,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 40,
+    marginTop: 100,
     marginBottom: 10,
     zIndex: 0,
   },
@@ -113,7 +115,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: '80%',
-    marginBottom: 40,
+    marginTop: 40,
   },
   errorMessage: {
     alignItems: 'center',

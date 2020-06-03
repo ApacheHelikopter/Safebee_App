@@ -23,7 +23,11 @@ import SettingsTab from '../screens/Settings/settings';
 import FAQ from '../screens/Settings/FAQ';
 import Help from '../screens/Settings/help';
 import Meldingen from '../screens/meldingen';
+
+//Tutorial
 import Tutorial from '../screens/Settings/tutorial';
+import TutorialCreateGroup from '../screens/Settings/tutorialCreateGroup';
+import TutorialModal from '../screens/Settings/tutorialModal';
 
 //Profiel imports
 import ProfielTab from '../screens/Profile/profile';
@@ -101,6 +105,16 @@ const SettingsStackScreen = () => {
       <SettingsStack.Screen
         name="Tutorial"
         component={Tutorial}
+        options={{ headerShown: false }}
+      />
+      <SettingsStack.Screen
+        name="TutorialCreateGroup"
+        component={TutorialCreateGroup}
+        options={{ headerShown: false }}
+      />
+      <SettingsStack.Screen
+        name="TutorialModal"
+        component={TutorialModal}
         options={{ headerShown: false }}
       />
     </SettingsStack.Navigator>
