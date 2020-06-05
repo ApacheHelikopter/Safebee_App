@@ -14,6 +14,7 @@ import { FlatList } from 'react-native-gesture-handler';
 const SelecteerGroep = ({ navigation }) => {
   window.addEventListener = x => x;
   const [groupName, setGroupName] = useState([]);
+  console.log(groupName);
   const [loading, setLoading] = useState(true);
   const db = firebase.firestore();
 

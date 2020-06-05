@@ -14,40 +14,50 @@ import * as firebase from 'firebase';
 import 'firebase/firestore';
 
 const TutorialModal = ({ route, navigation }) => {
-  window.addEventListener = (x) => x;
-  const { groupDetails } = route.params;
-  const [groupName, setGroupName] = useState(groupDetails.name);
-  const [modalVisible, setModalVisible] = useState(false);
+  window.addEventListener = x => x;
+  const { groupNameCurrent } = route.params;
+  console.log(groupNameCurrent);
+  const [modalVisible, setModalVisible] = useState(true);
+  const [groupDetails, setGroupDetails] = useState([]);
   const db = firebase.firestore();
 
   const addHesjes = () => {
     setModalVisible(modalVisible);
     navigation.navigate('QRScanner', { groupDetails: groupDetails });
   };
+
+  useEffect(() => {
+    const currentUser = firebase.auth().currentUser.uid;
+
+    const unsubscribe = db
+      .collection('groups')
+      .where('name', '==', groupNameCurrent)
+      .where('createdBy', '==', currentUser)
+      .onSnapshot(querySnapShot => {
+        const groups = querySnapShot.docs.map(documentSnapShot => {
+          return {
+            _id: documentSnapShot.id,
+            name: '',
+            createdAt: new Date().getTime(),
+            ...documentSnapShot.data(),
+          };
+        });
+        setGroupDetails(groups);
+      });
+    return () => unsubscribe();
+  }, []);
+
   return (
     <View style={styles.viewContainer}>
       <Modal animationType="fade" transparent={true} visible={modalVisible}>
         <View style={styles.viewContainerModal}>
           <View style={styles.modalView}>
             <Text style={styles.titleModal}>Hesjes</Text>
-            {groupDetails.names.length > 0 ? (
-              <View style={styles.bodyModal}>
-                {groupDetails.names.map((name) => (
-                  <Text key={name}>{name}</Text>
-                ))}
-              </View>
-            ) : (
-              <Text style={styles.bodyModal}>
-                Er zijn nog geen namen ingegeven, voeg deze toe.
-              </Text>
-            )}
-
+            <Text style={styles.bodyModal}>
+              Er zijn nog geen namen ingegeven, voeg deze toe.
+            </Text>
             <View>
-              <TouchableHighlight
-                onPress={() => {
-                  setModalVisible(!modalVisible);
-                }}
-              >
+              <TouchableHighlight>
                 <Text style={styles.backModal}>Terug</Text>
               </TouchableHighlight>
               <TouchableOpacity
@@ -60,7 +70,6 @@ const TutorialModal = ({ route, navigation }) => {
           </View>
         </View>
       </Modal>
-      <Image style={styles.logo} source={require('../../../assets/logo.png')} />
       <View style={styles.error}>
         <View style={styles.inputView}>
           <Icon name="group" size={20} style={styles.groepIcon} />
@@ -69,8 +78,6 @@ const TutorialModal = ({ route, navigation }) => {
             placeholder={groupDetails.name}
             placeholderTextColor="#9F9F9F"
             autoCapitalize="none"
-            value={groupName}
-            onChangeText={setGroupName}
           />
         </View>
       </View>
@@ -83,6 +90,9 @@ const TutorialModal = ({ route, navigation }) => {
         <Icon name="face" size={30} style={styles.faceIcon} />
 
         <Text style={styles.loginText}>Hesjes</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.loginBtn} onPress={() => updateGroup()}>
+        <Text style={styles.loginText}>Groep opslaan</Text>
       </TouchableOpacity>
     </View>
   );
@@ -112,14 +122,20 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#C4C4C4',
-    zIndex: 0,
+    backgroundColor: '#ffffff',
+  },
+  viewContainerModal: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(52, 52, 52, 0.8)',
   },
   inputView: {
     flexDirection: 'row',
     alignContent: 'center',
     alignItems: 'center',
-    width: '80%',
+    width: '100%',
     backgroundColor: '#F8F8F8',
     borderRadius: 25,
     height: 50,
@@ -140,26 +156,53 @@ const styles = StyleSheet.create({
     width: '72%',
     height: 50,
     marginBottom: 20,
-    opacity: 0.2,
-    color: '#9F9F9F',
   },
-  hesjestitle: { color: '#9F9F9F' },
+  faceIcon: {
+    color: '#9F9F9F',
+    marginRight: 15,
+  },
   forgot: {
     color: '#F6C004',
     fontSize: 12,
   },
-  error: {
-    alignItems: 'center',
-    justifyContent: 'center',
+  modalView: {
     width: '80%',
-    marginTop: 40,
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 20,
+    alignItems: 'flex-start',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
-  errorMessage: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    color: '#9F9F9F',
+  modalBtns: {
+    flexDirection: 'row',
   },
-  saveBtn: {
+  titleModal: {
+    fontWeight: 'bold',
+    marginLeft: 10,
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  bodyModal: {
+    marginLeft: 10,
+    marginBottom: 10,
+  },
+  backModal: {
+    color: '#F6C004',
+    marginLeft: 150,
+    marginTop: 20,
+  },
+  groepIconRight: {
+    marginLeft: 200,
+  },
+  loginBtn: {
     width: '80%',
     backgroundColor: '#ffffff',
     borderRadius: 25,
@@ -174,10 +217,33 @@ const styles = StyleSheet.create({
     height: 50,
     alignItems: 'center',
     justifyContent: 'center',
-    bottom: -50,
+    marginTop: 40,
+    marginBottom: 10,
   },
-  saveText: {
+  loginText: {
     color: '#F6C004',
+  },
+  register: {
+    color: '#9F9F9F',
+    fontSize: 12,
+  },
+  logo: {
+    width: 60,
+    height: 130,
+    resizeMode: 'stretch',
+    marginBottom: 40,
+    marginTop: 40,
+  },
+  error: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '80%',
+    marginBottom: 40,
+  },
+  errorMessage: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: 'red',
   },
 });
 export default TutorialModal;

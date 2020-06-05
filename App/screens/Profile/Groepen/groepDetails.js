@@ -14,8 +14,9 @@ import * as firebase from 'firebase';
 import 'firebase/firestore';
 
 const GroepDetails = ({ route, navigation }) => {
-  window.addEventListener = (x) => x;
+  window.addEventListener = x => x;
   const { groupDetails } = route.params;
+  console.log(groupDetails);
   const [groupName, setGroupName] = useState(groupDetails.name);
   const [modalVisible, setModalVisible] = useState(false);
   const db = firebase.firestore();
@@ -40,7 +41,7 @@ const GroepDetails = ({ route, navigation }) => {
             <Text style={styles.titleModal}>Hesjes</Text>
             {groupDetails.names.length > 0 ? (
               <View style={styles.bodyModal}>
-                {groupDetails.names.map((name) => (
+                {groupDetails.names.map(name => (
                   <Text key={name}>{name}</Text>
                 ))}
               </View>

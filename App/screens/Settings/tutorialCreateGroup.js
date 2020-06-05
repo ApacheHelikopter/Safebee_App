@@ -12,9 +12,10 @@ import * as firebase from 'firebase';
 import 'firebase/firestore';
 
 const TutorialCreateGroup = ({ navigation }) => {
-  const [count, setCount] = useState(0);
+  window.addEventListener = x => x;
   const [user, setUser] = useState(null);
   const [group, setGroup] = useState('');
+  const db = firebase.firestore();
 
   useEffect(() => {
     let currentUser = firebase.auth().currentUser.uid;
@@ -26,13 +27,14 @@ const TutorialCreateGroup = ({ navigation }) => {
       .firestore()
       .collection('groups')
       .add({
-        amount: count,
         createdAt: new Date().getTime(),
         createdBy: user,
         name: group,
         names: [],
       })
-      .then(() => navigation.navigate('TutorialModal'));
+      .then(() =>
+        navigation.navigate('TutorialModal', { groupNameCurrent: group })
+      );
   }
 
   return (
