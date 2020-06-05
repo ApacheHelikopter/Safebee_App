@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import * as firebase from 'firebase';
+import 'firebase/firestore';
 
 const TutorialCreateGroup = ({ navigation }) => {
   const [count, setCount] = useState(0);
