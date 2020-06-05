@@ -6,69 +6,83 @@ import {
   TouchableOpacity,
   Image,
   TextInput,
+  Modal,
+  TouchableHighlight,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import * as firebase from 'firebase';
+import 'firebase/firestore';
 
-const TutorialModal = ({ navigation }) => {
-  const [count, setCount] = useState(0);
-  const [user, setUser] = useState(null);
-  const [group, setGroup] = useState('');
+const TutorialModal = ({ route, navigation }) => {
+  window.addEventListener = (x) => x;
+  const { groupDetails } = route.params;
+  const [groupName, setGroupName] = useState(groupDetails.name);
+  const [modalVisible, setModalVisible] = useState(false);
+  const db = firebase.firestore();
 
-  useEffect(() => {
-    let currentUser = firebase.auth().currentUser.uid;
-    setUser(currentUser);
-  });
-
-  async function createGroup() {
-    await firebase
-      .firestore()
-      .collection('groups')
-      .add({
-        amount: count,
-        createdAt: new Date().getTime(),
-        createdBy: user,
-        name: group,
-        names: [],
-      })
-      .then(() => navigation.navigate('MijnGroepen'));
-  }
-
+  const addHesjes = () => {
+    setModalVisible(modalVisible);
+    navigation.navigate('QRScanner', { groupDetails: groupDetails });
+  };
   return (
     <View style={styles.viewContainer}>
-      <View style={styles.tutorialText}>
-        <Text style={styles.tutorialAanwijzing}>
-          HALLOGeef de groep een naam, zodat je deze later snel kunt
-          terugvinden.
-        </Text>
-      </View>
-      <Image
-        style={styles.arrow}
-        source={require('../../../assets/arrowBottom.png')}
-      />
-      <View style={styles.inputView}>
-        <Icon name="group" size={20} style={styles.groepIcon} />
-        <TextInput
-          style={styles.inputText}
-          placeholder="Groepsnaam"
-          placeholderTextColor="#9F9F9F"
-          autoCapitalize="none"
-          value={group}
-          onChangeText={setGroup}
-        />
-      </View>
+      <Modal animationType="fade" transparent={true} visible={modalVisible}>
+        <View style={styles.viewContainerModal}>
+          <View style={styles.modalView}>
+            <Text style={styles.titleModal}>Hesjes</Text>
+            {groupDetails.names.length > 0 ? (
+              <View style={styles.bodyModal}>
+                {groupDetails.names.map((name) => (
+                  <Text key={name}>{name}</Text>
+                ))}
+              </View>
+            ) : (
+              <Text style={styles.bodyModal}>
+                Er zijn nog geen namen ingegeven, voeg deze toe.
+              </Text>
+            )}
 
-      <TouchableOpacity style={styles.hesjesView}>
-        <Icon
-          name="person-add"
-          size={20}
-          opacity={0.5}
-          style={styles.groepIcon}
-        />
-        <Text style={styles.hesjesTitle}>Hesjes</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.saveBtn} onPress={() => createGroup()}>
-        <Text style={styles.saveText}>Groep opslaan</Text>
+            <View>
+              <TouchableHighlight
+                onPress={() => {
+                  setModalVisible(!modalVisible);
+                }}
+              >
+                <Text style={styles.backModal}>Terug</Text>
+              </TouchableHighlight>
+              <TouchableOpacity
+                style={styles.groepIconRight}
+                onPress={() => addHesjes()}
+              >
+                <Icon name="person-add" size={20} style={styles.groepIcon} />
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
+      <Image style={styles.logo} source={require('../../../assets/logo.png')} />
+      <View style={styles.error}>
+        <View style={styles.inputView}>
+          <Icon name="group" size={20} style={styles.groepIcon} />
+          <TextInput
+            style={styles.inputText}
+            placeholder={groupDetails.name}
+            placeholderTextColor="#9F9F9F"
+            autoCapitalize="none"
+            value={groupName}
+            onChangeText={setGroupName}
+          />
+        </View>
+      </View>
+      <TouchableOpacity
+        onPress={() => {
+          setModalVisible(true);
+        }}
+        style={styles.hesjesView}
+      >
+        <Icon name="face" size={30} style={styles.faceIcon} />
+
+        <Text style={styles.loginText}>Hesjes</Text>
       </TouchableOpacity>
     </View>
   );
