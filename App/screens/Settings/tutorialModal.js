@@ -14,7 +14,7 @@ import * as firebase from 'firebase';
 import 'firebase/firestore';
 
 const TutorialModal = ({ route, navigation }) => {
-  window.addEventListener = x => x;
+  window.addEventListener = (x) => x;
   const { groupNameCurrent } = route.params;
   console.log(groupNameCurrent);
   const [modalVisible, setModalVisible] = useState(true);
@@ -33,8 +33,8 @@ const TutorialModal = ({ route, navigation }) => {
       .collection('groups')
       .where('name', '==', groupNameCurrent)
       .where('createdBy', '==', currentUser)
-      .onSnapshot(querySnapShot => {
-        const groups = querySnapShot.docs.map(documentSnapShot => {
+      .onSnapshot((querySnapShot) => {
+        const groups = querySnapShot.docs.map((documentSnapShot) => {
           return {
             _id: documentSnapShot.id,
             name: '',
@@ -51,14 +51,24 @@ const TutorialModal = ({ route, navigation }) => {
     <View style={styles.viewContainer}>
       <Modal animationType="fade" transparent={true} visible={modalVisible}>
         <View style={styles.viewContainerModal}>
+          <View style={styles.tutorialText}>
+            <Text style={styles.tutorialStap}>Stap 2</Text>
+            <Text style={styles.tutorialAanwijzing}>
+              Voeg vestjes toe aan je groep.
+            </Text>
+          </View>
           <View style={styles.modalView}>
+            <Image
+              style={styles.arrow}
+              source={require('../../../assets/arrowBottom.png')}
+            />
             <Text style={styles.titleModal}>Hesjes</Text>
             <Text style={styles.bodyModal}>
-              Er zijn nog geen namen ingegeven, voeg deze toe.
+              Er zijn nog geen hesjes ingegeven, voeg deze toe.
             </Text>
             <View>
               <TouchableHighlight>
-                <Text style={styles.backModal}>Terug</Text>
+                <Text style={styles.backModal}>Klaar</Text>
               </TouchableHighlight>
               <TouchableOpacity
                 style={styles.groepIconRight}
@@ -70,35 +80,35 @@ const TutorialModal = ({ route, navigation }) => {
           </View>
         </View>
       </Modal>
-      <View style={styles.error}>
-        <View style={styles.inputView}>
-          <Icon name="group" size={20} style={styles.groepIcon} />
-          <TextInput
-            style={styles.inputText}
-            placeholder={groupDetails.name}
-            placeholderTextColor="#9F9F9F"
-            autoCapitalize="none"
-          />
-        </View>
+      <View style={styles.inputView}>
+        <Icon name="group" size={20} style={styles.groepIcon} />
+        <TextInput
+          style={styles.inputText}
+          placeholder="Groepsnaam"
+          placeholderTextColor="#9F9F9F"
+          autoCapitalize="none"
+        />
       </View>
-      <TouchableOpacity
-        onPress={() => {
-          setModalVisible(true);
-        }}
-        style={styles.hesjesView}
-      >
-        <Icon name="face" size={30} style={styles.faceIcon} />
 
-        <Text style={styles.loginText}>Hesjes</Text>
+      <TouchableOpacity style={styles.hesjesView}>
+        <Icon name="person-add" size={20} style={styles.groepIcon} />
+        <Text style={styles.hesjesTitle}>Hesjes</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.loginBtn} onPress={() => updateGroup()}>
-        <Text style={styles.loginText}>Groep opslaan</Text>
+      <TouchableOpacity style={styles.saveBtn} onPress={() => createGroup()}>
+        <Text style={styles.saveText}>Groep opslaan</Text>
       </TouchableOpacity>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  tutorialStap: {
+    color: '#FFFFFF',
+    fontWeight: 'bold',
+    fontSize: 26,
+    marginLeft: 40,
+    marginTop: -100,
+  },
   tutorialAanwijzing: {
     color: '#FFFFFF',
     fontWeight: 'bold',
@@ -106,16 +116,15 @@ const styles = StyleSheet.create({
     marginLeft: 40,
     marginRight: 40,
     marginBottom: 60,
-    top: -70,
   },
   arrow: {
-    width: 30,
-    height: 100,
+    width: 40,
+    height: 190,
     resizeMode: 'stretch',
     position: 'absolute',
-    right: 60,
-    zIndex: 2,
-    top: 170,
+    right: 10,
+    zIndex: 200,
+    top: -60,
   },
   viewContainer: {
     flex: 1,
@@ -135,7 +144,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignContent: 'center',
     alignItems: 'center',
-    width: '100%',
+    width: '80%',
     backgroundColor: '#F8F8F8',
     borderRadius: 25,
     height: 50,
@@ -168,7 +177,7 @@ const styles = StyleSheet.create({
   modalView: {
     width: '80%',
     margin: 20,
-    backgroundColor: 'white',
+    backgroundColor: '#E5E5E5',
     borderRadius: 20,
     padding: 20,
     alignItems: 'flex-start',
@@ -180,6 +189,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
+    zIndex: 1,
   },
   modalBtns: {
     flexDirection: 'row',
@@ -202,7 +212,7 @@ const styles = StyleSheet.create({
   groepIconRight: {
     marginLeft: 200,
   },
-  loginBtn: {
+  saveBtn: {
     width: '80%',
     backgroundColor: '#ffffff',
     borderRadius: 25,
@@ -217,10 +227,9 @@ const styles = StyleSheet.create({
     height: 50,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 40,
-    marginBottom: 10,
+    bottom: -50,
   },
-  loginText: {
+  saveText: {
     color: '#F6C004',
   },
   register: {
