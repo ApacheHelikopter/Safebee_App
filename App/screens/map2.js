@@ -91,7 +91,7 @@ const GeoLocationMap = () => {
   useEffect(() => {
     async function currentPosition() {
       navigator.geolocation.getCurrentPosition(
-        position => {
+        (position) => {
           let lat = parseFloat(position.coords.latitude);
           let long = parseFloat(position.coords.longitude);
 
@@ -105,14 +105,14 @@ const GeoLocationMap = () => {
           setInitialPosition(initialRegion);
           setmarkerPosition(initialRegion);
         },
-        error => alert(JSON.stringify(error)),
+        (error) => alert(JSON.stringify(error)),
         { enableHighAccuracy: true, timeout: 2000, maximumAge: 1000 }
       );
     }
     currentPosition();
 
     async function watchPosition() {
-      let watchID = navigator.geolocation.watchPosition(position => {
+      let watchID = navigator.geolocation.watchPosition((position) => {
         var lat = parseFloat(position.coords.latitude);
         var long = parseFloat(position.coords.longitude);
 

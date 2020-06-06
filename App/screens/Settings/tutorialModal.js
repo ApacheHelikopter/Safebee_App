@@ -68,13 +68,17 @@ const TutorialModal = ({ route, navigation }) => {
             </Text>
             <View>
               <TouchableHighlight>
-                <Text style={styles.backModal}>Klaar</Text>
+                <Text style={styles.backModal}>KLAAR</Text>
               </TouchableHighlight>
               <TouchableOpacity
                 style={styles.groepIconRight}
                 onPress={() => addHesjes()}
               >
-                <Icon name="person-add" size={20} style={styles.groepIcon} />
+                <Icon name="person-add" size={20} style={styles.groepaddIcon} />
+                <Image
+                  style={styles.circle}
+                  source={require('../../../assets/tutorialCircle.png')}
+                />
               </TouchableOpacity>
             </View>
           </View>
@@ -125,6 +129,18 @@ const styles = StyleSheet.create({
     right: 10,
     zIndex: 200,
     top: -60,
+  },
+  circle: {
+    width: 55,
+    height: 55,
+    resizeMode: 'stretch',
+    position: 'absolute',
+    right: 0,
+  },
+  groepaddIcon: {
+    padding: 18,
+    color: '#E5E5E5',
+    zIndex: 200,
   },
   viewContainer: {
     flex: 1,
@@ -206,7 +222,7 @@ const styles = StyleSheet.create({
   },
   backModal: {
     color: '#F6C004',
-    marginLeft: 150,
+    marginLeft: 120,
     marginTop: 20,
   },
   groepIconRight: {
