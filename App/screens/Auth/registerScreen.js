@@ -18,7 +18,6 @@ const Register = ({ navigation }) => {
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
-      .then(() => navigation.navigate('CreateGroep'))
       .catch(error => setErrorMessage(error.message));
   };
 

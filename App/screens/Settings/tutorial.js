@@ -7,7 +7,7 @@ const Tutorial = ({ navigation }) => {
       <View style={styles.tutorialText}>
         <Text style={styles.tutorialStap}>Stap 1</Text>
         <Text style={styles.tutorialAanwijzing}>
-          Welkom bij Safebee, (NAAM)! Maak hier je groep aan.
+          Welkom bij Safebee! Maak hier je groep aan.
         </Text>
       </View>
       <Image

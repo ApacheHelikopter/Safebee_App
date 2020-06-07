@@ -14,7 +14,7 @@ import * as firebase from 'firebase';
 import 'firebase/firestore';
 
 const TutorialModal = ({ route, navigation }) => {
-  window.addEventListener = (x) => x;
+  window.addEventListener = x => x;
   const { groupNameCurrent } = route.params;
   console.log(groupNameCurrent);
   const [modalVisible, setModalVisible] = useState(true);
@@ -22,8 +22,8 @@ const TutorialModal = ({ route, navigation }) => {
   const db = firebase.firestore();
 
   const addHesjes = () => {
-    setModalVisible(modalVisible);
-    navigation.navigate('QRScanner', { groupDetails: groupDetails });
+    setModalVisible(!modalVisible);
+    navigation.navigate('QRScannerTutorial', { groupDetails: groupDetails });
   };
 
   useEffect(() => {
@@ -33,8 +33,8 @@ const TutorialModal = ({ route, navigation }) => {
       .collection('groups')
       .where('name', '==', groupNameCurrent)
       .where('createdBy', '==', currentUser)
-      .onSnapshot((querySnapShot) => {
-        const groups = querySnapShot.docs.map((documentSnapShot) => {
+      .onSnapshot(querySnapShot => {
+        const groups = querySnapShot.docs.map(documentSnapShot => {
           return {
             _id: documentSnapShot.id,
             name: '',

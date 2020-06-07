@@ -28,6 +28,8 @@ import Meldingen from '../screens/meldingen';
 import Tutorial from '../screens/Settings/tutorial';
 import TutorialCreateGroup from '../screens/Settings/tutorialCreateGroup';
 import TutorialModal from '../screens/Settings/tutorialModal';
+import QRScannerTutorial from '../screens/Settings/QRScannerTutorial';
+import GroepDetailsTutorial from '../screens/Settings/groepDetailsTutorial';
 
 //Profiel imports
 import ProfielTab from '../screens/Profile/profile';
@@ -102,21 +104,6 @@ const SettingsStackScreen = () => {
       <SettingsStack.Screen name="Meldingen" component={Meldingen} />
       <SettingsStack.Screen name="FAQ" component={FAQ} />
       <SettingsStack.Screen name="Help" component={Help} />
-      <SettingsStack.Screen
-        name="Tutorial"
-        component={Tutorial}
-        options={{ headerShown: false }}
-      />
-      <SettingsStack.Screen
-        name="TutorialCreateGroup"
-        component={TutorialCreateGroup}
-        options={{ headerShown: false }}
-      />
-      <SettingsStack.Screen
-        name="TutorialModal"
-        component={TutorialModal}
-        options={{ headerShown: false }}
-      />
     </SettingsStack.Navigator>
   );
 };
@@ -203,6 +190,40 @@ const ProfileStackScreen = ({ navigation, route }) => {
           headerTitleAlign: 'left',
           headerTintColor: '#000000',
         }}
+      />
+      <ProfileStack.Screen
+        name="Tutorial"
+        component={Tutorial}
+        options={{
+          title: ' ',
+          headerBackTitle: ' ',
+          headerStyle: {
+            backgroundColor: '#FFFFFF',
+            elevation: 0,
+            shadowOpacity: 0,
+          },
+          headerTitleAlign: 'left',
+          headerTintColor: '#000000',
+        }}
+      />
+      <ProfileStack.Screen
+        name="TutorialCreateGroup"
+        component={TutorialCreateGroup}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <ProfileStack.Screen
+        name="TutorialModal"
+        component={TutorialModal}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <ProfileStack.Screen
+        name="QRScannerTutorial"
+        component={QRScannerTutorial}
+        options={{ headerShown: false }}
       />
       <ProfileStack.Screen
         name="QRScanner"
