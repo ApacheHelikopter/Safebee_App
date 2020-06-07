@@ -219,11 +219,13 @@ const styles = StyleSheet.create({
   bodyModal: {
     marginLeft: 10,
     marginBottom: 10,
+    paddingTop: 20,
   },
   backModal: {
     color: '#F6C004',
     marginLeft: 120,
     marginTop: 20,
+    position: 'absolute',
   },
   groepIconRight: {
     marginLeft: 200,
