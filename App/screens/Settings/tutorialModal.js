@@ -15,37 +15,14 @@ import 'firebase/firestore';
 
 const TutorialModal = ({ route, navigation }) => {
   window.addEventListener = x => x;
-  const { groupNameCurrent } = route.params;
-  console.log(groupNameCurrent);
+  const { groupDetails } = route.params;
   const [modalVisible, setModalVisible] = useState(true);
-  const [groupDetails, setGroupDetails] = useState([]);
   const db = firebase.firestore();
 
   const addHesjes = () => {
     setModalVisible(!modalVisible);
     navigation.navigate('QRScannerTutorial', { groupDetails: groupDetails });
   };
-
-  useEffect(() => {
-    const currentUser = firebase.auth().currentUser.uid;
-
-    const unsubscribe = db
-      .collection('groups')
-      .where('name', '==', groupNameCurrent)
-      .where('createdBy', '==', currentUser)
-      .onSnapshot(querySnapShot => {
-        const groups = querySnapShot.docs.map(documentSnapShot => {
-          return {
-            _id: documentSnapShot.id,
-            name: '',
-            createdAt: new Date().getTime(),
-            ...documentSnapShot.data(),
-          };
-        });
-        setGroupDetails(groups);
-      });
-    return () => unsubscribe();
-  }, []);
 
   return (
     <View style={styles.viewContainer}>

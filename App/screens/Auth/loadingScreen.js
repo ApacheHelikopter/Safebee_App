@@ -1,7 +1,12 @@
-import React, { useEffect } from 'react';
-import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  ActivityIndicator,
+  AsyncStorage,
+} from 'react-native';
 import * as firebase from 'firebase';
-import { AsyncStorage } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -12,23 +17,43 @@ const styles = StyleSheet.create({
 });
 
 const LoadingScreen = ({ navigation }) => {
+  const [tutorialState, setTutorialState] = useState(null);
+
+  const loadTutorialState = async () => {
+    try {
+      console.log('here');
+      const value = await AsyncStorage.getItem('TUTORIAL');
+      console.log(value);
+      if (value !== null) {
+        console.log(value);
+        setTutorialState(value);
+      }
+    } catch (e) {
+      alert(e);
+    }
+  };
+
   useEffect(() => {
-    firebase.auth().onAuthStateChanged(user => {
-      navigation.navigate(user ? 'App' : 'Auth');
-    });
+    loadTutorialState();
   }, []);
 
-  const checkUserState = async () => {
+  const checkUserState = () => {
     try {
-      const doneTutorial = await AsyncStorage.getItem('TUTORIAL');
-      if (doneTutorial !== null) {
-        return true;
-      } else {
-        console.log(doneTutorial);
-        navigation.navigate('TutorialIntro');
+      const userExists = firebase.auth().currentUser;
+      console.log(tutorialState);
+      if (tutorialState !== null && userExists !== null) {
+        return 'App';
+      } else if (tutorialState == null && userExists !== null) {
+        return 'Tutorial';
       }
-    } catch (e) {}
+    } catch (e) {
+      alert(e);
+    }
   };
+
+  firebase.auth().onAuthStateChanged(user => {
+    navigation.navigate(user ? 'App' : 'Auth');
+  });
 
   return (
     <View style={styles.container}>

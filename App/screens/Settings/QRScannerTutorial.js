@@ -7,7 +7,9 @@ import 'firebase/firestore';
 const QRScannerTutorial = ({ route, navigation }) => {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
+  const [currentGroup, setCurrentGroup] = useState([]);
   const { groupDetails } = route.params;
+  console.log(groupDetails);
   const db = firebase.firestore();
 
   useEffect(() => {
@@ -16,6 +18,27 @@ const QRScannerTutorial = ({ route, navigation }) => {
       setHasPermission(status === 'granted');
     })();
   }, []);
+
+  const finishScan = () => {
+    const currentUser = firebase.auth().currentUser.uid;
+
+    const unsubscribe = db
+      .collection('groups')
+      .where('createdBy', '==', currentUser)
+      .where('_id', '==', groupDetails._id)
+      .onSnapshot(querySnapShot => {
+        const groups = querySnapShot.docs.map(documentSnapShot => {
+          return {
+            _id: documentSnapShot.id,
+            name: '',
+            createdAt: new Date().getTime(),
+            ...documentSnapShot.data(),
+          };
+        });
+        setCurrentGroup(groups);
+      });
+    return () => unsubscribe().then();
+  };
 
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
@@ -47,11 +70,7 @@ const QRScannerTutorial = ({ route, navigation }) => {
 
       <Button
         title="Klaar"
-        onPress={() =>
-          navigation.navigate('GroepDetailsTutorial', {
-            groupDetails: groupDetails,
-          })
-        }
+        onPress={() => navigation.navigate('GroepDetailsTutorial')}
       />
 
       {scanned ? (

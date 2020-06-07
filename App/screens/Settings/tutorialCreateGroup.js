@@ -15,7 +15,6 @@ const TutorialCreateGroup = ({ navigation }) => {
   window.addEventListener = x => x;
   const [user, setUser] = useState(null);
   const [group, setGroup] = useState('');
-  const db = firebase.firestore();
 
   useEffect(() => {
     let currentUser = firebase.auth().currentUser.uid;
@@ -32,9 +31,7 @@ const TutorialCreateGroup = ({ navigation }) => {
         name: group,
         names: [],
       })
-      .then(() =>
-        navigation.navigate('TutorialModal', { groupNameCurrent: group })
-      );
+      .then(() => navigation.navigate('TutorialSelectGroup'));
   }
 
   return (

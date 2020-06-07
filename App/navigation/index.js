@@ -27,6 +27,7 @@ import Meldingen from '../screens/meldingen';
 //Tutorial
 import Tutorial from '../screens/Settings/tutorial';
 import TutorialCreateGroup from '../screens/Settings/tutorialCreateGroup';
+import TutorialSelectGroup from '../screens/Settings/tutorialSelectGroup';
 import TutorialModal from '../screens/Settings/tutorialModal';
 import QRScannerTutorial from '../screens/Settings/QRScannerTutorial';
 import GroepDetailsTutorial from '../screens/Settings/groepDetailsTutorial';
@@ -192,23 +193,15 @@ const ProfileStackScreen = ({ navigation, route }) => {
         }}
       />
       <ProfileStack.Screen
-        name="Tutorial"
-        component={Tutorial}
+        name="TutorialCreateGroup"
+        component={TutorialCreateGroup}
         options={{
-          title: ' ',
-          headerBackTitle: ' ',
-          headerStyle: {
-            backgroundColor: '#FFFFFF',
-            elevation: 0,
-            shadowOpacity: 0,
-          },
-          headerTitleAlign: 'left',
-          headerTintColor: '#000000',
+          headerShown: false,
         }}
       />
       <ProfileStack.Screen
-        name="TutorialCreateGroup"
-        component={TutorialCreateGroup}
+        name="TutorialSelectGroup"
+        component={TutorialSelectGroup}
         options={{
           headerShown: false,
         }}
@@ -230,6 +223,12 @@ const ProfileStackScreen = ({ navigation, route }) => {
         component={QRScanner}
         options={{ headerShown: false }}
       />
+      <ProfileStack.Screen
+        name="GroepDetailsTutorial"
+        component={GroepDetailsTutorial}
+        options={{ headerShown: false }}
+      />
+
       <ProfileStack.Screen name="ConnectHesje" component={ConnectHesje} />
       <ProfileStack.Screen name="DisconnectHesje" component={DisconnectHesje} />
     </ProfileStack.Navigator>
@@ -280,6 +279,11 @@ const SafebeeApp = createAppContainer(
   createSwitchNavigator(
     {
       Loading: LoadingScreen,
+      Tutorial: Tutorial,
+      TutorialCreateGroup: TutorialCreateGroup,
+      TutorialModal: TutorialModal,
+      QRScannerTutorial: QRScannerTutorial,
+      GroepDetailsTutorial: GroepDetailsTutorial,
       App: TabNavigator,
       Auth: AuthStackScreen,
     },

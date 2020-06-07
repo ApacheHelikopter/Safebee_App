@@ -56,7 +56,7 @@ const SelecteerGroep = ({ navigation }) => {
           renderItem={({ item }) => (
             <TouchableOpacity
               onPress={() =>
-                navigation.navigate('GroepDetails', { groupDetails: item })
+                navigation.navigate('TutorialModal', { groupDetails: item })
               }
             >
               <GroepButton name={item.name} />
