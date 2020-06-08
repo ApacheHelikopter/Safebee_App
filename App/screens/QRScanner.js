@@ -42,11 +42,13 @@ const QRScanner = ({ route, navigation }) => {
     >
       <BarCodeScanner
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+        showMarker={true}
         style={StyleSheet.absoluteFillObject}
       />
 
       <Button
-        title="Klaar"
+        title="KLAAR"
+        type="clear"
         onPress={() =>
           navigation.navigate('GroepDetails', { groupDetails: groupDetails })
         }
@@ -63,5 +65,15 @@ const QRScanner = ({ route, navigation }) => {
     </View>
   );
 };
-
+const styles = StyleSheet.create({
+  readyButton: {
+    color: '#FFFFFF',
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginTop: -100,
+    width: '100%',
+    backgroundColor: '#FFFFFF',
+  },
+});
 export default QRScanner;
