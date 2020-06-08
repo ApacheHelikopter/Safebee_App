@@ -14,7 +14,7 @@ import * as firebase from 'firebase';
 import 'firebase/firestore';
 
 const TutorialModal = ({ route, navigation }) => {
-  window.addEventListener = x => x;
+  window.addEventListener = (x) => x;
   const { groupDetails } = route.params;
   const [modalVisible, setModalVisible] = useState(true);
   const db = firebase.firestore();
@@ -31,7 +31,7 @@ const TutorialModal = ({ route, navigation }) => {
           <View style={styles.tutorialText}>
             <Text style={styles.tutorialStap}>Stap 2</Text>
             <Text style={styles.tutorialAanwijzing}>
-              Voeg vestjes toe aan je groep.
+              Voeg hesjes toe aan je groep.
             </Text>
           </View>
           <View style={styles.modalView}>
@@ -228,8 +228,11 @@ const styles = StyleSheet.create({
     color: '#F6C004',
   },
   register: {
-    color: '#9F9F9F',
-    fontSize: 12,
+    color: '#FFFFFF',
+    fontSize: 14,
+    zIndex: 200,
+    fontWeight: 'bold',
+    marginTop: 10,
   },
   logo: {
     width: 60,

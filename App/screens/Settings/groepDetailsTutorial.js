@@ -13,7 +13,7 @@ import 'firebase/firestore';
 import { FlatList } from 'react-native-gesture-handler';
 
 const SelecteerGroep = ({ navigation }) => {
-  window.addEventListener = x => x;
+  window.addEventListener = (x) => x;
   const [groupName, setGroupName] = useState([]);
 
   const [loading, setLoading] = useState(true);
@@ -25,8 +25,8 @@ const SelecteerGroep = ({ navigation }) => {
     const unsubscribe = db
       .collection('groups')
       .where('createdBy', '==', currentUser)
-      .onSnapshot(querySnapShot => {
-        const groups = querySnapShot.docs.map(documentSnapShot => {
+      .onSnapshot((querySnapShot) => {
+        const groups = querySnapShot.docs.map((documentSnapShot) => {
           return {
             _id: documentSnapShot.id,
             name: '',
@@ -49,10 +49,15 @@ const SelecteerGroep = ({ navigation }) => {
 
   return (
     <View style={styles.viewContainer}>
+      <View style={styles.tutorialText}>
+        <Text style={styles.tutorialAanwijzing}>
+          Alle hesjes zijn nu gescand en opgeslagen in jouw groep
+        </Text>
+      </View>
       <View style={styles.error}>
         <FlatList
           data={groupName}
-          keyExtractor={item => item._id}
+          keyExtractor={(item) => item._id}
           renderItem={({ item }) => (
             <TouchableOpacity
               onPress={() =>
@@ -70,7 +75,7 @@ const SelecteerGroep = ({ navigation }) => {
           <Text style={styles.loginText}>Groep toevoegen</Text>
         </TouchableOpacity>
         <TouchableOpacity>
-          <Text style={styles.register}>Klaar</Text>
+          <Text style={styles.registerBtn}>KLAAR</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -79,13 +84,6 @@ const SelecteerGroep = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   //NORMAL
-  viewContainer: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#ffffff',
-  },
   inputView: {
     width: '80%',
     backgroundColor: '#F8F8F8',
@@ -104,7 +102,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   loginBtn: {
-    width: '80%',
+    width: '100%',
     backgroundColor: '#ffffff',
     borderRadius: 25,
     shadowColor: '#000000',
@@ -124,9 +122,12 @@ const styles = StyleSheet.create({
   loginText: {
     color: '#F6C004',
   },
-  register: {
-    color: '#9F9F9F',
-    fontSize: 12,
+  registerBtn: {
+    color: '#FFFFFF',
+    fontSize: 14,
+    zIndex: 200,
+    fontWeight: 'bold',
+    marginTop: 10,
   },
   logo: {
     width: 60,
@@ -146,8 +147,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     color: 'red',
   },
+
   //TUTORIAL
-  viewContainerTutorial: {
+  viewContainer: {
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
