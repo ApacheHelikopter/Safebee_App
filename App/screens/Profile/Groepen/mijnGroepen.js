@@ -5,13 +5,64 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
+  ActivityIndicator,
   Image,
 } from 'react-native';
+import GroepButton from '../../../components/Groepen/GroepButton';
 import * as firebase from 'firebase';
+import 'firebase/firestore';
+import { FlatList } from 'react-native-gesture-handler';
 
 const MijnGroepen = ({ navigation }) => {
+  window.addEventListener = (x) => x;
+  const [groupName, setGroupName] = useState([]);
+
+  const [loading, setLoading] = useState(true);
+  const db = firebase.firestore();
+
+  useEffect(() => {
+    const currentUser = firebase.auth().currentUser.uid;
+
+    const unsubscribe = db
+      .collection('groups')
+      .where('createdBy', '==', currentUser)
+      .onSnapshot((querySnapShot) => {
+        const groups = querySnapShot.docs.map((documentSnapShot) => {
+          return {
+            _id: documentSnapShot.id,
+            name: '',
+            createdAt: new Date().getTime(),
+            ...documentSnapShot.data(),
+          };
+        });
+        setGroupName(groups);
+
+        if (loading) {
+          setLoading(false);
+        }
+      });
+    return () => unsubscribe();
+  }, []);
+
+  if (loading) {
+    return <ActivityIndicator />;
+  }
+
   return (
     <View style={styles.viewContainer}>
+      <FlatList
+        data={groupName}
+        keyExtractor={(item) => item._id}
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate('GroepDetails', { groupDetails: item })
+            }
+          >
+            <GroepButton name={item.name} />
+          </TouchableOpacity>
+        )}
+      />
       <TouchableOpacity>
         <Text
           style={styles.register}
