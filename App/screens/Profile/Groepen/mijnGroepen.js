@@ -50,19 +50,13 @@ const MijnGroepen = ({ navigation }) => {
 
   return (
     <View style={styles.viewContainer}>
-      <FlatList
-        data={groupName}
-        keyExtractor={(item) => item._id}
-        renderItem={({ item }) => (
-          <TouchableOpacity
-            onPress={() =>
-              navigation.navigate('GroepDetails', { groupDetails: item })
-            }
-          >
-            <GroepButton name={item.name} />
-          </TouchableOpacity>
-        )}
-      />
+      <View style={styles.error}>
+        <FlatList
+          data={groupName}
+          keyExtractor={(item) => item._id}
+          renderItem={({ item }) => <GroepButton name={item.name} />}
+        />
+      </View>
       <TouchableOpacity>
         <Text
           style={styles.register}
@@ -123,7 +117,7 @@ const styles = StyleSheet.create({
   },
   register: {
     color: '#F6C004',
-    fontSize: 12,
+    fontSize: 14,
   },
   logo: {
     width: 60,
@@ -133,8 +127,11 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
   error: {
+    alignItems: 'center',
+    justifyContent: 'center',
     width: '80%',
     marginBottom: 40,
+    top: -100,
   },
   errorMessage: {
     alignItems: 'center',
