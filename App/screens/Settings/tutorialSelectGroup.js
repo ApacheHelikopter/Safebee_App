@@ -7,13 +7,13 @@ import {
   ActivityIndicator,
   Image,
 } from 'react-native';
-import GroepButton from '../../../components/Groepen/GroepButton';
+import GroepButton from '../../components/Groepen/GroepButton';
 import * as firebase from 'firebase';
 import 'firebase/firestore';
 import { FlatList } from 'react-native-gesture-handler';
 
 const SelecteerGroep = ({ navigation }) => {
-  window.addEventListener = x => x;
+  window.addEventListener = (x) => x;
   const [groupName, setGroupName] = useState([]);
 
   const [loading, setLoading] = useState(true);
@@ -25,8 +25,8 @@ const SelecteerGroep = ({ navigation }) => {
     const unsubscribe = db
       .collection('groups')
       .where('createdBy', '==', currentUser)
-      .onSnapshot(querySnapShot => {
-        const groups = querySnapShot.docs.map(documentSnapShot => {
+      .onSnapshot((querySnapShot) => {
+        const groups = querySnapShot.docs.map((documentSnapShot) => {
           return {
             _id: documentSnapShot.id,
             name: '',
@@ -48,73 +48,46 @@ const SelecteerGroep = ({ navigation }) => {
   }
 
   return (
-    <>
-      {groupName.length > 0 ? (
-        <View style={styles.viewContainer}>
-          <View style={styles.error}>
-            <FlatList
-              data={groupName}
-              keyExtractor={item => item._id}
-              renderItem={({ item }) => (
-                <TouchableOpacity
-                  onPress={() =>
-                    navigation.navigate('GroepDetails', { groupDetails: item })
-                  }
-                >
-                  <GroepButton name={item.name} />
-                </TouchableOpacity>
-              )}
-            />
+    <View style={styles.viewContainer}>
+      <View style={styles.tutorialText}>
+        <Text style={styles.tutorialAanwijzing}>
+          Selecteer je nieuw aangemaakte groep
+        </Text>
+      </View>
+      <Image
+        style={styles.arrow}
+        source={require('../../../assets/arrowBottom.png')}
+      />
+      <View style={styles.error}>
+        <FlatList
+          data={groupName}
+          keyExtractor={(item) => item._id}
+          renderItem={({ item }) => (
             <TouchableOpacity
-              style={styles.loginBtn}
-              onPress={() => navigation.navigate('CreateGroep')}
+              onPress={() =>
+                navigation.navigate('TutorialModal', { groupDetails: item })
+              }
             >
-              <Text style={styles.loginText}>Groep toevoegen</Text>
+              <GroepButton name={item.name} />
             </TouchableOpacity>
-            <TouchableOpacity>
-              <Text style={styles.register}>Klaar</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      ) : (
-        <View style={styles.viewContainerTutorial}>
-          <View style={styles.tutorialText}>
-            <Text style={styles.tutorialStap}>Stap 1</Text>
-            <Text style={styles.tutorialAanwijzing}>
-              Welkom bij Safebee! Maak hier je groep aan.
-            </Text>
-          </View>
-          <Image
-            style={styles.arrow}
-            source={require('../../../../assets/arrowBottom.png')}
-          />
-          <View style={styles.error}>
-            <Text style={styles.errorMessageTutorial}>
-              Er bestaan nog geen groepen voor dit account. Voeg een groep toe.
-            </Text>
-          </View>
-
-          <TouchableOpacity
-            style={styles.loginBtn}
-            onPress={() => navigation.navigate('TutorialCreateGroup')}
-          >
-            <Text style={styles.loginText}>Groep toevoegen</Text>
-          </TouchableOpacity>
-        </View>
-      )}
-    </>
+          )}
+        />
+        <TouchableOpacity
+          style={styles.saveBtn}
+          onPress={() => navigation.navigate('CreateGroep')}
+        >
+          <Text style={styles.saveText}>Groep toevoegen</Text>
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <Text style={styles.register}>Klaar</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   //NORMAL
-  viewContainer: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#ffffff',
-  },
   inputView: {
     width: '80%',
     backgroundColor: '#F8F8F8',
@@ -132,8 +105,8 @@ const styles = StyleSheet.create({
     color: '#F6C004',
     fontSize: 12,
   },
-  loginBtn: {
-    width: '80%',
+  saveBtn: {
+    width: '100%',
     backgroundColor: '#ffffff',
     borderRadius: 25,
     shadowColor: '#000000',
@@ -147,15 +120,15 @@ const styles = StyleSheet.create({
     height: 50,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 40,
-    marginBottom: 10,
+    bottom: -50,
   },
-  loginText: {
+  saveText: {
     color: '#F6C004',
   },
   register: {
     color: '#9F9F9F',
     fontSize: 12,
+    zIndex: 200,
   },
   logo: {
     width: 60,
@@ -175,8 +148,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     color: 'red',
   },
+
   //TUTORIAL
-  viewContainerTutorial: {
+  viewContainer: {
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
@@ -196,15 +170,17 @@ const styles = StyleSheet.create({
     fontSize: 24,
     marginLeft: 40,
     marginRight: 40,
-    marginBottom: 60,
+    marginBottom: 120,
+    marginTop: -40,
   },
   arrow: {
-    width: 50,
-    height: 190,
+    width: 30,
+    height: 120,
     resizeMode: 'stretch',
     position: 'absolute',
     right: 60,
     zIndex: 2,
+    top: 140,
   },
   errorMessageTutorial: {
     alignItems: 'center',

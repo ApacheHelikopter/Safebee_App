@@ -18,8 +18,7 @@ const Register = ({ navigation }) => {
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
-      .then(() => navigation.navigate('OnBoarding'))
-      .catch((error) => setErrorMessage(error.message));
+      .catch(error => setErrorMessage(error.message));
   };
 
   return (
@@ -38,7 +37,7 @@ const Register = ({ navigation }) => {
           style={styles.inputText}
           placeholder="E-mailadres"
           placeholderTextColor="#9F9F9F"
-          onChangeText={(email) => setEmail(email)}
+          onChangeText={email => setEmail(email)}
           autoCapitalize="none"
           value={email}
         />
@@ -50,7 +49,7 @@ const Register = ({ navigation }) => {
           style={styles.inputText}
           placeholder="Wachtwoord"
           placeholderTextColor="#9F9F9F"
-          onChangeText={(pass) => setPassword(pass)}
+          onChangeText={pass => setPassword(pass)}
           autoCapitalize="none"
           value={password}
         />

@@ -24,6 +24,14 @@ import FAQ from '../screens/Settings/FAQ';
 import Help from '../screens/Settings/help';
 import Meldingen from '../screens/meldingen';
 
+//Tutorial
+import Tutorial from '../screens/Settings/tutorial';
+import TutorialCreateGroup from '../screens/Settings/tutorialCreateGroup';
+import TutorialSelectGroup from '../screens/Settings/tutorialSelectGroup';
+import TutorialModal from '../screens/Settings/tutorialModal';
+import QRScannerTutorial from '../screens/Settings/QRScannerTutorial';
+import GroepDetailsTutorial from '../screens/Settings/groepDetailsTutorial';
+
 //Profiel imports
 import ProfielTab from '../screens/Profile/profile';
 import ConnectHesje from '../screens/Profile/connectHesje';
@@ -97,7 +105,6 @@ const SettingsStackScreen = () => {
       <SettingsStack.Screen name="Meldingen" component={Meldingen} />
       <SettingsStack.Screen name="FAQ" component={FAQ} />
       <SettingsStack.Screen name="Help" component={Help} />
-      <SettingsStack.Screen name="Login" component={Login} />
     </SettingsStack.Navigator>
   );
 };
@@ -186,10 +193,42 @@ const ProfileStackScreen = ({ navigation, route }) => {
         }}
       />
       <ProfileStack.Screen
+        name="TutorialCreateGroup"
+        component={TutorialCreateGroup}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <ProfileStack.Screen
+        name="TutorialSelectGroup"
+        component={TutorialSelectGroup}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <ProfileStack.Screen
+        name="TutorialModal"
+        component={TutorialModal}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <ProfileStack.Screen
+        name="QRScannerTutorial"
+        component={QRScannerTutorial}
+        options={{ headerShown: false }}
+      />
+      <ProfileStack.Screen
         name="QRScanner"
         component={QRScanner}
         options={{ headerShown: false }}
       />
+      <ProfileStack.Screen
+        name="GroepDetailsTutorial"
+        component={GroepDetailsTutorial}
+        options={{ headerShown: false }}
+      />
+
       <ProfileStack.Screen name="ConnectHesje" component={ConnectHesje} />
       <ProfileStack.Screen name="DisconnectHesje" component={DisconnectHesje} />
     </ProfileStack.Navigator>
@@ -240,6 +279,11 @@ const SafebeeApp = createAppContainer(
   createSwitchNavigator(
     {
       Loading: LoadingScreen,
+      Tutorial: Tutorial,
+      TutorialCreateGroup: TutorialCreateGroup,
+      TutorialModal: TutorialModal,
+      QRScannerTutorial: QRScannerTutorial,
+      GroepDetailsTutorial: GroepDetailsTutorial,
       App: TabNavigator,
       Auth: AuthStackScreen,
     },
