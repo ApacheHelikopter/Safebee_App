@@ -151,7 +151,7 @@ const ProfileStackScreen = ({ navigation, route }) => {
         name="SelecteerGroep"
         component={SelecteerGroep}
         options={{
-          title: 'Selecteer groepen',
+          title: 'Groep bewerken',
           headerBackTitle: ' ',
           headerStyle: {
             backgroundColor: '#FFFFFF',
