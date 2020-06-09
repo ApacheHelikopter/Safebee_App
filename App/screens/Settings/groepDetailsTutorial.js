@@ -13,7 +13,7 @@ import 'firebase/firestore';
 import { FlatList } from 'react-native-gesture-handler';
 
 const SelecteerGroep = ({ navigation }) => {
-  window.addEventListener = (x) => x;
+  window.addEventListener = x => x;
   const [groupName, setGroupName] = useState([]);
 
   const [loading, setLoading] = useState(true);
@@ -25,8 +25,8 @@ const SelecteerGroep = ({ navigation }) => {
     const unsubscribe = db
       .collection('groups')
       .where('createdBy', '==', currentUser)
-      .onSnapshot((querySnapShot) => {
-        const groups = querySnapShot.docs.map((documentSnapShot) => {
+      .onSnapshot(querySnapShot => {
+        const groups = querySnapShot.docs.map(documentSnapShot => {
           return {
             _id: documentSnapShot.id,
             name: '',
@@ -57,7 +57,7 @@ const SelecteerGroep = ({ navigation }) => {
       <View style={styles.error}>
         <FlatList
           data={groupName}
-          keyExtractor={(item) => item._id}
+          keyExtractor={item => item._id}
           renderItem={({ item }) => (
             <TouchableOpacity
               onPress={() =>
@@ -74,7 +74,7 @@ const SelecteerGroep = ({ navigation }) => {
         >
           <Text style={styles.loginText}>Groep toevoegen</Text>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('MijnGroepen')}>
           <Text style={styles.registerBtn}>KLAAR</Text>
         </TouchableOpacity>
       </View>
