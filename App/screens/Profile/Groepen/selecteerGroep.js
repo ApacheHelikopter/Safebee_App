@@ -52,6 +52,10 @@ const SelecteerGroep = ({ navigation }) => {
     <>
       {groupName.length > 0 ? (
         <View style={styles.viewContainer}>
+          <Text style={styles.textGroepBewerken}>
+            Klik op de groep om hesjes toe te voegen of om een groep te
+            bewerken.
+          </Text>
           <View style={styles.error}>
             <FlatList
               data={groupName}
@@ -72,7 +76,9 @@ const SelecteerGroep = ({ navigation }) => {
             >
               <Text style={styles.loginText}>Groep toevoegen</Text>
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('MijnGroepen')}
+            >
               <Text style={styles.register}>Klaar</Text>
             </TouchableOpacity>
           </View>
@@ -177,6 +183,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     color: 'red',
   },
+  textGroepBewerken: {
+    color: '#9F9F9F',
+    position: 'absolute',
+    ...Platform.select({
+      ios: {
+        top: 40,
+        marginLeft: 40,
+        marginRight: 60,
+      },
+      android: {
+        top: 20,
+        marginLeft: 40,
+        marginRight: 60,
+      },
+    }),
+  },
+
   //TUTORIAL
   viewContainerTutorial: {
     flex: 1,

@@ -8,13 +8,14 @@ import {
   Image,
   Modal,
   TouchableHighlight,
+  Platform,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import * as firebase from 'firebase';
 import 'firebase/firestore';
 
 const GroepDetails = ({ route, navigation }) => {
-  window.addEventListener = x => x;
+  window.addEventListener = (x) => x;
   const { groupDetails } = route.params;
   console.log(groupDetails);
   const [groupName, setGroupName] = useState(groupDetails.name);
@@ -41,7 +42,7 @@ const GroepDetails = ({ route, navigation }) => {
             <Text style={styles.titleModal}>Hesjes</Text>
             {groupDetails.names.length > 0 ? (
               <View style={styles.bodyModal}>
-                {groupDetails.names.map(name => (
+                {groupDetails.names.map((name) => (
                   <Text key={name}>{name}</Text>
                 ))}
               </View>
@@ -180,11 +181,13 @@ const styles = StyleSheet.create({
   bodyModal: {
     marginLeft: 10,
     marginBottom: 10,
+    paddingTop: 20,
   },
   backModal: {
     color: '#F6C004',
-    marginLeft: 150,
+    marginLeft: 120,
     marginTop: 20,
+    position: 'absolute',
   },
   groepIconRight: {
     marginLeft: 200,
@@ -218,8 +221,15 @@ const styles = StyleSheet.create({
     width: 60,
     height: 130,
     resizeMode: 'stretch',
-    marginBottom: 40,
-    marginTop: 40,
+    marginBottom: 0,
+    ...Platform.select({
+      ios: {
+        top: -60,
+      },
+      android: {
+        top: -30,
+      },
+    }),
   },
   error: {
     alignItems: 'center',
