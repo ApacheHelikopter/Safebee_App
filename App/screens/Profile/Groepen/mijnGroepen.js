@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   Image,
+  Platform,
 } from 'react-native';
 import GroepButton from '../../../components/Groepen/GroepButton';
 import * as firebase from 'firebase';

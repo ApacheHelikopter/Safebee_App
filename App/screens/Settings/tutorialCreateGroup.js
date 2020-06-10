@@ -73,10 +73,20 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontWeight: 'bold',
     fontSize: 24,
-    marginLeft: 40,
-    marginRight: 40,
+
     marginBottom: 60,
-    top: -70,
+    ...Platform.select({
+      ios: {
+        top: -90,
+        marginLeft: 40,
+        marginRight: 90,
+      },
+      android: {
+        top: -70,
+        marginLeft: 40,
+        marginRight: 40,
+      },
+    }),
   },
   arrow: {
     width: 40,
@@ -85,7 +95,14 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 60,
     zIndex: 2,
-    top: 180,
+    ...Platform.select({
+      ios: {
+        top: 270,
+      },
+      android: {
+        top: 180,
+      },
+    }),
   },
   viewContainer: {
     flex: 1,

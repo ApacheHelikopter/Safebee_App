@@ -8,6 +8,7 @@ import {
   TextInput,
   Modal,
   TouchableHighlight,
+  Platform,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import * as firebase from 'firebase';
@@ -87,16 +88,34 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontWeight: 'bold',
     fontSize: 26,
-    marginLeft: 40,
-    marginTop: -100,
+    ...Platform.select({
+      ios: {
+        marginTop: -140,
+        marginLeft: -160,
+      },
+      android: {
+        marginTop: -100,
+        marginLeft: 40,
+      },
+    }),
   },
   tutorialAanwijzing: {
     color: '#FFFFFF',
     fontWeight: 'bold',
     fontSize: 24,
-    marginLeft: 40,
-    marginRight: 40,
-    marginBottom: 60,
+    ...Platform.select({
+      ios: {
+        marginTop: -110,
+        position: 'absolute',
+        marginLeft: -160,
+      },
+      android: {
+        marginTop: 0,
+        marginLeft: 40,
+        marginRight: 40,
+        marginBottom: 60,
+      },
+    }),
   },
   arrow: {
     width: 40,
@@ -105,7 +124,14 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 10,
     zIndex: 200,
-    top: -60,
+    ...Platform.select({
+      ios: {
+        top: -90,
+      },
+      android: {
+        top: -60,
+      },
+    }),
   },
   circle: {
     width: 55,

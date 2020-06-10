@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   Image,
+  Platform,
 } from 'react-native';
 import GroepButton from '../../../components/Groepen/GroepButton';
 import * as firebase from 'firebase';
@@ -190,7 +191,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 26,
     marginLeft: 40,
-    top: -20,
+    ...Platform.select({
+      ios: {
+        top: -80,
+      },
+      android: {
+        top: -20,
+      },
+    }),
   },
   tutorialAanwijzing: {
     color: '#FFFFFF',
@@ -199,7 +207,14 @@ const styles = StyleSheet.create({
     marginLeft: 40,
     marginRight: 40,
     marginBottom: 60,
-    top: -20,
+    ...Platform.select({
+      ios: {
+        top: -80,
+      },
+      android: {
+        top: -20,
+      },
+    }),
   },
   groupBtn: {
     width: '80%',
@@ -222,16 +237,39 @@ const styles = StyleSheet.create({
   arrow: {
     width: 50,
     height: 190,
+    ...Platform.select({
+      ios: {
+        height: 230,
+      },
+      android: {
+        height: 190,
+      },
+    }),
     resizeMode: 'stretch',
     position: 'absolute',
     right: 60,
     zIndex: 2,
+    ...Platform.select({
+      ios: {
+        top: 240,
+      },
+      android: {
+        top: 190,
+      },
+    }),
   },
   errorMessageTutorial: {
     alignItems: 'center',
     justifyContent: 'center',
     color: '#9F9F9F',
-    top: -20,
+    ...Platform.select({
+      ios: {
+        top: -50,
+      },
+      android: {
+        top: -20,
+      },
+    }),
   },
 });
 
