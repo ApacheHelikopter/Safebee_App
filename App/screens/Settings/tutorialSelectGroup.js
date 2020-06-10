@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   Image,
+  Platform,
 } from 'react-native';
 import GroepButton from '../../components/Groepen/GroepButton';
 import * as firebase from 'firebase';
@@ -72,14 +73,8 @@ const SelecteerGroep = ({ navigation }) => {
             </TouchableOpacity>
           )}
         />
-        <TouchableOpacity
-          style={styles.saveBtn}
-          onPress={() => navigation.navigate('CreateGroep')}
-        >
+        <TouchableOpacity style={styles.saveBtn}>
           <Text style={styles.saveText}>Groep toevoegen</Text>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Text style={styles.register}>Klaar</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -168,19 +163,36 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontWeight: 'bold',
     fontSize: 24,
-    marginLeft: 40,
-    marginRight: 40,
     marginBottom: 120,
-    marginTop: -40,
+    ...Platform.select({
+      ios: {
+        marginLeft: 25,
+        marginRight: 40,
+        marginTop: -70,
+      },
+      android: {
+        marginLeft: 40,
+        marginRight: 40,
+        marginTop: -40,
+      },
+    }),
   },
   arrow: {
     width: 30,
     height: 120,
     resizeMode: 'stretch',
     position: 'absolute',
-    right: 60,
+    right: 90,
     zIndex: 2,
-    top: 140,
+    top: 190,
+    ...Platform.select({
+      ios: {
+        top: 280,
+      },
+      android: {
+        top: 190,
+      },
+    }),
   },
   errorMessageTutorial: {
     alignItems: 'center',
