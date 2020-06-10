@@ -15,7 +15,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const QRScanner = ({ route, navigation }) => {
   const [hasPermission, setHasPermission] = useState(null);
-  const [scanned, setScanned] = useState(false);
+  const [scanned, setScanned] = useState(true);
   const { groupDetails } = route.params;
   const db = firebase.firestore();
 
@@ -108,10 +108,14 @@ const QRScanner = ({ route, navigation }) => {
         </TouchableHighlight>
       </View>
       {scanned ? (
-        <Button
-          title={'Scan volgend hesje'}
-          onPress={() => setScanned(false)}
-        />
+        <View style={styles.buttonNext}>
+          <TouchableHighlight
+            style={styles.readyViewNext}
+            onPress={() => setScanned(false)}
+          >
+            <Text style={styles.scanText}>Scan volgend hesje</Text>
+          </TouchableHighlight>
+        </View>
       ) : (
         <View style={styles.scanHesjeView}>
           <Text style={styles.scanHesje}>Scan het hesje</Text>
@@ -122,11 +126,11 @@ const QRScanner = ({ route, navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  buttonReady: {
+  buttonNext: {
     marginLeft: 60,
     marginRight: 60,
   },
-  readyView: {
+  readyViewNext: {
     width: '100%',
     backgroundColor: '#ffffff90',
     borderRadius: 25,
@@ -145,6 +149,24 @@ const styles = StyleSheet.create({
     position: 'absolute',
     ...Platform.select({
       ios: {
+        bottom: 150,
+      },
+      android: {
+        bottom: 120,
+      },
+    }),
+  },
+  scanText: {
+    fontSize: 18,
+    color: '#FFFFFF',
+    fontWeight: 'bold',
+  },
+  readyView: {
+    width: '100%',
+    alignItems: 'center',
+    position: 'absolute',
+    ...Platform.select({
+      ios: {
         bottom: 120,
       },
       android: {
@@ -153,9 +175,8 @@ const styles = StyleSheet.create({
     }),
   },
   readyText: {
-    fontSize: 18,
-    color: '#FFFFFF',
-    fontWeight: 'bold',
+    fontSize: 16,
+    color: '#F6C004',
   },
   scanHesjeView: {
     width: '100%',
