@@ -49,29 +49,38 @@ const MijnGroepen = ({ navigation }) => {
   }
 
   return (
-    <View style={styles.viewContainer}>
-      <FlatList
-        data={groupName}
-        keyExtractor={(item) => item._id}
-        renderItem={({ item }) => (
-          <TouchableOpacity
-            onPress={() =>
-              navigation.navigate('GroepDetails', { groupDetails: item })
-            }
-          >
-            <GroepButton name={item.name} />
+    <>
+      {groupName.length > 0 ? (
+        <View style={styles.viewContainer}>
+          <View style={styles.error}>
+            <FlatList
+              data={groupName}
+              keyExtractor={(item) => item._id}
+              renderItem={({ item }) => <GroepButton name={item.name} />}
+            />
+          </View>
+          <TouchableOpacity>
+            <Text
+              style={styles.register}
+              onPress={() => navigation.navigate('SelecteerGroep')}
+            >
+              BEWERKEN
+            </Text>
           </TouchableOpacity>
-        )}
-      />
-      <TouchableOpacity>
-        <Text
-          style={styles.register}
-          onPress={() => navigation.navigate('SelecteerGroep')}
-        >
-          BEWERKEN
-        </Text>
-      </TouchableOpacity>
-    </View>
+        </View>
+      ) : (
+        <View style={styles.viewContainer}>
+          <TouchableOpacity>
+            <Text
+              style={styles.register}
+              onPress={() => navigation.navigate('SelecteerGroep')}
+            >
+              BEWERKEN
+            </Text>
+          </TouchableOpacity>
+        </View>
+      )}
+    </>
   );
 };
 
@@ -123,7 +132,7 @@ const styles = StyleSheet.create({
   },
   register: {
     color: '#F6C004',
-    fontSize: 12,
+    fontSize: 14,
   },
   logo: {
     width: 60,
@@ -133,8 +142,11 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
   error: {
+    alignItems: 'center',
+    justifyContent: 'center',
     width: '80%',
     marginBottom: 40,
+    top: -100,
   },
   errorMessage: {
     alignItems: 'center',

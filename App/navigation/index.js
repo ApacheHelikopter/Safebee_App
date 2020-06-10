@@ -1,12 +1,9 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
 import { createSwitchNavigator, createAppContainer } from 'react-navigation';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import connectHesjes from '../screens/connectHesjes';
-import connect from '../screens/connect';
 import QRScanner from '../screens/QRScanner';
 
 //Auth imports
@@ -15,7 +12,6 @@ import Register from '../screens/Auth/registerScreen';
 import LoadingScreen from '../screens/Auth/loadingScreen';
 
 //Map imports
-import Map from '../screens/map';
 import GeoLocationMap from '../screens/map2';
 
 //Settings imports
@@ -151,7 +147,7 @@ const ProfileStackScreen = ({ navigation, route }) => {
         name="SelecteerGroep"
         component={SelecteerGroep}
         options={{
-          title: 'Selecteer groepen',
+          title: 'Groep bewerken',
           headerBackTitle: ' ',
           headerStyle: {
             backgroundColor: '#FFFFFF',

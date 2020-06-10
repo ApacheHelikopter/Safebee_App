@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   loginBtn: {
-    width: '80%',
+    width: '100%',
     backgroundColor: '#ffffff',
     borderRadius: 25,
     shadowColor: '#000000',
@@ -154,8 +154,9 @@ const styles = StyleSheet.create({
     color: '#F6C004',
   },
   register: {
-    color: '#9F9F9F',
-    fontSize: 12,
+    color: '#F6C004',
+    fontSize: 13,
+    marginTop: 10,
   },
   logo: {
     width: 60,
