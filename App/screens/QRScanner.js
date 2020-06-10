@@ -15,7 +15,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const QRScanner = ({ route, navigation }) => {
   const [hasPermission, setHasPermission] = useState(null);
-  const [scanned, setScanned] = useState(true);
+  const [scanned, setScanned] = useState(false);
   const { groupDetails } = route.params;
   const db = firebase.firestore();
 
@@ -163,6 +163,7 @@ const styles = StyleSheet.create({
   },
   readyView: {
     width: '100%',
+    height: 100,
     alignItems: 'center',
     position: 'absolute',
     ...Platform.select({
