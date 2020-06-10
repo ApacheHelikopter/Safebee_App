@@ -12,7 +12,7 @@ import * as firebase from 'firebase';
 import 'firebase/firestore';
 
 const TutorialCreateGroup = ({ navigation }) => {
-  window.addEventListener = x => x;
+  window.addEventListener = (x) => x;
   const [user, setUser] = useState(null);
   const [group, setGroup] = useState('');
 
@@ -79,13 +79,13 @@ const styles = StyleSheet.create({
     top: -70,
   },
   arrow: {
-    width: 30,
-    height: 100,
+    width: 40,
+    height: 140,
     resizeMode: 'stretch',
     position: 'absolute',
     right: 60,
     zIndex: 2,
-    top: 170,
+    top: 180,
   },
   viewContainer: {
     flex: 1,

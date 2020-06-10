@@ -95,7 +95,7 @@ const SelecteerGroep = ({ navigation }) => {
           </View>
 
           <TouchableOpacity
-            style={styles.loginBtn}
+            style={styles.groupBtn}
             onPress={() => navigation.navigate('TutorialCreateGroup')}
           >
             <Text style={styles.loginText}>Groep toevoegen</Text>
@@ -190,6 +190,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 26,
     marginLeft: 40,
+    top: -20,
   },
   tutorialAanwijzing: {
     color: '#FFFFFF',
@@ -198,6 +199,25 @@ const styles = StyleSheet.create({
     marginLeft: 40,
     marginRight: 40,
     marginBottom: 60,
+    top: -20,
+  },
+  groupBtn: {
+    width: '80%',
+    backgroundColor: '#ffffff',
+    borderRadius: 25,
+    shadowColor: '#000000',
+    shadowOpacity: 0.25,
+    shadowRadius: 2,
+    shadowOffset: {
+      height: 1,
+      width: 1,
+    },
+    elevation: 2,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 40,
+    marginBottom: 10,
   },
   arrow: {
     width: 50,
@@ -211,6 +231,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     color: '#9F9F9F',
+    top: -20,
   },
 });
 

@@ -178,9 +178,9 @@ const styles = StyleSheet.create({
     height: 120,
     resizeMode: 'stretch',
     position: 'absolute',
-    right: 60,
+    right: 90,
     zIndex: 2,
-    top: 140,
+    top: 190,
   },
   errorMessageTutorial: {
     alignItems: 'center',
