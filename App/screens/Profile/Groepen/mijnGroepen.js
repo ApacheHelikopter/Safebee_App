@@ -49,23 +49,38 @@ const MijnGroepen = ({ navigation }) => {
   }
 
   return (
-    <View style={styles.viewContainer}>
-      <View style={styles.error}>
-        <FlatList
-          data={groupName}
-          keyExtractor={(item) => item._id}
-          renderItem={({ item }) => <GroepButton name={item.name} />}
-        />
-      </View>
-      <TouchableOpacity>
-        <Text
-          style={styles.register}
-          onPress={() => navigation.navigate('SelecteerGroep')}
-        >
-          BEWERKEN
-        </Text>
-      </TouchableOpacity>
-    </View>
+    <>
+      {groupName.length > 0 ? (
+        <View style={styles.viewContainer}>
+          <View style={styles.error}>
+            <FlatList
+              data={groupName}
+              keyExtractor={(item) => item._id}
+              renderItem={({ item }) => <GroepButton name={item.name} />}
+            />
+          </View>
+          <TouchableOpacity>
+            <Text
+              style={styles.register}
+              onPress={() => navigation.navigate('SelecteerGroep')}
+            >
+              BEWERKEN
+            </Text>
+          </TouchableOpacity>
+        </View>
+      ) : (
+        <View style={styles.viewContainer}>
+          <TouchableOpacity>
+            <Text
+              style={styles.register}
+              onPress={() => navigation.navigate('SelecteerGroep')}
+            >
+              BEWERKEN
+            </Text>
+          </TouchableOpacity>
+        </View>
+      )}
+    </>
   );
 };
 
