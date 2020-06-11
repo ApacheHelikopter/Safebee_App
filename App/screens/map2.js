@@ -20,7 +20,7 @@ const LATITUDE_DELTA = 0.0222;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 const GeoLocationMap = () => {
-  window.addEventListener = x => x;
+  window.addEventListener = (x) => x;
   const [initialPosition, setInitialPosition] = useState({
     latitude: 0,
     longitude: 0,
@@ -46,7 +46,7 @@ const GeoLocationMap = () => {
   useEffect(() => {
     async function currentPosition() {
       navigator.geolocation.getCurrentPosition(
-        position => {
+        (position) => {
           let lat = parseFloat(position.coords.latitude);
           let long = parseFloat(position.coords.longitude);
 
@@ -60,14 +60,14 @@ const GeoLocationMap = () => {
           setInitialPosition(initialRegion);
           setmarkerPosition(initialRegion);
         },
-        error => alert(JSON.stringify(error)),
+        (error) => alert(JSON.stringify(error)),
         { enableHighAccuracy: true, timeout: 2000, maximumAge: 1000 }
       );
     }
     currentPosition();
 
     async function watchPosition() {
-      let watchID = navigator.geolocation.watchPosition(position => {
+      let watchID = navigator.geolocation.watchPosition((position) => {
         var lat = parseFloat(position.coords.latitude);
         var long = parseFloat(position.coords.longitude);
 
@@ -101,7 +101,7 @@ const GeoLocationMap = () => {
   const getLocationHesjes = () => {
     const setLocationHesje = () => {
       const firebaseGetLat = () => {
-        db.ref('lat').on('value', snapshot => {
+        db.ref('lat').on('value', (snapshot) => {
           const gpsLat = snapshot.val();
           setGpsLat(gpsLat);
         });
@@ -109,7 +109,7 @@ const GeoLocationMap = () => {
       firebaseGetLat();
 
       const firebaseGetLng = () => {
-        db.ref('lng').on('value', snapshot => {
+        db.ref('lng').on('value', (snapshot) => {
           const gpsLng = snapshot.val();
           setGpsLng(gpsLng);
         });
@@ -127,15 +127,6 @@ const GeoLocationMap = () => {
 
   return (
     <View style={styles.container}>
-      <BottomSheet
-        ref={bottomSheetRef}
-        snapPoints={['50%', 0]}
-        renderContent={Radius}
-        renderHeader={renderHeader}
-        initialSnap={1}
-        enabledBottomInitialAnimation={true}
-        enabledContentGestureInteraction={false}
-      />
       <MapView
         ref={map}
         style={styles.mapStyle}
@@ -148,9 +139,9 @@ const GeoLocationMap = () => {
           <View style={styles.markerHesje} />
         </MapView.Marker>
       </MapView>
-      <TouchableOpacity onPress={showRadius} style={styles.FAB}>
-        <Icon name="group-work" size={30} color={'white'} />
-      </TouchableOpacity>
+      <View style={styles.radiusView}>
+        <Radius></Radius>
+      </View>
       <TouchableOpacity
         onPress={showCurrentLocation}
         style={styles.FABposition}
@@ -162,6 +153,10 @@ const GeoLocationMap = () => {
 };
 
 const styles = StyleSheet.create({
+  radiusView: {
+    position: 'absolute',
+    bottom: 20,
+  },
   radius: {
     height: 50,
     width: 50,
