@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
   screen: {
     backgroundColor: 'white',
     height: '100%',
+    fontFamily: 'Roboto, Helvetica Neue, Helvetica, sans-serif',
   },
   settingsTab: {
     display: 'flex',

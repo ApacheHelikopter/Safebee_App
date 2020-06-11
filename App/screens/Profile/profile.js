@@ -11,7 +11,12 @@ const ProfielTab = ({ navigation }) => {
           <TouchableOpacity style={styles.textcontainer}>
             <Text style={styles.text}>20</Text>
             <Text style={styles.times}>x</Text>
-            <Icon name="face" size={35} />
+            <Icon
+              name="face"
+              size={35}
+              const
+              fontFamily={'Roboto, Helvetica Neue, Helvetica, sans-serif'}
+            />
           </TouchableOpacity>
         </View>
         <View style={styles.profileActions}>
