@@ -155,7 +155,7 @@ const GeoLocationMap = () => {
 const styles = StyleSheet.create({
   radiusView: {
     position: 'absolute',
-    bottom: 20,
+    bottom: 35,
   },
   radius: {
     height: 50,
@@ -216,8 +216,8 @@ const styles = StyleSheet.create({
     height: 56,
     alignItems: 'center',
     justifyContent: 'center',
-    left: 20,
-    bottom: '75%',
+    right: 40,
+    bottom: 120,
     backgroundColor: '#F6C004',
     borderRadius: 30,
     elevation: 8,

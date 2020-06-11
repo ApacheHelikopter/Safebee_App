@@ -27,19 +27,32 @@ const styles = StyleSheet.create({
     elevation: 2,
     height: 50,
   },
+  track: {
+    height: 20,
+  },
+  sliderWidth: {
+    padding: 20,
+  },
 });
 
 const Radius = () => (
   <View style={styles.panel}>
-    <Text style={styles.panelTitle}>zone instellen</Text>
+    <Text style={styles.panelTitle}></Text>
     <View style={styles.sliderView}>
-      <Slider
-        style={{ width: 300 }}
-        step={5}
-        minimumValue={1}
-        maximumValue={200}
-        value={100}
-      />
+      <View style={styles.sliderWidth}>
+        <Slider
+          style={{ width: 270 }}
+          step={5}
+          minimumValue={1}
+          maximumValue={200}
+          value={3}
+          maximumTrackTintColor="#FFFFFF"
+          minimumTrackTintColor="#655D5D"
+          thumbTintColor="#655D5D"
+          thumbStyle={styles.thumb}
+          trackStyle={styles.track}
+        />
+      </View>
     </View>
   </View>
 );
