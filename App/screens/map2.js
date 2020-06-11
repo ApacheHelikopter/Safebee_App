@@ -7,6 +7,8 @@ import {
   Dimensions,
   TouchableOpacity,
   Slider,
+  Modal,
+  TouchableHighlight,
 } from 'react-native';
 import * as Location from 'expo-location';
 import BottomSheet from 'reanimated-bottom-sheet';
@@ -15,6 +17,7 @@ import Radius from '../components/Radius/radius';
 import renderHeader from '../components/BottomSheet/header';
 import * as firebase from 'firebase';
 import 'firebase/firestore';
+import { isPointWithinRadius } from 'geolib';
 const { width, height } = Dimensions.get('window');
 
 const ASPECT_RATIO = width / height;
@@ -47,6 +50,8 @@ const GeoLocationMap = () => {
 
   const [gpsLat, setGpsLat] = useState(0);
   const [gpsLng, setGpsLng] = useState(0);
+
+  const [modalVisible, setModalVisible] = useState(false);
 
   const db = firebase.database();
 
@@ -144,6 +149,19 @@ const GeoLocationMap = () => {
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location);
     })();
+
+    const isHesjeInRadius = isPointWithinRadius(
+      { latitude: gpsLat, longitude: gpsLng },
+      {
+        latitude: locationUser.coords.latitude,
+        longitude: locationUser.coords.longitude,
+      },
+      countSlider.value
+    );
+
+    if (isHesjeInRadius == false) {
+      setModalVisible(true);
+    }
   };
 
   return (
@@ -198,6 +216,27 @@ const GeoLocationMap = () => {
       >
         <Icon name="gps-fixed" size={30} color={'white'} />
       </TouchableOpacity>
+
+      <Modal animationType="fade" transparent={true} visible={modalVisible}>
+        <View style={styles.viewContainerModal}>
+          <View style={styles.modalView}>
+            <Text style={styles.titleModal}>OPGELET!</Text>
+            <Text style={styles.titleModal}>
+              Er is een hesje buiten de perimeter!
+            </Text>
+            <View>
+              <TouchableOpacity
+                style={styles.groepIconRight}
+                onPress={() => {
+                  setModalVisible(!modalVisible);
+                }}
+              >
+                <Text>OK</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -304,6 +343,47 @@ const styles = StyleSheet.create({
   },
   sliderWidth: {
     padding: 20,
+  },
+
+  //MODAL
+
+  viewContainerModal: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(52, 52, 52, 0.8)',
+  },
+  modalView: {
+    width: '80%',
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 20,
+    alignItems: 'flex-start',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  titleModal: {
+    fontWeight: 'bold',
+    marginLeft: 10,
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  backModal: {
+    color: '#F6C004',
+    marginLeft: 120,
+    marginTop: 20,
+    position: 'absolute',
+  },
+  groepIconRight: {
+    marginLeft: 200,
   },
 });
 
