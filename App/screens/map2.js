@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import MapView from 'react-native-maps';
+import MapView, { Circle } from 'react-native-maps';
 import {
   StyleSheet,
   Text,
   View,
   Dimensions,
   TouchableOpacity,
+  Slider,
 } from 'react-native';
+import * as Location from 'expo-location';
 import BottomSheet from 'reanimated-bottom-sheet';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Radius from '../components/Radius/radius';
@@ -20,7 +22,7 @@ const LATITUDE_DELTA = 0.0222;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 const GeoLocationMap = () => {
-  window.addEventListener = (x) => x;
+  window.addEventListener = x => x;
   const [initialPosition, setInitialPosition] = useState({
     latitude: 0,
     longitude: 0,
@@ -38,15 +40,22 @@ const GeoLocationMap = () => {
     longitude: 0,
   });
 
+  const [locationUser, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+
+  const [countSlider, setCountSlider] = useState(0);
+
   const [gpsLat, setGpsLat] = useState(0);
   const [gpsLng, setGpsLng] = useState(0);
 
   const db = firebase.database();
 
+  useEffect(() => {});
+
   useEffect(() => {
     async function currentPosition() {
       navigator.geolocation.getCurrentPosition(
-        (position) => {
+        position => {
           let lat = parseFloat(position.coords.latitude);
           let long = parseFloat(position.coords.longitude);
 
@@ -60,14 +69,14 @@ const GeoLocationMap = () => {
           setInitialPosition(initialRegion);
           setmarkerPosition(initialRegion);
         },
-        (error) => alert(JSON.stringify(error)),
+        error => alert(JSON.stringify(error)),
         { enableHighAccuracy: true, timeout: 2000, maximumAge: 1000 }
       );
     }
     currentPosition();
 
     async function watchPosition() {
-      let watchID = navigator.geolocation.watchPosition((position) => {
+      let watchID = navigator.geolocation.watchPosition(position => {
         var lat = parseFloat(position.coords.latitude);
         var long = parseFloat(position.coords.longitude);
 
@@ -80,19 +89,26 @@ const GeoLocationMap = () => {
 
         setInitialPosition(lastRegion);
         setmarkerPosition(lastRegion);
+        console.log(lastRegion);
         return () => {
           navigator.geolocation.clearWatch(watchID);
         };
       });
     }
     watchPosition();
+
+    (async () => {
+      let { status } = await Location.requestPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+    })();
   }, []);
 
-  const bottomSheetRef = React.createRef();
   const map = React.createRef();
-  const showRadius = () => {
-    bottomSheetRef.current.snapTo(0);
-  };
 
   const showCurrentLocation = () => {
     map.current.animateToRegion(markerPosition, 1000);
@@ -101,7 +117,7 @@ const GeoLocationMap = () => {
   const getLocationHesjes = () => {
     const setLocationHesje = () => {
       const firebaseGetLat = () => {
-        db.ref('lat').on('value', (snapshot) => {
+        db.ref('lat').on('value', snapshot => {
           const gpsLat = snapshot.val();
           setGpsLat(gpsLat);
         });
@@ -109,7 +125,7 @@ const GeoLocationMap = () => {
       firebaseGetLat();
 
       const firebaseGetLng = () => {
-        db.ref('lng').on('value', (snapshot) => {
+        db.ref('lng').on('value', snapshot => {
           const gpsLng = snapshot.val();
           setGpsLng(gpsLng);
         });
@@ -123,6 +139,11 @@ const GeoLocationMap = () => {
       setGpsLocation(gpsLocation);
     };
     setLocationHesje();
+
+    (async () => {
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+    })();
   };
 
   return (
@@ -135,12 +156,41 @@ const GeoLocationMap = () => {
         showsUserLocation
         onUserLocationChange={getLocationHesjes}
       >
+        {locationUser && countSlider ? (
+          <Circle
+            center={{
+              latitude: locationUser.coords.latitude,
+              longitude: locationUser.coords.longitude,
+            }}
+            radius={countSlider.value}
+            fillColor={'rgba(246, 192, 4, 0.4)'}
+          />
+        ) : null}
         <MapView.Marker key={1} coordinate={gpsLocation}>
           <View style={styles.markerHesje} />
         </MapView.Marker>
       </MapView>
       <View style={styles.radiusView}>
-        <Radius></Radius>
+        <View style={styles.panel}>
+          <Text style={styles.panelTitle}></Text>
+          <View style={styles.sliderView}>
+            <View style={styles.sliderWidth}>
+              <Slider
+                style={{ width: 270 }}
+                step={5}
+                minimumValue={1}
+                maximumValue={200}
+                value={countSlider}
+                onValueChange={value => setCountSlider({ value })}
+                maximumTrackTintColor="#FFFFFF"
+                minimumTrackTintColor="#655D5D"
+                thumbTintColor="#655D5D"
+                thumbStyle={styles.thumb}
+                trackStyle={styles.track}
+              />
+            </View>
+          </View>
+        </View>
       </View>
       <TouchableOpacity
         onPress={showCurrentLocation}
@@ -221,6 +271,39 @@ const styles = StyleSheet.create({
     backgroundColor: '#F6C004',
     borderRadius: 30,
     elevation: 8,
+  },
+
+  //SLIDER
+  panel: {
+    height: '100%',
+  },
+  panelTitle: {
+    alignSelf: 'flex-start',
+    fontSize: 16,
+    height: 35,
+    color: '#ffffff',
+  },
+  sliderView: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    backgroundColor: '#ffffff90',
+    borderRadius: 25,
+    shadowColor: '#000000',
+    shadowOpacity: 0.25,
+    shadowRadius: 2,
+    shadowOffset: {
+      height: 1,
+      width: 1,
+    },
+    elevation: 2,
+    height: 50,
+  },
+  track: {
+    height: 20,
+  },
+  sliderWidth: {
+    padding: 20,
   },
 });
 
