@@ -158,36 +158,10 @@ const GeoLocationMap = () => {
       },
       countSlider.value
     );
-
-    if (isHesjeInRadius == false) {
-      setModalVisible(true);
-    }
   };
 
   return (
     <View style={styles.container}>
-      <MapView
-        ref={map}
-        style={styles.mapStyle}
-        initialRegion={initialPosition}
-        mapType={'satellite'}
-        showsUserLocation
-        onUserLocationChange={getLocationHesjes}
-      >
-        {locationUser && countSlider ? (
-          <Circle
-            center={{
-              latitude: locationUser.coords.latitude,
-              longitude: locationUser.coords.longitude,
-            }}
-            radius={countSlider.value}
-            fillColor={'rgba(246, 192, 4, 0.4)'}
-          />
-        ) : null}
-        <MapView.Marker key={1} coordinate={gpsLocation}>
-          <View style={styles.markerHesje} />
-        </MapView.Marker>
-      </MapView>
       <View style={styles.radiusView}>
         <View style={styles.panel}>
           <Text style={styles.panelTitle}></Text>
@@ -210,12 +184,6 @@ const GeoLocationMap = () => {
           </View>
         </View>
       </View>
-      <TouchableOpacity
-        onPress={showCurrentLocation}
-        style={styles.FABposition}
-      >
-        <Icon name="gps-fixed" size={30} color={'white'} />
-      </TouchableOpacity>
 
       <Modal animationType="fade" transparent={true} visible={modalVisible}>
         <View style={styles.viewContainerModal}>
@@ -237,6 +205,35 @@ const GeoLocationMap = () => {
           </View>
         </View>
       </Modal>
+      {locationUser ? (
+        <MapView
+          ref={map}
+          style={styles.mapStyle}
+          initialRegion={initialPosition}
+          mapType={'satellite'}
+          showsUserLocation
+          onUserLocationChange={getLocationHesjes}
+        >
+          <Circle
+            center={{
+              latitude: locationUser.coords.latitude,
+              longitude: locationUser.coords.longitude,
+            }}
+            radius={countSlider.value}
+            fillColor={'rgba(246, 192, 4, 0.4)'}
+          />
+
+          <MapView.Marker key={1} coordinate={gpsLocation}>
+            <View style={styles.markerHesje} />
+          </MapView.Marker>
+        </MapView>
+      ) : null}
+      <TouchableOpacity
+        onPress={showCurrentLocation}
+        style={styles.FABposition}
+      >
+        <Icon name="gps-fixed" size={30} color={'white'} />
+      </TouchableOpacity>
     </View>
   );
 };
