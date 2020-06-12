@@ -14,7 +14,7 @@ import 'firebase/firestore';
 import { FlatList } from 'react-native-gesture-handler';
 
 const SelecteerGroep = ({ navigation }) => {
-  window.addEventListener = x => x;
+  window.addEventListener = (x) => x;
   const [groupName, setGroupName] = useState([]);
 
   const [loading, setLoading] = useState(true);
@@ -26,8 +26,8 @@ const SelecteerGroep = ({ navigation }) => {
     const unsubscribe = db
       .collection('groups')
       .where('createdBy', '==', currentUser)
-      .onSnapshot(querySnapShot => {
-        const groups = querySnapShot.docs.map(documentSnapShot => {
+      .onSnapshot((querySnapShot) => {
+        const groups = querySnapShot.docs.map((documentSnapShot) => {
           return {
             _id: documentSnapShot.id,
             name: '',
@@ -59,7 +59,7 @@ const SelecteerGroep = ({ navigation }) => {
           <View style={styles.error}>
             <FlatList
               data={groupName}
-              keyExtractor={item => item._id}
+              keyExtractor={(item) => item._id}
               renderItem={({ item }) => (
                 <TouchableOpacity
                   onPress={() =>
@@ -219,7 +219,7 @@ const styles = StyleSheet.create({
         top: -80,
       },
       android: {
-        top: -20,
+        top: -70,
       },
     }),
   },
@@ -235,7 +235,7 @@ const styles = StyleSheet.create({
         top: -80,
       },
       android: {
-        top: -20,
+        top: -70,
       },
     }),
   },
@@ -259,27 +259,20 @@ const styles = StyleSheet.create({
   },
   arrow: {
     width: 50,
-    height: 190,
     ...Platform.select({
       ios: {
-        height: 230,
+        height: '25%',
+        top: '30%',
       },
       android: {
-        height: 190,
+        height: '25%',
+        top: '30%',
       },
     }),
     resizeMode: 'stretch',
     position: 'absolute',
     right: 60,
     zIndex: 2,
-    ...Platform.select({
-      ios: {
-        top: 240,
-      },
-      android: {
-        top: 190,
-      },
-    }),
   },
   errorMessageTutorial: {
     alignItems: 'center',

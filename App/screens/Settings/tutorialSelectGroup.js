@@ -163,17 +163,17 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontWeight: 'bold',
     fontSize: 24,
-    marginBottom: 120,
+    marginBottom: '40%',
     ...Platform.select({
       ios: {
         marginLeft: 25,
         marginRight: 40,
-        marginTop: -70,
+        marginTop: '-20%',
       },
       android: {
         marginLeft: 40,
         marginRight: 40,
-        marginTop: -40,
+        marginTop: '-20%',
       },
     }),
   },
@@ -187,10 +187,16 @@ const styles = StyleSheet.create({
     top: 190,
     ...Platform.select({
       ios: {
-        top: 280,
+        top: '30%',
+        height: '15%',
+        width: '7%',
+        right: '15%',
       },
       android: {
-        top: 190,
+        top: '25%',
+        height: '20%',
+        width: '10%',
+        right: '15%',
       },
     }),
   },
