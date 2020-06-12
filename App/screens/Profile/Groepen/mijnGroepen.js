@@ -10,54 +10,120 @@ import {
   Platform,
 } from 'react-native';
 import GroepButton from '../../../components/Groepen/GroepButton';
+import GroepButtonActive from '../../../components/Groepen/GroepButtonActive';
 import * as firebase from 'firebase';
 import 'firebase/firestore';
 import { FlatList } from 'react-native-gesture-handler';
 
 const MijnGroepen = ({ navigation }) => {
-  window.addEventListener = (x) => x;
-  const [groupName, setGroupName] = useState([]);
+  window.addEventListener = x => x;
+  const [activeGroups, setActiveGroups] = useState([]);
+  const [nonActiveGroups, setNonActiveGroups] = useState([]);
 
   const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(null);
+
   const db = firebase.firestore();
 
   useEffect(() => {
-    const currentUser = firebase.auth().currentUser.uid;
+    let currentUser = firebase.auth().currentUser.uid;
+    setUser(currentUser);
 
-    const unsubscribe = db
-      .collection('groups')
-      .where('createdBy', '==', currentUser)
-      .onSnapshot((querySnapShot) => {
-        const groups = querySnapShot.docs.map((documentSnapShot) => {
-          return {
-            _id: documentSnapShot.id,
-            name: '',
-            createdAt: new Date().getTime(),
-            ...documentSnapShot.data(),
-          };
+    const getActiveGroups = () => {
+      db.collection('groups')
+        .where('createdBy', '==', currentUser)
+        .where('status', '==', true)
+        .onSnapshot(querySnapShot => {
+          const groups = querySnapShot.docs.map(documentSnapShot => {
+            return {
+              _id: documentSnapShot.id,
+              name: '',
+              createdAt: new Date().getTime(),
+              ...documentSnapShot.data(),
+            };
+          });
+          setActiveGroups(groups);
+          console.log(activeGroups);
+          if (loading) {
+            setLoading(false);
+          }
         });
-        setGroupName(groups);
+    };
+    getActiveGroups();
 
-        if (loading) {
-          setLoading(false);
-        }
-      });
-    return () => unsubscribe();
+    const getNonActiveGroups = () => {
+      db.collection('groups')
+        .where('createdBy', '==', currentUser)
+        .where('status', '==', false)
+        .onSnapshot(querySnapShot => {
+          const groups = querySnapShot.docs.map(documentSnapShot => {
+            return {
+              _id: documentSnapShot.id,
+              name: '',
+              createdAt: new Date().getTime(),
+              ...documentSnapShot.data(),
+            };
+          });
+          setNonActiveGroups(groups);
+
+          if (loading) {
+            setLoading(false);
+          }
+        });
+    };
+    getNonActiveGroups();
   }, []);
 
   if (loading) {
     return <ActivityIndicator />;
   }
 
+  async function onGroepLongPressActivate(group_id) {
+    await firebase
+      .firestore()
+      .collection('groups')
+      .doc(group_id)
+      .update({
+        status: true,
+      });
+  }
+
+  async function onGroepLongPressDeactivate(group_id) {
+    await firebase
+      .firestore()
+      .collection('groups')
+      .doc(group_id)
+      .update({
+        status: false,
+      });
+  }
+
   return (
     <>
-      {groupName.length > 0 ? (
+      {activeGroups.length || nonActiveGroups.length > 0 ? (
         <View style={styles.viewContainer}>
           <View style={styles.error}>
             <FlatList
-              data={groupName}
-              keyExtractor={(item) => item._id}
-              renderItem={({ item }) => <GroepButton name={item.name} />}
+              data={activeGroups}
+              keyExtractor={item => item._id}
+              renderItem={({ item }) => (
+                <TouchableOpacity
+                  onLongPress={() => onGroepLongPressDeactivate(item._id)}
+                >
+                  <GroepButtonActive name={item.name} />
+                </TouchableOpacity>
+              )}
+            />
+            <FlatList
+              data={nonActiveGroups}
+              keyExtractor={item => item._id}
+              renderItem={({ item }) => (
+                <TouchableOpacity
+                  onLongPress={() => onGroepLongPressActivate(item._id)}
+                >
+                  <GroepButton name={item.name} />
+                </TouchableOpacity>
+              )}
             />
           </View>
           <TouchableOpacity>

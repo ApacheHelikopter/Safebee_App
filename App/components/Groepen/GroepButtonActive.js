@@ -1,0 +1,37 @@
+import React from 'react';
+import { Text, View, StyleSheet } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+
+const GroepButtonActive = ({ name }) => {
+  return (
+    <View style={styles.inputView}>
+      <Icon name="group" size={20} style={styles.groepIcon} />
+      <Text style={styles.inputText}>{name}</Text>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  inputView: {
+    flexDirection: 'row',
+    alignContent: 'center',
+    alignItems: 'center',
+    width: '90%',
+    backgroundColor: '#9F9F9F',
+    borderRadius: 25,
+    height: 50,
+    marginBottom: 20,
+  },
+  inputText: {
+    paddingTop: 14,
+    height: 50,
+    color: '#FFFFFF',
+    width: '100%',
+  },
+  groepIcon: {
+    padding: 20,
+    color: '#FFFFFF',
+  },
+});
+
+export default GroepButtonActive;

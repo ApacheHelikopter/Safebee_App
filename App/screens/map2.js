@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import MapView from 'react-native-maps';
+import MapView, { Circle } from 'react-native-maps';
 import {
   StyleSheet,
   Text,
   View,
   Dimensions,
   TouchableOpacity,
+  Slider,
+  Modal,
+  TouchableHighlight,
 } from 'react-native';
-import BottomSheet from 'reanimated-bottom-sheet';
+import * as Location from 'expo-location';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import Radius from '../components/Radius/radius';
-import renderHeader from '../components/BottomSheet/header';
 import * as firebase from 'firebase';
 import 'firebase/firestore';
+import { isPointWithinRadius } from 'geolib';
 const { width, height } = Dimensions.get('window');
 
 const ASPECT_RATIO = width / height;
@@ -38,10 +40,22 @@ const GeoLocationMap = () => {
     longitude: 0,
   });
 
+  const [locationUser, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+
+  const [countSlider, setCountSlider] = useState(0);
+
   const [gpsLat, setGpsLat] = useState(0);
   const [gpsLng, setGpsLng] = useState(0);
 
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const [groupActive, setGroupActive] = useState(false);
+
   const db = firebase.database();
+  const dbFire = firebase.firestore();
+
+  useEffect(() => {});
 
   useEffect(() => {
     async function currentPosition() {
@@ -80,19 +94,47 @@ const GeoLocationMap = () => {
 
         setInitialPosition(lastRegion);
         setmarkerPosition(lastRegion);
+        console.log(lastRegion);
         return () => {
           navigator.geolocation.clearWatch(watchID);
         };
       });
     }
     watchPosition();
+
+    (async () => {
+      let { status } = await Location.requestPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+    })();
+
+    const currentUser = firebase.auth().currentUser.uid;
+
+    const checkActiveGroups = () => {
+      dbFire
+        .collection('groups')
+        .where('createdBy', '==', currentUser)
+        .onSnapshot(querySnapShot => {
+          querySnapShot.docs.map(documentSnapShot => {
+            if (
+              documentSnapShot.data().status == true &&
+              documentSnapShot.data().names == 'Safebee'
+            ) {
+              setGroupActive(true);
+            } else {
+              setGroupActive(false);
+            }
+          });
+        });
+    };
+    checkActiveGroups();
   }, []);
 
-  const bottomSheetRef = React.createRef();
   const map = React.createRef();
-  const showRadius = () => {
-    bottomSheetRef.current.snapTo(0);
-  };
 
   const showCurrentLocation = () => {
     map.current.animateToRegion(markerPosition, 1000);
@@ -123,34 +165,91 @@ const GeoLocationMap = () => {
       setGpsLocation(gpsLocation);
     };
     setLocationHesje();
+
+    (async () => {
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+    })();
+
+    const isHesjeInRadius = isPointWithinRadius(
+      { latitude: gpsLat, longitude: gpsLng },
+      {
+        latitude: locationUser.coords.latitude,
+        longitude: locationUser.coords.longitude,
+      },
+      countSlider.value
+    );
   };
 
   return (
     <View style={styles.container}>
-      <BottomSheet
-        ref={bottomSheetRef}
-        snapPoints={['50%', 0]}
-        renderContent={Radius}
-        renderHeader={renderHeader}
-        initialSnap={1}
-        enabledBottomInitialAnimation={true}
-        enabledContentGestureInteraction={false}
-      />
-      <MapView
-        ref={map}
-        style={styles.mapStyle}
-        initialRegion={initialPosition}
-        mapType={'satellite'}
-        showsUserLocation
-        onUserLocationChange={getLocationHesjes}
-      >
-        <MapView.Marker key={1} coordinate={gpsLocation}>
-          <View style={styles.markerHesje} />
-        </MapView.Marker>
-      </MapView>
-      <TouchableOpacity onPress={showRadius} style={styles.FAB}>
-        <Icon name="group-work" size={30} color={'white'} />
-      </TouchableOpacity>
+      <View style={styles.radiusView}>
+        <View style={styles.panel}>
+          <Text style={styles.panelTitle}></Text>
+          <View style={styles.sliderView}>
+            <View style={styles.sliderWidth}>
+              <Slider
+                style={{ width: 270 }}
+                step={5}
+                minimumValue={1}
+                maximumValue={200}
+                value={countSlider}
+                onValueChange={value => setCountSlider({ value })}
+                maximumTrackTintColor="#FFFFFF"
+                minimumTrackTintColor="#655D5D"
+                thumbTintColor="#655D5D"
+                thumbStyle={styles.thumb}
+                trackStyle={styles.track}
+              />
+            </View>
+          </View>
+        </View>
+      </View>
+
+      <Modal animationType="fade" transparent={true} visible={modalVisible}>
+        <View style={styles.viewContainerModal}>
+          <View style={styles.modalView}>
+            <Text style={styles.titleModal}>OPGELET!</Text>
+            <Text style={styles.titleModal}>
+              Er is een hesje buiten de perimeter!
+            </Text>
+            <View>
+              <TouchableOpacity
+                style={styles.groepIconRight}
+                onPress={() => {
+                  setModalVisible(!modalVisible);
+                }}
+              >
+                <Text>OK</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
+      {locationUser ? (
+        <MapView
+          ref={map}
+          style={styles.mapStyle}
+          initialRegion={initialPosition}
+          mapType={'satellite'}
+          showsUserLocation
+          onUserLocationChange={getLocationHesjes}
+        >
+          <Circle
+            center={{
+              latitude: locationUser.coords.latitude,
+              longitude: locationUser.coords.longitude,
+            }}
+            radius={countSlider.value}
+            fillColor={'rgba(246, 192, 4, 0.4)'}
+          />
+          {groupActive == true ? (
+            <MapView.Marker key={1} coordinate={gpsLocation}>
+              <View style={styles.markerHesje} />
+            </MapView.Marker>
+          ) : null}
+        </MapView>
+      ) : null}
       <TouchableOpacity
         onPress={showCurrentLocation}
         style={styles.FABposition}
@@ -162,6 +261,10 @@ const GeoLocationMap = () => {
 };
 
 const styles = StyleSheet.create({
+  radiusView: {
+    position: 'absolute',
+    bottom: 35,
+  },
   radius: {
     height: 50,
     width: 50,
@@ -221,11 +324,85 @@ const styles = StyleSheet.create({
     height: 56,
     alignItems: 'center',
     justifyContent: 'center',
-    left: 20,
-    bottom: '75%',
+    right: 40,
+    bottom: 120,
     backgroundColor: '#F6C004',
     borderRadius: 30,
     elevation: 8,
+  },
+
+  //SLIDER
+  panel: {
+    height: '100%',
+  },
+  panelTitle: {
+    alignSelf: 'flex-start',
+    fontSize: 16,
+    height: 35,
+    color: '#ffffff',
+  },
+  sliderView: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    backgroundColor: '#ffffff90',
+    borderRadius: 25,
+    shadowColor: '#000000',
+    shadowOpacity: 0.25,
+    shadowRadius: 2,
+    shadowOffset: {
+      height: 1,
+      width: 1,
+    },
+    elevation: 2,
+    height: 50,
+  },
+  track: {
+    height: 20,
+  },
+  sliderWidth: {
+    padding: 20,
+  },
+
+  //MODAL
+
+  viewContainerModal: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(52, 52, 52, 0.8)',
+  },
+  modalView: {
+    width: '80%',
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 20,
+    alignItems: 'flex-start',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  titleModal: {
+    fontWeight: 'bold',
+    marginLeft: 10,
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  backModal: {
+    color: '#F6C004',
+    marginLeft: 120,
+    marginTop: 20,
+    position: 'absolute',
+  },
+  groepIconRight: {
+    marginLeft: 200,
   },
 });
 
