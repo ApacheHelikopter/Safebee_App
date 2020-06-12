@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   Image,
+  Platform,
 } from 'react-native';
 import GroepButton from '../../../components/Groepen/GroepButton';
 import * as firebase from 'firebase';
@@ -70,6 +71,12 @@ const MijnGroepen = ({ navigation }) => {
         </View>
       ) : (
         <View style={styles.viewContainer}>
+          <View style={styles.error}>
+            <Text style={styles.errorText}>
+              Je hebt nog geen groepen, klik om bewerken op groepen toe te
+              voegen.
+            </Text>
+          </View>
           <TouchableOpacity>
             <Text
               style={styles.register}
@@ -147,6 +154,10 @@ const styles = StyleSheet.create({
     width: '80%',
     marginBottom: 40,
     top: -100,
+  },
+  errorText: {
+    color: '#9F9F9F',
+    fontSize: 16,
   },
   errorMessage: {
     alignItems: 'center',

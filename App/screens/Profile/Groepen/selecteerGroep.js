@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   Image,
+  Platform,
 } from 'react-native';
 import GroepButton from '../../../components/Groepen/GroepButton';
 import * as firebase from 'firebase';
@@ -51,6 +52,10 @@ const SelecteerGroep = ({ navigation }) => {
     <>
       {groupName.length > 0 ? (
         <View style={styles.viewContainer}>
+          <Text style={styles.textGroepBewerken}>
+            Klik op de groep om hesjes toe te voegen of om een groep te
+            bewerken.
+          </Text>
           <View style={styles.error}>
             <FlatList
               data={groupName}
@@ -71,7 +76,9 @@ const SelecteerGroep = ({ navigation }) => {
             >
               <Text style={styles.loginText}>Groep toevoegen</Text>
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('MijnGroepen')}
+            >
               <Text style={styles.register}>Klaar</Text>
             </TouchableOpacity>
           </View>
@@ -95,7 +102,7 @@ const SelecteerGroep = ({ navigation }) => {
           </View>
 
           <TouchableOpacity
-            style={styles.loginBtn}
+            style={styles.groupBtn}
             onPress={() => navigation.navigate('TutorialCreateGroup')}
           >
             <Text style={styles.loginText}>Groep toevoegen</Text>
@@ -176,6 +183,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     color: 'red',
   },
+  textGroepBewerken: {
+    color: '#9F9F9F',
+    position: 'absolute',
+    ...Platform.select({
+      ios: {
+        top: 40,
+        marginLeft: 40,
+        marginRight: 60,
+      },
+      android: {
+        top: 20,
+        marginLeft: 40,
+        marginRight: 60,
+      },
+    }),
+  },
+
   //TUTORIAL
   viewContainerTutorial: {
     flex: 1,
@@ -190,6 +214,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 26,
     marginLeft: 40,
+    ...Platform.select({
+      ios: {
+        top: -80,
+      },
+      android: {
+        top: -20,
+      },
+    }),
   },
   tutorialAanwijzing: {
     color: '#FFFFFF',
@@ -198,19 +230,69 @@ const styles = StyleSheet.create({
     marginLeft: 40,
     marginRight: 40,
     marginBottom: 60,
+    ...Platform.select({
+      ios: {
+        top: -80,
+      },
+      android: {
+        top: -20,
+      },
+    }),
+  },
+  groupBtn: {
+    width: '80%',
+    backgroundColor: '#ffffff',
+    borderRadius: 25,
+    shadowColor: '#000000',
+    shadowOpacity: 0.25,
+    shadowRadius: 2,
+    shadowOffset: {
+      height: 1,
+      width: 1,
+    },
+    elevation: 2,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 40,
+    marginBottom: 10,
   },
   arrow: {
     width: 50,
     height: 190,
+    ...Platform.select({
+      ios: {
+        height: 230,
+      },
+      android: {
+        height: 190,
+      },
+    }),
     resizeMode: 'stretch',
     position: 'absolute',
     right: 60,
     zIndex: 2,
+    ...Platform.select({
+      ios: {
+        top: 240,
+      },
+      android: {
+        top: 190,
+      },
+    }),
   },
   errorMessageTutorial: {
     alignItems: 'center',
     justifyContent: 'center',
     color: '#9F9F9F',
+    ...Platform.select({
+      ios: {
+        top: -50,
+      },
+      android: {
+        top: -20,
+      },
+    }),
   },
 });
 

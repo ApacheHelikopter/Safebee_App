@@ -31,7 +31,7 @@ const CreateGroep = ({ navigation }) => {
         name: group,
         names: [],
       })
-      .then(() => navigation.navigate('MijnGroepen'));
+      .then(() => navigation.navigate('SelecteerGroep'));
   }
 
   return (
@@ -40,6 +40,11 @@ const CreateGroep = ({ navigation }) => {
         style={styles.logo}
         source={require('../../../../assets/logo.png')}
       />
+      <View style={styles.textTutorial}>
+        <Text style={styles.textOneTutorial}>
+          Kies een groepsnaam voor jouw groep
+        </Text>
+      </View>
       <View style={styles.inputView}>
         <Icon name="group" size={20} style={styles.groepIcon} />
         <TextInput
@@ -50,24 +55,6 @@ const CreateGroep = ({ navigation }) => {
           value={group}
           onChangeText={setGroup}
         />
-      </View>
-      <View>
-        <View style={styles.otherForm}>
-          <Text style={styles.ledenText}>Aantal leden</Text>
-          <TouchableOpacity
-            style={styles.counterBtn}
-            onPress={() => setCount(count - 1)}
-          >
-            <Text style={styles.countSign}>-</Text>
-          </TouchableOpacity>
-          <Text style={styles.countNumber}>{count}</Text>
-          <TouchableOpacity
-            style={styles.counterBtn}
-            onPress={() => setCount(count + 1)}
-          >
-            <Text style={styles.countSign}>+</Text>
-          </TouchableOpacity>
-        </View>
       </View>
 
       <TouchableOpacity style={styles.saveBtn} onPress={() => createGroup()}>
@@ -126,10 +113,36 @@ const styles = StyleSheet.create({
     height: 130,
     resizeMode: 'stretch',
     marginBottom: 0,
-    marginTop: 0,
+    ...Platform.select({
+      ios: {
+        top: -60,
+      },
+      android: {
+        top: -50,
+      },
+    }),
   },
   groepIcon: {
     padding: 20,
+  },
+  textTutorial: {
+    alignItems: 'center',
+    ...Platform.select({
+      ios: {
+        top: -10,
+        marginBottom: 30,
+      },
+      android: {
+        top: -10,
+        marginBottom: 30,
+      },
+    }),
+  },
+  textOneTutorial: {
+    color: '#9F9F9F',
+  },
+  textTwoTutorial: {
+    color: '#9F9F9F',
   },
   counterBtn: {
     borderWidth: 1,

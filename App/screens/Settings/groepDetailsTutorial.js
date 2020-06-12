@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   Image,
+  Platform,
 } from 'react-native';
 import GroepButton from '../../components/Groepen/GroepButton';
 import * as firebase from 'firebase';
@@ -13,7 +14,7 @@ import 'firebase/firestore';
 import { FlatList } from 'react-native-gesture-handler';
 
 const SelecteerGroep = ({ navigation }) => {
-  window.addEventListener = x => x;
+  window.addEventListener = (x) => x;
   const [groupName, setGroupName] = useState([]);
 
   const [loading, setLoading] = useState(true);
@@ -25,8 +26,8 @@ const SelecteerGroep = ({ navigation }) => {
     const unsubscribe = db
       .collection('groups')
       .where('createdBy', '==', currentUser)
-      .onSnapshot(querySnapShot => {
-        const groups = querySnapShot.docs.map(documentSnapShot => {
+      .onSnapshot((querySnapShot) => {
+        const groups = querySnapShot.docs.map((documentSnapShot) => {
           return {
             _id: documentSnapShot.id,
             name: '',
@@ -57,7 +58,7 @@ const SelecteerGroep = ({ navigation }) => {
       <View style={styles.error}>
         <FlatList
           data={groupName}
-          keyExtractor={item => item._id}
+          keyExtractor={(item) => item._id}
           renderItem={({ item }) => (
             <TouchableOpacity
               onPress={() =>
@@ -167,9 +168,17 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontWeight: 'bold',
     fontSize: 24,
-    marginLeft: 40,
-    marginRight: 40,
     marginBottom: 60,
+    ...Platform.select({
+      ios: {
+        marginLeft: 20,
+        marginRight: 40,
+      },
+      android: {
+        marginLeft: 40,
+        marginRight: 40,
+      },
+    }),
   },
   arrow: {
     width: 50,
