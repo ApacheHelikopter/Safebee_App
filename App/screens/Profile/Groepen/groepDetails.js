@@ -31,10 +31,6 @@ const GroepDetails = ({ route, navigation }) => {
 
   const addHesjes = () => {
     setModalVisible(!modalVisible);
-    (async () => {
-      const { status } = await BarCodeScanner.requestPermissionsAsync();
-      setHasPermission(status === 'granted');
-    })();
     navigation.navigate('QRScanner', { groupDetails: groupDetails });
   };
 

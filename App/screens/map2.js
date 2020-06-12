@@ -11,10 +11,7 @@ import {
   TouchableHighlight,
 } from 'react-native';
 import * as Location from 'expo-location';
-import BottomSheet from 'reanimated-bottom-sheet';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import Radius from '../components/Radius/radius';
-import renderHeader from '../components/BottomSheet/header';
 import * as firebase from 'firebase';
 import 'firebase/firestore';
 import { isPointWithinRadius } from 'geolib';
@@ -53,7 +50,10 @@ const GeoLocationMap = () => {
 
   const [modalVisible, setModalVisible] = useState(false);
 
+  const [groupActive, setGroupActive] = useState(false);
+
   const db = firebase.database();
+  const dbFire = firebase.firestore();
 
   useEffect(() => {});
 
@@ -111,6 +111,27 @@ const GeoLocationMap = () => {
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location);
     })();
+
+    const currentUser = firebase.auth().currentUser.uid;
+
+    const checkActiveGroups = () => {
+      dbFire
+        .collection('groups')
+        .where('createdBy', '==', currentUser)
+        .onSnapshot(querySnapShot => {
+          querySnapShot.docs.map(documentSnapShot => {
+            if (
+              documentSnapShot.data().status == true &&
+              documentSnapShot.data().names == 'Safebee'
+            ) {
+              setGroupActive(true);
+            } else {
+              setGroupActive(false);
+            }
+          });
+        });
+    };
+    checkActiveGroups();
   }, []);
 
   const map = React.createRef();
@@ -222,10 +243,11 @@ const GeoLocationMap = () => {
             radius={countSlider.value}
             fillColor={'rgba(246, 192, 4, 0.4)'}
           />
-
-          <MapView.Marker key={1} coordinate={gpsLocation}>
-            <View style={styles.markerHesje} />
-          </MapView.Marker>
+          {groupActive == true ? (
+            <MapView.Marker key={1} coordinate={gpsLocation}>
+              <View style={styles.markerHesje} />
+            </MapView.Marker>
+          ) : null}
         </MapView>
       ) : null}
       <TouchableOpacity

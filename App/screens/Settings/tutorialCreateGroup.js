@@ -12,7 +12,7 @@ import * as firebase from 'firebase';
 import 'firebase/firestore';
 
 const TutorialCreateGroup = ({ navigation }) => {
-  window.addEventListener = (x) => x;
+  window.addEventListener = x => x;
   const [user, setUser] = useState(null);
   const [group, setGroup] = useState('');
 
@@ -29,6 +29,7 @@ const TutorialCreateGroup = ({ navigation }) => {
         createdAt: new Date().getTime(),
         createdBy: user,
         name: group,
+        status: true,
         names: [],
       })
       .then(() => navigation.navigate('TutorialSelectGroup'));

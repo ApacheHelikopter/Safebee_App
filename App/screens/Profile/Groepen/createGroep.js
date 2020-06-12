@@ -28,6 +28,7 @@ const CreateGroep = ({ navigation }) => {
         createdAt: new Date().getTime(),
         createdBy: user,
         name: group,
+        status: false,
         names: [],
       })
       .then(() => navigation.navigate('SelecteerGroep'));
