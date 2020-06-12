@@ -11,7 +11,6 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import * as firebase from 'firebase';
 
 const CreateGroep = ({ navigation }) => {
-  const [count, setCount] = useState(0);
   const [user, setUser] = useState(null);
   const [group, setGroup] = useState('');
 
@@ -29,6 +28,7 @@ const CreateGroep = ({ navigation }) => {
         createdAt: new Date().getTime(),
         createdBy: user,
         name: group,
+        status: false,
         names: [],
       })
       .then(() => navigation.navigate('SelecteerGroep'));
