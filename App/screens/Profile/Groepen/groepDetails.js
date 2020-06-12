@@ -61,6 +61,7 @@ const GroepDetails = ({ route, navigation }) => {
 
             <View>
               <TouchableHighlight
+                style={styles.backView}
                 onPress={() => {
                   setModalVisible(!modalVisible);
                 }}
@@ -192,14 +193,18 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     paddingTop: 20,
   },
+  backView: {
+    width: 200,
+    height: 50,
+    position: 'absolute',
+    marginTop: 15,
+    marginLeft: '40%',
+  },
   backModal: {
     color: '#F6C004',
-    marginLeft: 120,
-    marginTop: 20,
-    position: 'absolute',
   },
   groepIconRight: {
-    marginLeft: 200,
+    left: '70%',
   },
   loginBtn: {
     width: '80%',
