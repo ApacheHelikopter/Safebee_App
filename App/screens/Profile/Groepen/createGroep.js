@@ -24,7 +24,6 @@ const CreateGroep = ({ navigation }) => {
       .firestore()
       .collection('groups')
       .add({
-        amount: count,
         createdAt: new Date().getTime(),
         createdBy: user,
         name: group,
