@@ -11,7 +11,7 @@ import {
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import * as firebase from 'firebase';
 import 'firebase/firestore';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const QRScanner = ({ route, navigation }) => {
   const [hasPermission, setHasPermission] = useState(null);
@@ -117,9 +117,19 @@ const QRScanner = ({ route, navigation }) => {
           </TouchableHighlight>
         </View>
       ) : (
-        <View style={styles.scanHesjeView}>
-          <Text style={styles.scanHesje}>Scan het hesje</Text>
-        </View>
+        <>
+          <View style={styles.goBackView}>
+            <Icon
+              name="close"
+              size={30}
+              style={styles.closeIcon}
+              onPress={() => navigation.goBack()}
+            />
+          </View>
+          <View style={styles.scanHesjeView}>
+            <Text style={styles.scanHesje}>Scan het hesje</Text>
+          </View>
+        </>
       )}
     </View>
   );
@@ -194,9 +204,28 @@ const styles = StyleSheet.create({
       },
     }),
   },
+  goBackView: {
+    width: '100%',
+    alignContent: 'flex-start',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    position: 'absolute',
+    ...Platform.select({
+      ios: {
+        top: 30,
+      },
+      android: {
+        top: 30,
+      },
+    }),
+  },
   scanHesje: {
     color: '#FFFFFF',
     fontSize: 18,
+  },
+  closeIcon: {
+    padding: 20,
+    color: '#FFFFFF',
   },
 });
 

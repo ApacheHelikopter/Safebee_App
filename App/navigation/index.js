@@ -213,30 +213,14 @@ const ProfileStackScreen = ({ navigation, route }) => {
         name="QRScannerTutorial"
         component={QRScannerTutorial}
         options={{
-          title: 'Hesjes scannen',
-          headerBackTitle: ' ',
-          headerStyle: {
-            backgroundColor: '#FFFFFF',
-            elevation: 0,
-            shadowOpacity: 0,
-          },
-          headerTitleAlign: 'left',
-          headerTintColor: '#000000',
+          headerShown: false,
         }}
       />
       <ProfileStack.Screen
         name="QRScanner"
         component={QRScanner}
         options={{
-          title: 'Hesjes scannen',
-          headerBackTitle: ' ',
-          headerStyle: {
-            backgroundColor: '#FFFFFF',
-            elevation: 0,
-            shadowOpacity: 0,
-          },
-          headerTitleAlign: 'left',
-          headerTintColor: '#000000',
+          headerShown: false,
         }}
       />
       <ProfileStack.Screen
