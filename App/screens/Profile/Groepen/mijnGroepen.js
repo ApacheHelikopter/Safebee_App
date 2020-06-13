@@ -139,7 +139,7 @@ const MijnGroepen = ({ navigation }) => {
         <View style={styles.viewContainer}>
           <View style={styles.error}>
             <Text style={styles.errorText}>
-              Je hebt nog geen groepen, klik om bewerken op groepen toe te
+              Je hebt nog geen groepen, klik op bewerken om groepen toe te
               voegen.
             </Text>
           </View>
@@ -223,7 +223,8 @@ const styles = StyleSheet.create({
   },
   errorText: {
     color: '#9F9F9F',
-    fontSize: 16,
+    fontSize: 14,
+    textAlign: 'center',
   },
   errorMessage: {
     alignItems: 'center',

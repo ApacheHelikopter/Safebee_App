@@ -74,34 +74,36 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontWeight: 'bold',
     fontSize: 24,
-
     marginBottom: 60,
     ...Platform.select({
       ios: {
-        top: -90,
+        top: '-70%',
         marginLeft: 40,
         marginRight: 90,
       },
       android: {
-        top: -70,
+        top: '-50%',
         marginLeft: 40,
         marginRight: 40,
       },
     }),
   },
   arrow: {
-    width: 40,
-    height: 140,
     resizeMode: 'stretch',
     position: 'absolute',
-    right: 60,
     zIndex: 2,
     ...Platform.select({
       ios: {
-        top: 270,
+        top: '30%',
+        height: '15%',
+        width: '7%',
+        right: '15%',
       },
       android: {
-        top: 180,
+        top: '27%',
+        height: '20%',
+        width: '10%',
+        right: '10%',
       },
     }),
   },

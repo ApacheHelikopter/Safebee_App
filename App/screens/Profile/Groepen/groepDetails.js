@@ -29,6 +29,13 @@ const GroepDetails = ({ route, navigation }) => {
       .then(() => navigation.navigate('SelecteerGroep'));
   };
 
+  const deleteGroup = () => {
+    db.collection('groups')
+      .doc(groupDetails._id)
+      .delete()
+      .then(() => navigation.navigate('SelecteerGroep'));
+  };
+
   const addHesjes = () => {
     setModalVisible(!modalVisible);
     (async () => {
@@ -58,6 +65,7 @@ const GroepDetails = ({ route, navigation }) => {
 
             <View>
               <TouchableHighlight
+                style={styles.backView}
                 onPress={() => {
                   setModalVisible(!modalVisible);
                 }}
@@ -98,11 +106,13 @@ const GroepDetails = ({ route, navigation }) => {
         style={styles.hesjesView}
       >
         <Icon name="face" size={30} style={styles.faceIcon} />
-
         <Text style={styles.loginText}>Hesjes</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.loginBtn} onPress={() => updateGroup()}>
         <Text style={styles.loginText}>Groep opslaan</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.deleteBtn} onPress={() => deleteGroup()}>
+        <Text style={styles.deleteText}>Groep verwijderen</Text>
       </TouchableOpacity>
     </View>
   );
@@ -187,14 +197,18 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     paddingTop: 20,
   },
+  backView: {
+    width: 200,
+    height: 50,
+    position: 'absolute',
+    marginTop: 15,
+    marginLeft: '40%',
+  },
   backModal: {
     color: '#F6C004',
-    marginLeft: 120,
-    marginTop: 20,
-    position: 'absolute',
   },
   groepIconRight: {
-    marginLeft: 200,
+    left: '70%',
   },
   loginBtn: {
     width: '80%',
@@ -245,6 +259,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     color: 'red',
+  },
+  deleteBtn: {
+    width: '100%',
+  },
+  deleteText: {
+    color: '#9F9F9F',
+    textAlign: 'center',
+    width: '100%',
+    marginTop: 10,
+    fontSize: 12,
   },
 });
 
