@@ -196,8 +196,9 @@ const GeoLocationMap = () => {
           <View style={styles.modalView}>
             <Text style={styles.titleModal}>OPGELET!</Text>
             <Text style={styles.titleModal}>
-              Er is een hesje buiten de perimeter!
+              Safebee is buiten de perimeter!
             </Text>
+
             <View>
               <TouchableOpacity
                 style={styles.groepIconRight}
@@ -408,10 +409,10 @@ const styles = StyleSheet.create({
   },
   modalView: {
     width: '80%',
-    margin: 20,
+    height: '22%',
     backgroundColor: 'white',
     borderRadius: 20,
-    padding: 20,
+    padding: 30,
     alignItems: 'flex-start',
     shadowColor: '#000',
     shadowOffset: {
@@ -424,15 +425,15 @@ const styles = StyleSheet.create({
   },
   titleModal: {
     fontWeight: 'bold',
-    marginLeft: 10,
     fontSize: 16,
     marginBottom: 10,
+    color: '#F00F0F',
   },
   backModal: {
     color: '#F6C004',
-    marginLeft: 120,
-    marginTop: 20,
-    position: 'absolute',
+    left: '30%',
+    fontSize: 16,
+    padding: 20,
   },
   groepIconRight: {
     marginLeft: 200,
