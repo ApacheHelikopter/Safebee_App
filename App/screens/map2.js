@@ -22,7 +22,7 @@ const LATITUDE_DELTA = 0.0222;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 const GeoLocationMap = () => {
-  window.addEventListener = (x) => x;
+  window.addEventListener = x => x;
   const [initialPosition, setInitialPosition] = useState({
     latitude: 0,
     longitude: 0,
@@ -49,6 +49,7 @@ const GeoLocationMap = () => {
   const [gpsLng, setGpsLng] = useState(0);
 
   const [modalVisible, setModalVisible] = useState(false);
+  const [positionHesje, setPositionHesje] = useState(true);
 
   const [groupActive, setGroupActive] = useState(false);
 
@@ -60,7 +61,7 @@ const GeoLocationMap = () => {
   useEffect(() => {
     async function currentPosition() {
       navigator.geolocation.getCurrentPosition(
-        (position) => {
+        position => {
           let lat = parseFloat(position.coords.latitude);
           let long = parseFloat(position.coords.longitude);
 
@@ -74,14 +75,14 @@ const GeoLocationMap = () => {
           setInitialPosition(initialRegion);
           setmarkerPosition(initialRegion);
         },
-        (error) => alert(JSON.stringify(error)),
+        error => alert(JSON.stringify(error)),
         { enableHighAccuracy: true, timeout: 2000, maximumAge: 1000 }
       );
     }
     currentPosition();
 
     async function watchPosition() {
-      let watchID = navigator.geolocation.watchPosition((position) => {
+      let watchID = navigator.geolocation.watchPosition(position => {
         var lat = parseFloat(position.coords.latitude);
         var long = parseFloat(position.coords.longitude);
 
@@ -94,7 +95,6 @@ const GeoLocationMap = () => {
 
         setInitialPosition(lastRegion);
         setmarkerPosition(lastRegion);
-        console.log(lastRegion);
         return () => {
           navigator.geolocation.clearWatch(watchID);
         };
@@ -118,8 +118,8 @@ const GeoLocationMap = () => {
       dbFire
         .collection('groups')
         .where('createdBy', '==', currentUser)
-        .onSnapshot((querySnapShot) => {
-          querySnapShot.docs.map((documentSnapShot) => {
+        .onSnapshot(querySnapShot => {
+          querySnapShot.docs.map(documentSnapShot => {
             if (
               documentSnapShot.data().status == true &&
               documentSnapShot.data().names == 'Safebee'
@@ -143,7 +143,7 @@ const GeoLocationMap = () => {
   const getLocationHesjes = () => {
     const setLocationHesje = () => {
       const firebaseGetLat = () => {
-        db.ref('lat').on('value', (snapshot) => {
+        db.ref('lat').on('value', snapshot => {
           const gpsLat = snapshot.val();
           setGpsLat(gpsLat);
         });
@@ -151,7 +151,7 @@ const GeoLocationMap = () => {
       firebaseGetLat();
 
       const firebaseGetLng = () => {
-        db.ref('lng').on('value', (snapshot) => {
+        db.ref('lng').on('value', snapshot => {
           const gpsLng = snapshot.val();
           setGpsLng(gpsLng);
         });
@@ -179,10 +179,39 @@ const GeoLocationMap = () => {
       },
       countSlider.value
     );
+
+    if (groupActive && isHesjeInRadius == false) {
+      setPositionHesje(false);
+      setModalVisible(true);
+    } else {
+      setPositionHesje(true);
+      setModalVisible(false);
+    }
   };
 
   return (
     <View style={styles.container}>
+      <Modal animationType="fade" transparent={true} visible={modalVisible}>
+        <View style={styles.viewContainerModal}>
+          <View style={styles.modalView}>
+            <Text style={styles.titleModal}>OPGELET!</Text>
+            <Text style={styles.titleModal}>
+              Safebee is buiten de perimeter!
+            </Text>
+
+            <View>
+              <TouchableOpacity
+                style={styles.groepIconRight}
+                onPress={() => {
+                  setModalVisible(!modalVisible);
+                }}
+              >
+                <Text>OK</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
       <View style={styles.radiusView}>
         <View style={styles.panel}>
           <Text style={styles.panelTitle}></Text>
@@ -194,7 +223,7 @@ const GeoLocationMap = () => {
                 minimumValue={1}
                 maximumValue={200}
                 value={countSlider}
-                onValueChange={(value) => setCountSlider({ value })}
+                onValueChange={value => setCountSlider({ value })}
                 maximumTrackTintColor="#FFFFFF"
                 minimumTrackTintColor="#655D5D"
                 thumbTintColor="#655D5D"
@@ -205,27 +234,6 @@ const GeoLocationMap = () => {
           </View>
         </View>
       </View>
-
-      <Modal animationType="fade" transparent={true} visible={modalVisible}>
-        <View style={styles.viewContainerModal}>
-          <View style={styles.modalView}>
-            <Text style={styles.titleModal}>OPGELET!</Text>
-            <Text style={styles.bodyModal}>
-              Er is een hesje buiten de zone gegaan!
-            </Text>
-            <View>
-              <TouchableOpacity
-                style={styles.groepIconRight}
-                onPress={() => {
-                  setModalVisible(!modalVisible);
-                }}
-              >
-                <Text style={styles.backModal}>OK</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      </Modal>
       {locationUser ? (
         <MapView
           ref={map}
@@ -243,9 +251,25 @@ const GeoLocationMap = () => {
             radius={countSlider.value}
             fillColor={'rgba(246, 192, 4, 0.4)'}
           />
-          {groupActive == true ? (
-            <MapView.Marker key={1} coordinate={gpsLocation}>
+          {groupActive == true && positionHesje == true ? (
+            <MapView.Marker
+              key={1}
+              coordinate={gpsLocation}
+              title={'SAFEBEE'}
+              description={'Binnen de radius'}
+            >
               <View style={styles.markerHesje} />
+            </MapView.Marker>
+          ) : null}
+
+          {groupActive == true && positionHesje == false ? (
+            <MapView.Marker
+              key={1}
+              coordinate={gpsLocation}
+              title={'SAFEBEE'}
+              description={'!Buiten de radius!'}
+            >
+              <View style={styles.markerHesjeBDZ} />
             </MapView.Marker>
           ) : null}
         </MapView>
@@ -285,6 +309,16 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     backgroundColor: '#007AFF',
     color: '#007AFF',
+  },
+  markerHesjeBDZ: {
+    height: 10,
+    width: 10,
+    borderRadius: 20 / 2,
+    overflow: 'hidden',
+    borderColor: 'red',
+    borderWidth: 2,
+    backgroundColor: 'red',
+    color: 'red',
   },
   marker: {
     height: 20,
