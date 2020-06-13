@@ -133,14 +133,14 @@ const ProfileStackScreen = ({ navigation, route }) => {
         component={MijnGroepen}
         options={{
           title: 'Mijn groepen',
-          headerBackTitle: ' ',
           headerStyle: {
-            backgroundColor: '#FFFFFF',
-            elevation: 0,
-            shadowOpacity: 0,
+            backgroundColor: '#F6C004',
           },
-          headerTitleAlign: 'left',
-          headerTintColor: '#000000',
+          headerTitleAlign: 'center',
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
         }}
       />
       <ProfileStack.Screen
@@ -270,11 +270,11 @@ const TabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="Profiel"
-        component={ProfileStackScreen}
+        name="Mijn groepen"
+        component={MijnGroepen}
         options={{
           tabBarIcon: ({ color }) => (
-            <Icon name="person" size={35} color={color} />
+            <Icon name="group" size={35} color={color} />
           ),
         }}
       />
