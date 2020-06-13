@@ -15,11 +15,12 @@ import * as firebase from 'firebase';
 import 'firebase/firestore';
 
 const GroepDetails = ({ route, navigation }) => {
-  window.addEventListener = x => x;
+  window.addEventListener = (x) => x;
   const { groupDetails } = route.params;
   console.log(groupDetails);
   const [groupName, setGroupName] = useState(groupDetails.name);
   const [modalVisible, setModalVisible] = useState(false);
+  const [modalDeleteVisible, setModalDeleteVisible] = useState(false);
   const db = firebase.firestore();
 
   const updateGroup = () => {
@@ -45,6 +46,10 @@ const GroepDetails = ({ route, navigation }) => {
     navigation.navigate('QRScanner', { groupDetails: groupDetails });
   };
 
+  const modalDeleteGroup = () => {
+    setModalDeleteVisible(!modalDeleteVisible);
+  };
+
   return (
     <View style={styles.viewContainer}>
       <Modal animationType="fade" transparent={true} visible={modalVisible}>
@@ -53,7 +58,7 @@ const GroepDetails = ({ route, navigation }) => {
             <Text style={styles.titleModal}>Hesjes</Text>
             {groupDetails.names.length > 0 ? (
               <View style={styles.bodyModal}>
-                {groupDetails.names.map(name => (
+                {groupDetails.names.map((name) => (
                   <Text key={name}>{name}</Text>
                 ))}
               </View>
@@ -62,7 +67,6 @@ const GroepDetails = ({ route, navigation }) => {
                 Er zijn nog geen namen ingegeven, voeg deze toe.
               </Text>
             )}
-
             <View>
               <TouchableHighlight
                 style={styles.backView}
@@ -82,6 +86,39 @@ const GroepDetails = ({ route, navigation }) => {
           </View>
         </View>
       </Modal>
+
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={modalDeleteVisible}
+      >
+        <View style={styles.viewContainerModal}>
+          <View style={styles.modalView}>
+            <Text style={styles.titleModal}>Groep verwijderen</Text>
+            <Text style={styles.bodyModal}>
+              Weet u zeker dat u deze groep wilt verwijderen?
+            </Text>
+
+            <View>
+              <TouchableHighlight
+                style={styles.backView}
+                onPress={() => {
+                  setModalDeleteVisible(!modalDeleteVisible);
+                }}
+              >
+                <Text style={styles.backDeleteModal}>Terug</Text>
+              </TouchableHighlight>
+              <TouchableOpacity
+                style={styles.groepIconRight}
+                onPress={() => deleteGroup()}
+              >
+                <Text style={styles.deleteModal}>Verwijderen</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
+
       <Image
         style={styles.logo}
         source={require('../../../../assets/logo.png')}
@@ -111,7 +148,10 @@ const GroepDetails = ({ route, navigation }) => {
       <TouchableOpacity style={styles.loginBtn} onPress={() => updateGroup()}>
         <Text style={styles.loginText}>Groep opslaan</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.deleteBtn} onPress={() => deleteGroup()}>
+      <TouchableOpacity
+        style={styles.deleteBtn}
+        onPress={() => modalDeleteGroup()}
+      >
         <Text style={styles.deleteText}>Groep verwijderen</Text>
       </TouchableOpacity>
     </View>
@@ -209,6 +249,15 @@ const styles = StyleSheet.create({
   },
   groepIconRight: {
     left: '70%',
+  },
+  backDeleteModal: {
+    color: '#F6C004',
+    padding: 5,
+  },
+  deleteModal: {
+    color: '#9F9F9F',
+    left: '-20%',
+    padding: 20,
   },
   loginBtn: {
     width: '80%',
