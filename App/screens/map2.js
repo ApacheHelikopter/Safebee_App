@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import MapView, { Circle } from 'react-native-maps';
+import MapView, { Circle, Polygon } from 'react-native-maps';
 import {
   StyleSheet,
   Text,
@@ -43,7 +43,7 @@ const GeoLocationMap = () => {
   const [locationUser, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
 
-  const [countSlider, setCountSlider] = useState(0);
+  const [countSlider, setCountSlider] = useState(1);
 
   const [gpsLat, setGpsLat] = useState(0);
   const [gpsLng, setGpsLng] = useState(0);
@@ -135,6 +135,7 @@ const GeoLocationMap = () => {
   }, []);
 
   const map = React.createRef();
+  const circle = React.createRef();
 
   const showCurrentLocation = () => {
     map.current.animateToRegion(markerPosition, 1000);
@@ -212,6 +213,7 @@ const GeoLocationMap = () => {
           </View>
         </View>
       </Modal>
+
       <View style={styles.radiusView}>
         <View style={styles.panel}>
           <Text style={styles.panelTitle}></Text>
@@ -222,7 +224,6 @@ const GeoLocationMap = () => {
                 step={5}
                 minimumValue={1}
                 maximumValue={200}
-                value={countSlider}
                 onValueChange={value => setCountSlider({ value })}
                 maximumTrackTintColor="#FFFFFF"
                 minimumTrackTintColor="#655D5D"
@@ -238,12 +239,19 @@ const GeoLocationMap = () => {
         <MapView
           ref={map}
           style={styles.mapStyle}
+          provider={MapView.PROVIDER_GOOGLE}
           initialRegion={initialPosition}
           mapType={'satellite'}
           showsUserLocation
-          onUserLocationChange={getLocationHesjes}
+          onUserLocationChange={() => getLocationHesjes()}
+          onMapReady={() =>
+            circle.current.setNativeProps({
+              fillColor: 'rgba(246, 192, 4, 0.4)',
+            })
+          }
         >
           <Circle
+            ref={circle}
             center={{
               latitude: locationUser.coords.latitude,
               longitude: locationUser.coords.longitude,
@@ -274,6 +282,7 @@ const GeoLocationMap = () => {
           ) : null}
         </MapView>
       ) : null}
+
       <TouchableOpacity
         onPress={showCurrentLocation}
         style={styles.FABposition}
@@ -288,6 +297,7 @@ const styles = StyleSheet.create({
   radiusView: {
     position: 'absolute',
     bottom: 35,
+    zIndex: 500,
   },
   radius: {
     height: 50,
