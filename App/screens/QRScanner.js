@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
     }),
   },
   scanText: {
-    fontSize: 18,
+    fontSize: 14,
     color: '#FFFFFF',
     fontWeight: 'bold',
   },
@@ -178,16 +178,23 @@ const styles = StyleSheet.create({
     position: 'absolute',
     ...Platform.select({
       ios: {
-        bottom: 120,
+        bottom: 10,
       },
       android: {
-        bottom: 90,
+        bottom: 10,
       },
     }),
   },
   readyText: {
-    fontSize: 16,
     color: '#F6C004',
+    ...Platform.select({
+      ios: {
+        fontSize: 24,
+      },
+      android: {
+        fontSize: 16,
+      },
+    }),
   },
   scanHesjeView: {
     width: '100%',
@@ -212,10 +219,11 @@ const styles = StyleSheet.create({
     position: 'absolute',
     ...Platform.select({
       ios: {
-        top: 30,
+        top: 60,
+        left: 10,
       },
       android: {
-        top: 30,
+        top: 50,
       },
     }),
   },
