@@ -48,7 +48,7 @@ const GeoLocationMap = () => {
   const [gpsLat, setGpsLat] = useState(0);
   const [gpsLng, setGpsLng] = useState(0);
 
-  const [modalVisible, setModalVisible] = useState(true);
+  const [modalVisible, setModalVisible] = useState(false);
   const [positionHesje, setPositionHesje] = useState(true);
 
   const [groupActive, setGroupActive] = useState(false);
@@ -179,6 +179,14 @@ const GeoLocationMap = () => {
       },
       countSlider.value
     );
+
+    if (groupActive && isHesjeInRadius == false) {
+      setPositionHesje(false);
+      setModalVisible(true);
+    } else {
+      setPositionHesje(true);
+      setModalVisible(false);
+    }
   };
 
   return (
@@ -195,7 +203,7 @@ const GeoLocationMap = () => {
               <TouchableOpacity
                 style={styles.groepIconRight}
                 onPress={() => {
-                  setModalVisible(true);
+                  setModalVisible(!modalVisible);
                 }}
               >
                 <Text>OK</Text>
