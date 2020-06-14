@@ -11,7 +11,7 @@ import {
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import * as firebase from 'firebase';
 import 'firebase/firestore';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const QRScanner = ({ route, navigation }) => {
   const [hasPermission, setHasPermission] = useState(null);
@@ -117,9 +117,19 @@ const QRScanner = ({ route, navigation }) => {
           </TouchableHighlight>
         </View>
       ) : (
-        <View style={styles.scanHesjeView}>
-          <Text style={styles.scanHesje}>Scan het hesje</Text>
-        </View>
+        <>
+          <View style={styles.goBackView}>
+            <Icon
+              name="close"
+              size={30}
+              style={styles.closeIcon}
+              onPress={() => navigation.goBack()}
+            />
+          </View>
+          <View style={styles.scanHesjeView}>
+            <Text style={styles.scanHesje}>Scan het hesje</Text>
+          </View>
+        </>
       )}
     </View>
   );
@@ -157,7 +167,7 @@ const styles = StyleSheet.create({
     }),
   },
   scanText: {
-    fontSize: 18,
+    fontSize: 14,
     color: '#FFFFFF',
     fontWeight: 'bold',
   },
@@ -168,16 +178,23 @@ const styles = StyleSheet.create({
     position: 'absolute',
     ...Platform.select({
       ios: {
-        bottom: 120,
+        bottom: 10,
       },
       android: {
-        bottom: 90,
+        bottom: 10,
       },
     }),
   },
   readyText: {
-    fontSize: 16,
     color: '#F6C004',
+    ...Platform.select({
+      ios: {
+        fontSize: 24,
+      },
+      android: {
+        fontSize: 16,
+      },
+    }),
   },
   scanHesjeView: {
     width: '100%',
@@ -194,9 +211,29 @@ const styles = StyleSheet.create({
       },
     }),
   },
+  goBackView: {
+    width: '100%',
+    alignContent: 'flex-start',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    position: 'absolute',
+    ...Platform.select({
+      ios: {
+        top: 60,
+        left: 10,
+      },
+      android: {
+        top: 50,
+      },
+    }),
+  },
   scanHesje: {
     color: '#FFFFFF',
     fontSize: 18,
+  },
+  closeIcon: {
+    padding: 20,
+    color: '#FFFFFF',
   },
 });
 

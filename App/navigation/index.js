@@ -114,6 +114,21 @@ const ProfileStackScreen = ({ navigation, route }) => {
   return (
     <ProfileStack.Navigator screenOptions={{ gestureEnabled: true }}>
       <ProfileStack.Screen
+        name="MijnGroepen"
+        component={MijnGroepen}
+        options={{
+          title: 'Mijn groepen',
+          headerStyle: {
+            backgroundColor: '#F6C004',
+          },
+          headerTitleAlign: 'center',
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }}
+      />
+      {/* <ProfileStack.Screen
         name="ProfielTab"
         component={ProfielTab}
         options={{
@@ -127,22 +142,7 @@ const ProfileStackScreen = ({ navigation, route }) => {
             fontWeight: 'bold',
           },
         }}
-      />
-      <ProfileStack.Screen
-        name="MijnGroepen"
-        component={MijnGroepen}
-        options={{
-          title: 'Mijn groepen',
-          headerBackTitle: ' ',
-          headerStyle: {
-            backgroundColor: '#FFFFFF',
-            elevation: 0,
-            shadowOpacity: 0,
-          },
-          headerTitleAlign: 'left',
-          headerTintColor: '#000000',
-        }}
-      />
+      /> */}
       <ProfileStack.Screen
         name="SelecteerGroep"
         component={SelecteerGroep}
@@ -213,30 +213,14 @@ const ProfileStackScreen = ({ navigation, route }) => {
         name="QRScannerTutorial"
         component={QRScannerTutorial}
         options={{
-          title: 'Hesjes scannen',
-          headerBackTitle: ' ',
-          headerStyle: {
-            backgroundColor: '#FFFFFF',
-            elevation: 0,
-            shadowOpacity: 0,
-          },
-          headerTitleAlign: 'left',
-          headerTintColor: '#000000',
+          headerShown: false,
         }}
       />
       <ProfileStack.Screen
         name="QRScanner"
         component={QRScanner}
         options={{
-          title: 'Hesjes scannen',
-          headerBackTitle: ' ',
-          headerStyle: {
-            backgroundColor: '#FFFFFF',
-            elevation: 0,
-            shadowOpacity: 0,
-          },
-          headerTitleAlign: 'left',
-          headerTintColor: '#000000',
+          headerShown: false,
         }}
       />
       <ProfileStack.Screen
@@ -270,11 +254,11 @@ const TabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="Profiel"
+        name="Mijn groepen"
         component={ProfileStackScreen}
         options={{
           tabBarIcon: ({ color }) => (
-            <Icon name="person" size={35} color={color} />
+            <Icon name="group" size={35} color={color} />
           ),
         }}
       />

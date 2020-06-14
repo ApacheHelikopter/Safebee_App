@@ -11,6 +11,7 @@ import {
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import * as firebase from 'firebase';
 import 'firebase/firestore';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const QRScannerTutorial = ({ route, navigation }) => {
   const [hasPermission, setHasPermission] = useState(null);
@@ -36,8 +37,8 @@ const QRScannerTutorial = ({ route, navigation }) => {
       .collection('groups')
       .where('createdBy', '==', currentUser)
       .where('_id', '==', groupDetails._id)
-      .onSnapshot((querySnapShot) => {
-        const groups = querySnapShot.docs.map((documentSnapShot) => {
+      .onSnapshot(querySnapShot => {
+        const groups = querySnapShot.docs.map(documentSnapShot => {
           return {
             _id: documentSnapShot.id,
             name: '',
@@ -139,9 +140,19 @@ const QRScannerTutorial = ({ route, navigation }) => {
           </TouchableHighlight>
         </View>
       ) : (
-        <View style={styles.scanHesjeView}>
-          <Text style={styles.scanHesje}>Scan het hesje</Text>
-        </View>
+        <>
+          <View style={styles.goBackView}>
+            <Icon
+              name="close"
+              size={30}
+              style={styles.closeIcon}
+              onPress={() => navigation.goBack()}
+            />
+          </View>
+          <View style={styles.scanHesjeView}>
+            <Text style={styles.scanHesje}>Scan het hesje</Text>
+          </View>
+        </>
       )}
     </View>
   );
@@ -219,6 +230,21 @@ const styles = StyleSheet.create({
   scanHesje: {
     color: '#FFFFFF',
     fontSize: 18,
+  },
+  goBackView: {
+    width: '100%',
+    alignContent: 'flex-start',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    position: 'absolute',
+    ...Platform.select({
+      ios: {
+        top: 30,
+      },
+      android: {
+        top: 30,
+      },
+    }),
   },
 });
 

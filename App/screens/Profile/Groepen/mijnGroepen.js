@@ -16,7 +16,7 @@ import 'firebase/firestore';
 import { FlatList } from 'react-native-gesture-handler';
 
 const MijnGroepen = ({ navigation }) => {
-  window.addEventListener = x => x;
+  window.addEventListener = (x) => x;
   const [activeGroups, setActiveGroups] = useState([]);
   const [nonActiveGroups, setNonActiveGroups] = useState([]);
 
@@ -33,8 +33,8 @@ const MijnGroepen = ({ navigation }) => {
       db.collection('groups')
         .where('createdBy', '==', currentUser)
         .where('status', '==', true)
-        .onSnapshot(querySnapShot => {
-          const groups = querySnapShot.docs.map(documentSnapShot => {
+        .onSnapshot((querySnapShot) => {
+          const groups = querySnapShot.docs.map((documentSnapShot) => {
             return {
               _id: documentSnapShot.id,
               name: '',
@@ -55,8 +55,8 @@ const MijnGroepen = ({ navigation }) => {
       db.collection('groups')
         .where('createdBy', '==', currentUser)
         .where('status', '==', false)
-        .onSnapshot(querySnapShot => {
-          const groups = querySnapShot.docs.map(documentSnapShot => {
+        .onSnapshot((querySnapShot) => {
+          const groups = querySnapShot.docs.map((documentSnapShot) => {
             return {
               _id: documentSnapShot.id,
               name: '',
@@ -79,36 +79,32 @@ const MijnGroepen = ({ navigation }) => {
   }
 
   async function onGroepLongPressActivate(group_id) {
-    await firebase
-      .firestore()
-      .collection('groups')
-      .doc(group_id)
-      .update({
-        status: true,
-      });
+    await firebase.firestore().collection('groups').doc(group_id).update({
+      status: true,
+    });
   }
 
   async function onGroepLongPressDeactivate(group_id) {
-    await firebase
-      .firestore()
-      .collection('groups')
-      .doc(group_id)
-      .update({
-        status: false,
-      });
+    await firebase.firestore().collection('groups').doc(group_id).update({
+      status: false,
+    });
   }
 
   return (
     <>
       {activeGroups.length || nonActiveGroups.length > 0 ? (
         <View style={styles.viewContainer}>
-          <View style={styles.error}>
+          <Text style={styles.textGroepBewerken}>
+            Klik op de groep om een groep te selecteren of op bewerken als je
+            een groep wilt bewerken of toevoegen.
+          </Text>
+          <View style={styles.flatlist}>
             <FlatList
               data={activeGroups}
-              keyExtractor={item => item._id}
+              keyExtractor={(item) => item._id}
               renderItem={({ item }) => (
                 <TouchableOpacity
-                  onLongPress={() => onGroepLongPressDeactivate(item._id)}
+                  onPress={() => onGroepLongPressDeactivate(item._id)}
                 >
                   <GroepButtonActive name={item.name} />
                 </TouchableOpacity>
@@ -116,10 +112,10 @@ const MijnGroepen = ({ navigation }) => {
             />
             <FlatList
               data={nonActiveGroups}
-              keyExtractor={item => item._id}
+              keyExtractor={(item) => item._id}
               renderItem={({ item }) => (
                 <TouchableOpacity
-                  onLongPress={() => onGroepLongPressActivate(item._id)}
+                  onPress={() => onGroepLongPressActivate(item._id)}
                 >
                   <GroepButton name={item.name} />
                 </TouchableOpacity>
@@ -164,6 +160,24 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#ffffff',
+  },
+  textGroepBewerken: {
+    color: '#9F9F9F',
+    position: 'absolute',
+    ...Platform.select({
+      ios: {
+        top: 40,
+        marginLeft: 40,
+        marginRight: 60,
+        marginBottom: 20,
+      },
+      android: {
+        top: 20,
+        marginLeft: 40,
+        marginRight: 60,
+        marginBottom: 20,
+      },
+    }),
   },
   inputView: {
     width: '80%',
@@ -213,6 +227,13 @@ const styles = StyleSheet.create({
     resizeMode: 'stretch',
     marginBottom: 40,
     marginTop: 40,
+  },
+  flatlist: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '80%',
+    marginBottom: 40,
+    top: 0,
   },
   error: {
     alignItems: 'center',
