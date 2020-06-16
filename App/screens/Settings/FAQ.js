@@ -3,12 +3,20 @@ import { Text, View, StyleSheet, Button } from 'react-native';
 
 const FAQ = () => {
   return (
-    <View>
-      <Button title="Meldingen"></Button>
-      <Button title="FAQ"></Button>
-      <Button title="Help"></Button>
+    <View style={styles.viewContainer}>
+      <Text>Hallo! Kom later terug, dit hoort nu nog niet bij de demo</Text>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  viewContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#ffffff',
+  },
+});
 
 export default FAQ;
