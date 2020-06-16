@@ -29,7 +29,7 @@ const SettingsTab = ({ navigation }) => {
             title="FAQ"
             onPress={() => navigation.navigate('FAQ')}
           />
-          <CustomButton title="Logout" onPress={handleLogout} />
+          <CustomButton title="Log uit" onPress={handleLogout} />
         </View>
         <Text>Hi, {email}</Text>
 
