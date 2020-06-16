@@ -98,8 +98,36 @@ const SettingsStackScreen = () => {
           },
         }}
       />
-      <SettingsStack.Screen name="Meldingen" component={Meldingen} />
-      <SettingsStack.Screen name="FAQ" component={FAQ} />
+      <SettingsStack.Screen
+        name="Meldingen"
+        component={Meldingen}
+        options={{
+          title: 'Meldingen',
+          headerBackTitle: ' ',
+          headerStyle: {
+            backgroundColor: '#FFFFFF',
+            elevation: 0,
+            shadowOpacity: 0,
+          },
+          headerTitleAlign: 'left',
+          headerTintColor: '#000000',
+        }}
+      />
+      <SettingsStack.Screen
+        name="FAQ"
+        component={FAQ}
+        options={{
+          title: 'FAQ',
+          headerBackTitle: ' ',
+          headerStyle: {
+            backgroundColor: '#FFFFFF',
+            elevation: 0,
+            shadowOpacity: 0,
+          },
+          headerTitleAlign: 'left',
+          headerTintColor: '#000000',
+        }}
+      />
       <SettingsStack.Screen name="Help" component={Help} />
     </SettingsStack.Navigator>
   );
