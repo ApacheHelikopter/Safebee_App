@@ -15,7 +15,7 @@ import * as firebase from 'firebase';
 import 'firebase/firestore';
 
 const TutorialModal = ({ route, navigation }) => {
-  window.addEventListener = (x) => x;
+  window.addEventListener = x => x;
   const { groupDetails } = route.params;
   const [modalVisible, setModalVisible] = useState(true);
   const db = firebase.firestore();
@@ -231,7 +231,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   groepIconRight: {
-    marginLeft: 200,
+    marginLeft: 192,
   },
   saveBtn: {
     width: '80%',

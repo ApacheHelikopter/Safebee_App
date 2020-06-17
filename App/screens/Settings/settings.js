@@ -29,9 +29,7 @@ const SettingsTab = ({ navigation }) => {
             title="FAQ"
             onPress={() => navigation.navigate('FAQ')}
           />
-          <CustomButton title="Logout" onPress={handleLogout} />
         </View>
-        <Text>Hi, {email}</Text>
 
         <View style={styles.containerBttns}>
           <View style={styles.languageBttns}>
@@ -50,6 +48,14 @@ const SettingsTab = ({ navigation }) => {
               <Text>en</Text>
             </TouchableOpacity>
           </View>
+        </View>
+
+        <View style={styles.logUitView}>
+          <Text style={styles.emailText}>{email}</Text>
+
+          <Text style={styles.logUitText} onPress={handleLogout}>
+            LOG UIT
+          </Text>
         </View>
       </View>
     </View>
@@ -102,6 +108,22 @@ const styles = StyleSheet.create({
     backgroundColor: '#F6C004',
     borderRadius: 50,
     margin: '2%',
+  },
+  logUitText: {
+    color: '#9F9F9F',
+    marginTop: 20,
+  },
+  logUitView: {
+    display: 'flex',
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    height: '20%',
+    bottom: -150,
+  },
+  emailText: {
+    color: '#655D5D',
   },
 });
 

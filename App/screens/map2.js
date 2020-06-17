@@ -196,7 +196,9 @@ const GeoLocationMap = () => {
         <View style={styles.viewContainerModal}>
           <View style={styles.modalView}>
             <Text style={styles.titleModal}>OPGELET!</Text>
-            <Text style={styles.titleModal}>Safebee is buiten de zone!</Text>
+            <Text style={styles.bodyModal}>
+              Er is een hesje buiten de zone gegaan!
+            </Text>
 
             <View>
               <TouchableOpacity
@@ -205,7 +207,7 @@ const GeoLocationMap = () => {
                   setModalVisible(!modalVisible);
                 }}
               >
-                <Text>OK</Text>
+                <Text style={styles.backModal}>OK</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -407,7 +409,6 @@ const styles = StyleSheet.create({
   },
 
   //MODAL
-
   viewContainerModal: {
     flex: 1,
     flexDirection: 'column',
