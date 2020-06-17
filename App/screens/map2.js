@@ -22,7 +22,7 @@ const LATITUDE_DELTA = 0.0222;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 const GeoLocationMap = () => {
-  window.addEventListener = (x) => x;
+  window.addEventListener = x => x;
   const [initialPosition, setInitialPosition] = useState({
     latitude: 0,
     longitude: 0,
@@ -61,7 +61,7 @@ const GeoLocationMap = () => {
   useEffect(() => {
     async function currentPosition() {
       navigator.geolocation.getCurrentPosition(
-        (position) => {
+        position => {
           let lat = parseFloat(position.coords.latitude);
           let long = parseFloat(position.coords.longitude);
 
@@ -75,14 +75,14 @@ const GeoLocationMap = () => {
           setInitialPosition(initialRegion);
           setmarkerPosition(initialRegion);
         },
-        (error) => alert(JSON.stringify(error)),
+        error => alert(JSON.stringify(error)),
         { enableHighAccuracy: true, timeout: 2000, maximumAge: 1000 }
       );
     }
     currentPosition();
 
     async function watchPosition() {
-      let watchID = navigator.geolocation.watchPosition((position) => {
+      let watchID = navigator.geolocation.watchPosition(position => {
         var lat = parseFloat(position.coords.latitude);
         var long = parseFloat(position.coords.longitude);
 
@@ -118,8 +118,8 @@ const GeoLocationMap = () => {
       dbFire
         .collection('groups')
         .where('createdBy', '==', currentUser)
-        .onSnapshot((querySnapShot) => {
-          querySnapShot.docs.map((documentSnapShot) => {
+        .onSnapshot(querySnapShot => {
+          querySnapShot.docs.map(documentSnapShot => {
             if (
               documentSnapShot.data().status == true &&
               documentSnapShot.data().names == 'Safebee'
@@ -144,7 +144,7 @@ const GeoLocationMap = () => {
   const getLocationHesjes = () => {
     const setLocationHesje = () => {
       const firebaseGetLat = () => {
-        db.ref('lat').on('value', (snapshot) => {
+        db.ref('lat').on('value', snapshot => {
           const gpsLat = snapshot.val();
           setGpsLat(gpsLat);
         });
@@ -152,7 +152,7 @@ const GeoLocationMap = () => {
       firebaseGetLat();
 
       const firebaseGetLng = () => {
-        db.ref('lng').on('value', (snapshot) => {
+        db.ref('lng').on('value', snapshot => {
           const gpsLng = snapshot.val();
           setGpsLng(gpsLng);
         });
@@ -196,13 +196,9 @@ const GeoLocationMap = () => {
         <View style={styles.viewContainerModal}>
           <View style={styles.modalView}>
             <Text style={styles.titleModal}>OPGELET!</Text>
-<<<<<<< HEAD
-            <Text style={styles.titleModal}>Safebee is buiten de zone!</Text>
-=======
             <Text style={styles.bodyModal}>
               Er is een hesje buiten de zone gegaan!
             </Text>
->>>>>>> c2d1fae8dd22debfab0efb914c037586cfe7cca7
 
             <View>
               <TouchableOpacity
@@ -228,7 +224,7 @@ const GeoLocationMap = () => {
                 step={5}
                 minimumValue={1}
                 maximumValue={200}
-                onValueChange={(value) => setCountSlider({ value })}
+                onValueChange={value => setCountSlider({ value })}
                 maximumTrackTintColor="#FFFFFF"
                 minimumTrackTintColor="#655D5D"
                 thumbTintColor="#655D5D"

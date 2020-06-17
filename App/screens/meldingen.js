@@ -10,7 +10,7 @@ const Meldingen = ({ navigation }) => {
           style={styles.loginBtn}
           onPress={() => navigation.goBack()}
         >
-          <Text style={styles.loginText}>Ga terug naar het echte werk</Text>
+          <Text style={styles.loginText}>Ga terug</Text>
         </TouchableOpacity>
       </View>
     </View>
