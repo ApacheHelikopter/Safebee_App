@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 const GroepButtonActive = ({ name }) => {
   return (
     <View style={styles.inputView}>
-      <Icon name="group" size={20} style={styles.groepIcon} />
+      <Icon name="radio-button-checked" size={20} style={styles.groepIcon} />
       <Text style={styles.inputText}>{name}</Text>
     </View>
   );
@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     alignItems: 'center',
     width: '90%',
-    backgroundColor: '#9F9F9F',
+    backgroundColor: '#F8F8F8',
     borderRadius: 25,
     height: 50,
     marginBottom: 20,
@@ -25,12 +25,12 @@ const styles = StyleSheet.create({
   inputText: {
     paddingTop: 14,
     height: 50,
-    color: '#FFFFFF',
+    color: '#9F9F9F',
     width: '100%',
   },
   groepIcon: {
     padding: 20,
-    color: '#FFFFFF',
+    color: '#F6C004',
   },
 });
 

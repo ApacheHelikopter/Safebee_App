@@ -16,7 +16,7 @@ import 'firebase/firestore';
 import { FlatList } from 'react-native-gesture-handler';
 
 const MijnGroepen = ({ navigation }) => {
-  window.addEventListener = (x) => x;
+  window.addEventListener = x => x;
   const [activeGroups, setActiveGroups] = useState([]);
   const [nonActiveGroups, setNonActiveGroups] = useState([]);
 
@@ -33,8 +33,8 @@ const MijnGroepen = ({ navigation }) => {
       db.collection('groups')
         .where('createdBy', '==', currentUser)
         .where('status', '==', true)
-        .onSnapshot((querySnapShot) => {
-          const groups = querySnapShot.docs.map((documentSnapShot) => {
+        .onSnapshot(querySnapShot => {
+          const groups = querySnapShot.docs.map(documentSnapShot => {
             return {
               _id: documentSnapShot.id,
               name: '',
@@ -55,8 +55,8 @@ const MijnGroepen = ({ navigation }) => {
       db.collection('groups')
         .where('createdBy', '==', currentUser)
         .where('status', '==', false)
-        .onSnapshot((querySnapShot) => {
-          const groups = querySnapShot.docs.map((documentSnapShot) => {
+        .onSnapshot(querySnapShot => {
+          const groups = querySnapShot.docs.map(documentSnapShot => {
             return {
               _id: documentSnapShot.id,
               name: '',
@@ -79,15 +79,23 @@ const MijnGroepen = ({ navigation }) => {
   }
 
   async function onGroepLongPressActivate(group_id) {
-    await firebase.firestore().collection('groups').doc(group_id).update({
-      status: true,
-    });
+    await firebase
+      .firestore()
+      .collection('groups')
+      .doc(group_id)
+      .update({
+        status: true,
+      });
   }
 
   async function onGroepLongPressDeactivate(group_id) {
-    await firebase.firestore().collection('groups').doc(group_id).update({
-      status: false,
-    });
+    await firebase
+      .firestore()
+      .collection('groups')
+      .doc(group_id)
+      .update({
+        status: false,
+      });
   }
 
   return (
@@ -101,7 +109,7 @@ const MijnGroepen = ({ navigation }) => {
           <View style={styles.flatlist}>
             <FlatList
               data={activeGroups}
-              keyExtractor={(item) => item._id}
+              keyExtractor={item => item._id}
               renderItem={({ item }) => (
                 <TouchableOpacity
                   onPress={() => onGroepLongPressDeactivate(item._id)}
@@ -112,7 +120,7 @@ const MijnGroepen = ({ navigation }) => {
             />
             <FlatList
               data={nonActiveGroups}
-              keyExtractor={(item) => item._id}
+              keyExtractor={item => item._id}
               renderItem={({ item }) => (
                 <TouchableOpacity
                   onPress={() => onGroepLongPressActivate(item._id)}

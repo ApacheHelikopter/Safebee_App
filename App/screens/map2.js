@@ -196,9 +196,7 @@ const GeoLocationMap = () => {
         <View style={styles.viewContainerModal}>
           <View style={styles.modalView}>
             <Text style={styles.titleModal}>OPGELET!</Text>
-            <Text style={styles.titleModal}>
-              Safebee is buiten de perimeter!
-            </Text>
+            <Text style={styles.titleModal}>Safebee is buiten de zone!</Text>
 
             <View>
               <TouchableOpacity

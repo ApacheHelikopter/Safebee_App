@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, Button } from 'react-native';
 
-const Meldingen = () => {
+const Meldingen = ({ navigation }) => {
   return (
     <View>
       <Button title="Meldingen"></Button>
